@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>PoruchkiBG White — Floating Delivery UI</title>
+  <meta name="description" content="PoruchkiBG в бяла parallax тема с floating прозрачни box-ове и real image links." />
+  <meta name="theme-color" content="#f7f8fc" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles-white.css" />
+  <script defer src="/app-white.js"></script>
+</head>
+<body>
+  <div class="bg-blur blur-a"></div>
+  <div class="bg-blur blur-b"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/poruchkibg-white.html" class="brand">
+        <span class="brand-mark">P</span>
+        <span class="brand-copy">
+          <strong>PoruchkiBG</strong>
+          <small>white floating edition</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="#stores">Магазини</a>
+        <a href="#how">Как работи</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="header-actions">
+        <button class="cart-btn" id="cartBtn" type="button">Количка <b id="cartCount">0</b></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero hero-parallax">
+      <div class="hero-image"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy floating-box soft-box">
+          <div class="eyebrow">WHITE PARALLAX · REAL IMAGE LINKS</div>
+          <h1>Бяла тема.<br>Прозрачни floating box-ове.<br><span>По-чист premium look.</span></h1>
+          <p>Това е светлата версия на PoruchkiBG: parallax секции, реални image URL-и в картите, glass ефект и по-луксозно усещане за delivery платформа.</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#stores">Виж магазини</a>
+            <a class="secondary-btn" href="#how">Виж flow</a>
+          </div>
+          <div class="hero-stats">
+            <article><strong>White UI</strong><span>clean premium look</span></article>
+            <article><strong>Glass cards</strong><span>transparent floating boxes</span></article>
+            <article><strong>Real image links</strong><span>директни URL-и в store cards</span></article>
+          </div>
+        </div>
+
+        <div class="hero-side floating-box strong-box">
+          <div class="mini-pill">Бърз вход</div>
+          <h2>Избери град и търси</h2>
+          <label class="field"><span>Град</span><select id="citySelect"></select></label>
+          <label class="field"><span>Търсене</span><input id="storeSearch" type="text" placeholder="магазин, пица, аптека, куче..." /></label>
+          <button class="primary-btn full-btn" id="toStoresBtn" type="button">Покажи резултати</button>
+          <div class="quick-list">
+            <div>✔ Light luxury UI</div>
+            <div>✔ Floating прозрачни карти</div>
+            <div>✔ Real image URLs</div>
+            <div>✔ Mobile + desktop</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tight">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Категории</div>
+            <h2>Най-силните категории за старт</h2>
+          </div>
+          <p>Супермаркети, аптеки, ресторанти, зоомагазини и строителни материали — в светла тема с по-луксозно представяне.</p>
+        </div>
+        <div class="chip-row" id="categoryRow"></div>
+      </div>
+    </section>
+
+    <section class="section" id="stores">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Магазини</div>
+            <h2>Кликваш карта и влизаш вътре</h2>
+          </div>
+          <p>Всяка карта е с real image link, floating overlay и прозрачна долна информация.</p>
+        </div>
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <button class="toolbar-chip active" type="button" data-filter="all">Всички</button>
+            <button class="toolbar-chip" type="button" data-filter="popular">Популярни</button>
+            <button class="toolbar-chip" type="button" data-filter="fast">Бърза доставка</button>
+          </div>
+          <div class="toolbar-right"><span id="storesCountText">0 магазина</span></div>
+        </div>
+        <div class="stores-grid" id="storesGrid"></div>
+      </div>
+    </section>
+
+    <section class="parallax-band section">
+      <div class="parallax-image"></div>
+      <div class="container">
+        <div class="floating-box strong-box band-box">
+          <div class="section-kicker">Parallax</div>
+          <h2>Светла платформа с depth</h2>
+          <p>Белият фон не значи плосък дизайн. Значи по-скъп, по-чист и по-доверителен интерфейс — особено когато картите плуват над реални изображения.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">Flow</div>
+            <h2>Как минава поръчката</h2>
+          </div>
+          <p>От избор на магазин до запис в количка и checkout слой.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="floating-box soft-box"><strong>01</strong><h3>Избираш град</h3><p>Системата зарежда подходящите магазини.</p></article>
+          <article class="floating-box soft-box"><strong>02</strong><h3>Влизаш в магазин</h3><p>Виждаш продукти и реално изображение в hero частта.</p></article>
+          <article class="floating-box soft-box"><strong>03</strong><h3>Добавяш в количката</h3><p>Събираш няколко продукта с quantity control.</p></article>
+          <article class="floating-box soft-box"><strong>04</strong><h3>Checkout</h3><p>Име, телефон, адрес и финална сума.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">FAQ</div>
+            <h2>Най-важното накратко</h2>
+          </div>
+          <p>Светла версия, real image links и floating UI.</p>
+        </div>
+        <div class="faq-list">
+          <details class="floating-box soft-box" open><summary>Това нова тема ли е?</summary><p>Да. Това е отделна white parallax версия на интерфейса.</p></details>
+          <details class="floating-box soft-box"><summary>Има ли реални image URL-и?</summary><p>Да. В store data има директни URL-и към изображения за всяка карта.</p></details>
+          <details class="floating-box soft-box"><summary>Box-овете прозрачни ли са?</summary><p>Да. Използван е glass / transparent floating background.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="overlay hidden" id="overlay"></div>
+
+  <section class="store-modal hidden" id="storeModal">
+    <div class="modal-hero" id="storeHero">
+      <button class="close-btn" id="closeStoreBtn" type="button">✕</button>
+      <div class="floating-box strong-box hero-info">
+        <div class="mini-pill" id="storeLabel">Store</div>
+        <h2 id="storeTitle">Store</h2>
+        <p id="storeDesc"></p>
+      </div>
+    </div>
+    <div class="modal-toolbar">
+      <input id="productSearch" type="text" placeholder="Търси продукт в магазина..." />
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <aside class="cart-drawer hidden" id="cartDrawer">
+    <div class="drawer-head">
+      <div>
+        <div class="section-kicker">Количка</div>
+        <h3>Твоята поръчка</h3>
+      </div>
+      <button class="close-btn small" id="closeCartBtn" type="button">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-summary">
+      <div class="sum-row"><span>Продукти</span><strong id="basePrice">0.00 лв</strong></div>
+      <div class="sum-row"><span>Такса</span><strong id="servicePrice">0.00 лв</strong></div>
+      <div class="sum-row"><span>Доставка</span><strong id="deliveryPrice">0.00 лв</strong></div>
+      <div class="sum-row total"><span>Общо</span><strong id="totalPrice">0.00 лв</strong></div>
+    </div>
+    <div class="drawer-actions">
+      <button class="secondary-btn full-btn" id="clearCartBtn" type="button">Изчисти</button>
+      <button class="primary-btn full-btn" id="checkoutBtn" type="button">Checkout</button>
+    </div>
+  </aside>
+
+  <section class="checkout-modal hidden" id="checkoutModal">
+    <div class="checkout-card floating-box strong-box">
+      <div class="drawer-head checkout-head">
+        <div>
+          <div class="section-kicker">Checkout</div>
+          <h3>Завърши поръчката</h3>
+        </div>
+        <button class="close-btn small" id="closeCheckoutBtn" type="button">✕</button>
+      </div>
+      <form id="checkoutForm" class="checkout-form">
+        <div class="form-grid">
+          <label class="field"><span>Име</span><input id="customerName" type="text" required placeholder="Димитър" /></label>
+          <label class="field"><span>Телефон</span><input id="customerPhone" type="tel" required placeholder="08..." /></label>
+          <label class="field full"><span>Адрес</span><input id="customerAddress" type="text" required placeholder="ул., вход, етаж..." /></label>
+          <label class="field"><span>Град</span><select id="checkoutCity"></select></label>
+          <label class="field"><span>Плащане</span><select id="paymentMethod"><option value="cash">Наложен платеж</option><option value="card">Карта</option><option value="online">Онлайн</option></select></label>
+          <label class="field full"><span>Бележка</span><textarea id="customerNote" rows="4" placeholder="Бележка към поръчката..."></textarea></label>
+        </div>
+        <div class="checkout-summary floating-box soft-box" id="checkoutSummary"></div>
+        <button class="primary-btn full-btn" type="submit">Изпрати поръчка</button>
+      </form>
+      <div class="success-box hidden" id="successBox">
+        <div class="success-icon">✓</div>
+        <h3>Поръчката е записана</h3>
+        <p id="successText"></p>
+        <button class="primary-btn full-btn" id="doneBtn" type="button">Готово</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+</body>
+</html>
