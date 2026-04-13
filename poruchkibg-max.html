@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>PoruchkiBG — Доставка от магазини с една количка</title>
+  <meta name="description" content="PoruchkiBG — multi-store delivery платформа с магазини, продукти, количка, checkout и admin panel demo." />
+  <meta name="theme-color" content="#0b1020" />
+  <meta property="og:title" content="PoruchkiBG — една количка за целия град" />
+  <meta property="og:description" content="Магазини, ресторанти, аптеки и още. Един checkout. Една доставка." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-grid"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="brand">
+        <span class="brand-mark">P</span>
+        <span class="brand-text">
+          <strong>PoruchkiBG</strong>
+          <small>multi-store delivery</small>
+        </span>
+      </a>
+
+      <nav class="desktop-nav">
+        <a href="#stores">Магазини</a>
+        <a href="#how">Как работи</a>
+        <a href="#benefits">Предимства</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="ghost-btn" href="/admin">Admin</a>
+        <button class="cart-button" id="cartButton" type="button">Количка <b id="cartBadge">0</b></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">PORUCHKIBG · MAX MVP</div>
+          <h1>Поръчваш от няколко магазина.<br><span>Завършваш с една количка.</span></h1>
+          <p class="hero-text">Супермаркети, минимаркет, аптеки, ресторанти, строителни материали и зоомагазини. Избираш град, добавяш продукти и пращаш реална поръчка.</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#stores">Започни поръчка</a>
+            <a class="secondary-btn" href="#how">Виж системата</a>
+          </div>
+          <div class="hero-stats">
+            <article class="stat-card"><strong id="ordersCountStat">0+</strong><span>записани поръчки</span></article>
+            <article class="stat-card"><strong>1 checkout</strong><span>за много магазини</span></article>
+            <article class="stat-card"><strong>Fast mobile</strong><span>силно на телефон и PC</span></article>
+          </div>
+        </div>
+
+        <div class="hero-panel">
+          <div class="hero-panel-top">
+            <div class="mini-pill">Поръчай сега</div>
+            <h2>Избери град и магазин</h2>
+            <p>Това е входът към реална количка, checkout и admin flow.</p>
+          </div>
+          <div class="search-panel">
+            <label class="field"><span>Град</span><select id="citySelect"></select></label>
+            <label class="field"><span>Търсене</span><input id="storeSearch" type="text" placeholder="напр. пица, аптека, Kaufland, храна за куче" /></label>
+            <button class="primary-btn full-btn" id="scrollStoresBtn" type="button">Покажи магазини</button>
+          </div>
+          <div class="quick-points">
+            <div class="quick-point">✔ Real checkout</div>
+            <div class="quick-point">✔ Запис на поръчки</div>
+            <div class="quick-point">✔ Admin panel</div>
+            <div class="quick-point">✔ Responsive UX</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tight">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="section-kicker">Категории</div><h2>Най-силните категории за старт</h2></div>
+          <p>Най-добрият микс за честота, средна стойност и удобство: супермаркети, минимаркет, аптеки, ресторанти, строителни и зоомагазини.</p>
+        </div>
+        <div class="chip-row" id="categoryChips"></div>
+      </div>
+    </section>
+
+    <section class="section" id="stores">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="section-kicker">Магазини</div><h2>Избери обект и влез вътре</h2></div>
+          <p>Натискаш карта, отваря се магазин, виждаш продукти и добавяш директно в количката.</p>
+        </div>
+        <div class="toolbar">
+          <div class="toolbar-left">
+            <button class="toolbar-chip active" data-filter="all" type="button">Всички</button>
+            <button class="toolbar-chip" data-filter="popular" type="button">Популярни</button>
+            <button class="toolbar-chip" data-filter="fast" type="button">Бърза доставка</button>
+          </div>
+          <div class="toolbar-right"><span class="toolbar-result" id="storesResultText">0 магазина</span></div>
+        </div>
+        <div class="stores-grid" id="storesGrid"></div>
+      </div>
+    </section>
+
+    <section class="section dark-band" id="how">
+      <div class="container">
+        <div class="section-head section-head-light">
+          <div><div class="section-kicker">Как работи</div><h2>От избор до поръчка за минути</h2></div>
+          <p>Това е flow-ът, който прави идеята продаваема и реално използваема.</p>
+        </div>
+        <div class="steps-grid">
+          <article class="step-card"><div class="step-num">01</div><h3>Избираш град</h3><p>Системата знае зона на доставка и цена по град.</p></article>
+          <article class="step-card"><div class="step-num">02</div><h3>Влизаш в магазин</h3><p>Виждаш продукти, категории и цени.</p></article>
+          <article class="step-card"><div class="step-num">03</div><h3>Добавяш в количката</h3><p>Събираш продукти от различни магазини в една обща кошница.</p></article>
+          <article class="step-card"><div class="step-num">04</div><h3>Checkout</h3><p>Име, телефон, адрес, бележка и метод на плащане.</p></article>
+          <article class="step-card"><div class="step-num">05</div><h3>Поръчката се записва</h3><p>В local admin панела влиза с уникален номер.</p></article>
+          <article class="step-card"><div class="step-num">06</div><h3>Admin управлява</h3><p>Нова, приета, пазарува се, на път, доставена.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="benefits">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="section-kicker">Предимства</div><h2>Не е просто красив сайт. Това е MVP, който може да се показва.</h2></div>
+          <p>Има реална количка, реален checkout, запис на поръчки и admin слой.</p>
+        </div>
+        <div class="benefits-grid">
+          <article class="benefit-card"><div class="benefit-icon">⚡</div><h3>Бърз старт</h3><p>Front-end MVP, който може веднага да се качи и тества.</p></article>
+          <article class="benefit-card"><div class="benefit-icon">🛒</div><h3>Една количка</h3><p>Клиентът не мисли за много сайтове и много checkout-и.</p></article>
+          <article class="benefit-card"><div class="benefit-icon">📦</div><h3>Реален order flow</h3><p>Има адрес, телефон, бележки, метод на плащане и доставка.</p></article>
+          <article class="benefit-card"><div class="benefit-icon">📊</div><h3>Admin контрол</h3><p>Виждаш поръчки, оборот, статуси и филтри по градове.</p></article>
+          <article class="benefit-card"><div class="benefit-icon">📱</div><h3>Mobile-first</h3><p>Направено е първо да изглежда силно на телефон.</p></article>
+          <article class="benefit-card"><div class="benefit-icon">🚀</div><h3>Готово за backend</h3><p>Следващата стъпка е Firebase или Supabase.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-head">
+          <div><div class="section-kicker">FAQ</div><h2>Най-важните въпроси</h2></div>
+          <p>Ясно, кратко и удобно за клиента.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item" open><summary>Мога ли да добавям от различни магазини в една количка?</summary><p>Да. Това е едно от най-силните неща в платформата.</p></details>
+          <details class="faq-item"><summary>Има ли реален checkout?</summary><p>Да. Попълват се име, телефон, адрес, бележка и начин на плащане.</p></details>
+          <details class="faq-item"><summary>Къде влизат поръчките?</summary><p>Влизат в local admin панела в страницата /admin.</p></details>
+          <details class="faq-item"><summary>Това готово ли е за backend?</summary><p>Да. Следващата стъпка е да свържем записите към Firebase или Supabase.</p></details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <div class="brand footer-brand"><span class="brand-mark">P</span><span class="brand-text"><strong>PoruchkiBG</strong><small>multi-store delivery MVP</small></span></div>
+        <p class="footer-text">Една количка. Един checkout. Реален order flow.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#stores">Магазини</a>
+        <a href="#how">Как работи</a>
+        <a href="#faq">FAQ</a>
+        <a href="/admin">Admin</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="overlay hidden" id="overlay"></div>
+
+  <section class="store-modal hidden" id="storeModal" aria-hidden="true">
+    <div class="store-modal-hero" id="storeModalHero">
+      <button class="icon-close" type="button" id="closeStoreModal">✕</button>
+      <div class="store-modal-copy">
+        <div class="mini-pill" id="storeModalLabel">Store</div>
+        <h2 id="storeModalTitle">Магазин</h2>
+        <p id="storeModalDesc"></p>
+      </div>
+    </div>
+    <div class="store-modal-toolbar">
+      <div class="store-search-box"><input id="productSearch" type="text" placeholder="Търси продукт в магазина..." /></div>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <aside class="cart-drawer hidden" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-head">
+      <div><div class="section-kicker">Количка</div><h3>Твоята поръчка</h3></div>
+      <button class="icon-close" type="button" id="closeCartDrawer">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-summary">
+      <div class="sum-row"><span>Продукти</span><strong id="cartBasePrice">0.00 лв</strong></div>
+      <div class="sum-row"><span>Сервизна такса</span><strong id="cartServiceFee">0.00 лв</strong></div>
+      <div class="sum-row"><span>Доставка</span><strong id="cartDeliveryFee">0.00 лв</strong></div>
+      <div class="sum-row total-row"><span>Общо</span><strong id="cartTotalPrice">0.00 лв</strong></div>
+    </div>
+    <div class="drawer-actions">
+      <button class="secondary-btn full-btn" type="button" id="clearCartBtn">Изчисти количка</button>
+      <button class="primary-btn full-btn" type="button" id="openCheckoutBtn">Продължи към checkout</button>
+    </div>
+  </aside>
+
+  <section class="checkout-modal hidden" id="checkoutModal" aria-hidden="true">
+    <div class="checkout-card">
+      <div class="drawer-head">
+        <div><div class="section-kicker">Checkout</div><h3>Завърши поръчката</h3></div>
+        <button class="icon-close" type="button" id="closeCheckoutModal">✕</button>
+      </div>
+      <form id="checkoutForm" class="checkout-form">
+        <div class="form-grid">
+          <label class="field"><span>Име</span><input type="text" id="customerName" placeholder="напр. Димитър" required /></label>
+          <label class="field"><span>Телефон</span><input type="tel" id="customerPhone" placeholder="08..." required /></label>
+          <label class="field field-full"><span>Адрес</span><input type="text" id="customerAddress" placeholder="ул., квартал, вход, етаж..." required /></label>
+          <label class="field"><span>Град</span><select id="checkoutCity" required></select></label>
+          <label class="field"><span>Плащане</span><select id="paymentMethod" required><option value="cash">Наложен платеж</option><option value="card">Карта при доставка</option><option value="online">Онлайн плащане</option></select></label>
+          <label class="field field-full"><span>Бележка</span><textarea id="customerNote" rows="4" placeholder="без лук, звъннете при входа..."></textarea></label>
+        </div>
+        <div class="checkout-summary-box" id="checkoutSummaryBox"></div>
+        <button class="primary-btn full-btn" type="submit">Изпрати поръчка</button>
+      </form>
+      <div class="success-state hidden" id="successState">
+        <div class="success-icon">✓</div>
+        <h3>Поръчката е записана успешно</h3>
+        <p id="successText"></p>
+        <button class="primary-btn full-btn" type="button" id="closeSuccessBtn">Готово</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+</body>
+</html>
