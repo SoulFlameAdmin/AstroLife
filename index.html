@@ -2,60 +2,781 @@
 <html lang="bg">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PoruchkiBG Demo</title>
-  <meta name="description" content="PoruchkiBG demo — multi-store delivery система с количка, марж и заявка." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>PoruchkiBG — Demo</title>
+  <meta name="description" content="PoruchkiBG demo — multi-store delivery система с марки, parallax секции, продукти и количка." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0b0d12;--panel:#121723;--panel2:#1a2030;--text:#f4f7ff;--muted:#9aa6bf;--line:rgba(255,255,255,.08);--brand:#67e8f9;--brand2:#8b5cf6;--ok:#86efac;--shadow:0 24px 80px rgba(0,0,0,.35)}
-    *{box-sizing:border-box}html,body{margin:0;padding:0;background:radial-gradient(circle at top,#171b29 0%,#0b0d12 55%);color:var(--text);font-family:Inter,system-ui,sans-serif}
-    .wrap{max-width:1200px;margin:0 auto;padding:24px}.hero{padding:46px 0 12px}.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand);font-weight:800}.hero h1{font-size:clamp(34px,7vw,72px);line-height:1.02;margin:12px 0}.sub{max-width:760px;font-size:18px;line-height:1.6;color:var(--muted)}
-    .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 18px;border-radius:16px;border:1px solid var(--line);font-weight:800;text-decoration:none;color:inherit;background:transparent;cursor:pointer}.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#0b1020;border:none}
-    .stats,.grid,.schema,.ideas{display:grid;gap:14px}.stats{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:22px}.stat,.panel,.store,.schema-card,.idea{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid var(--line);box-shadow:var(--shadow)}.stat{border-radius:20px;padding:18px}.stat strong{display:block;font-size:28px}.stat span{color:var(--muted)}
-    .panel{margin-top:18px;border-radius:28px;padding:22px}.section-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;flex-wrap:wrap;margin-bottom:18px}.section-head h2{margin:0;font-size:30px}.section-head p{margin:0;color:var(--muted);max-width:720px}
-    .chips{display:flex;gap:10px;flex-wrap:wrap}.chip{padding:10px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted)}
-    .grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}.store{border-radius:22px;padding:18px}.store h3,.store p{margin:0}.store p{color:var(--muted)}.products{display:grid;gap:10px;margin-top:14px}.product{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:var(--panel2);border:1px solid var(--line)}.product small{display:block;color:var(--muted)}.product button{background:transparent;color:var(--ok);border:1px solid rgba(134,239,172,.35);padding:8px 10px;border-radius:12px;font-weight:700;cursor:pointer}
-    .checkout{display:grid;grid-template-columns:1fr 1fr;gap:18px}.cart,.form{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:18px}.cart-items{display:grid;gap:10px;min-height:140px}.row{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:14px;background:var(--panel2);border:1px solid var(--line)}.summary{display:grid;gap:10px;margin-top:18px}.summary>div{display:flex;justify-content:space-between;color:var(--muted)}.summary strong{color:var(--text)}.final{padding-top:10px;border-top:1px solid var(--line);font-size:20px}.final strong{color:var(--brand)}
-    .form{display:grid;gap:12px}.form label{display:grid;gap:8px;color:var(--muted);font-size:14px}.form input,.form textarea{width:100%;background:#0f1320;color:var(--text);border:1px solid var(--line);border-radius:14px;padding:14px;font:inherit}.form textarea{min-height:120px;resize:vertical}.hint{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
-    .schema{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}.schema-card,.idea{border-radius:18px;padding:16px}.schema-card strong,.idea strong{display:block;margin-bottom:8px}.schema-card span,.idea span{color:var(--muted)}.flow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:16px}.flow div,.flow span{padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
-    .ideas{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}.toast{position:fixed;right:16px;bottom:16px;background:#101524;border:1px solid var(--line);padding:14px 16px;border-radius:16px;opacity:0;transform:translateY(10px);transition:.25s ease;pointer-events:none;max-width:360px;box-shadow:var(--shadow)}.toast.show{opacity:1;transform:translateY(0)}@media (max-width:860px){.stats,.checkout{grid-template-columns:1fr}}
+    :root{
+      --bg:#090b11;
+      --panel:#121724;
+      --panel-2:#1a2131;
+      --text:#f4f7ff;
+      --muted:#9aa6bf;
+      --line:rgba(255,255,255,.08);
+      --line-strong:rgba(255,255,255,.16);
+      --brand:#67e8f9;
+      --brand-2:#8b5cf6;
+      --ok:#86efac;
+      --danger:#ff8c8c;
+      --shadow:0 30px 100px rgba(0,0,0,.45);
+      --radius:26px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(90vw 60vw at 20% -10%, rgba(103,232,249,.12), transparent 60%),
+        radial-gradient(80vw 60vw at 100% 10%, rgba(139,92,246,.12), transparent 60%),
+        linear-gradient(180deg,#0b0d14 0%, #090b11 100%);
+      overflow-x:hidden;
+    }
+    a{text-decoration:none;color:inherit}
+    button,input,textarea{font:inherit}
+    .wrap{max-width:1280px;margin:0 auto;padding:0 18px}
+    .hero{
+      min-height:100svh;
+      display:flex;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+      border-bottom:1px solid var(--line);
+    }
+    .hero::before,
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background-attachment:fixed;
+    }
+    .hero::before{
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.55)),
+        radial-gradient(circle at 20% 20%, rgba(103,232,249,.22), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(139,92,246,.22), transparent 26%),
+        linear-gradient(120deg, #101522 0%, #0a0d14 55%, #12182a 100%);
+      transform:scale(1.05);
+    }
+    .hero::after{
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size:36px 36px;
+      mask-image:linear-gradient(180deg, rgba(0,0,0,.7), transparent 90%);
+      opacity:.18;
+    }
+    .hero__content{position:relative;z-index:2;padding:92px 0 56px;max-width:860px}
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border:1px solid var(--line-strong);
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      color:var(--brand);
+      font-weight:800;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:12px;
+      backdrop-filter:blur(14px);
+    }
+    h1{
+      margin:18px 0 14px;
+      font-size:clamp(38px, 8vw, 86px);
+      line-height:.95;
+      letter-spacing:-.05em;
+    }
+    .hero p{
+      margin:0;
+      max-width:760px;
+      color:#d7def0;
+      font-size:clamp(16px,2.5vw,21px);
+      line-height:1.6;
+    }
+    .hero__actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:15px 20px;border-radius:18px;border:1px solid var(--line-strong);
+      background:rgba(255,255,255,.04);color:var(--text);font-weight:800;cursor:pointer;
+      transition:.22s ease;
+      backdrop-filter:blur(14px);
+    }
+    .btn:hover{transform:translateY(-2px);border-color:rgba(103,232,249,.45)}
+    .btn--primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1120;border:none}
+    .floating-stats{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-top:28px;
+      max-width:860px;
+    }
+    .stat{
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(14px);
+    }
+    .stat strong{display:block;font-size:28px}
+    .stat span{color:var(--muted)}
+
+    .section{padding:26px 0}
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .panel__head{padding:22px 22px 10px;display:flex;justify-content:space-between;gap:16px;align-items:end;flex-wrap:wrap}
+    .panel__head h2{margin:0;font-size:clamp(24px,4vw,38px);letter-spacing:-.03em}
+    .panel__head p{margin:0;color:var(--muted);max-width:780px}
+
+    .chips{display:flex;gap:10px;flex-wrap:wrap;padding:0 22px 22px}
+    .chip{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--muted);font-weight:700;font-size:13px}
+
+    .brands-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:16px;
+      padding:0 22px 22px;
+    }
+    .brand-card{
+      position:relative;
+      min-height:320px;
+      border-radius:24px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      background:#111827;
+      cursor:pointer;
+      isolation:isolate;
+      transition:.28s ease;
+    }
+    .brand-card:hover{transform:translateY(-4px) scale(1.01)}
+    .brand-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.68)),
+        var(--bg-image),
+        linear-gradient(135deg,#1b2335,#0f1522);
+      background-size:cover;
+      background-position:center;
+      transform:scale(1.08);
+      transition:transform .5s ease;
+    }
+    .brand-card:hover::before{transform:scale(1.14)}
+    .brand-card::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0 0;
+      height:50%;
+      background:linear-gradient(180deg, transparent, rgba(0,0,0,.65));
+      z-index:1;
+    }
+    .brand-card__body{
+      position:absolute;
+      inset:auto 0 0 0;
+      z-index:2;
+      padding:20px;
+    }
+    .brand-card__top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .brand-card h3{margin:0;font-size:28px;letter-spacing:-.03em}
+    .brand-card p{margin:8px 0 0;color:#d6def2;max-width:88%}
+    .mini-badge{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);font-size:12px;font-weight:800}
+    .brand-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .brand-meta span{padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.08);font-size:12px;color:#e9eefc}
+
+    .parallax-band{
+      position:relative;
+      min-height:360px;
+      display:flex;
+      align-items:end;
+      padding:26px;
+      overflow:hidden;
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.55));
+    }
+    .parallax-band::before{
+      content:"";
+      position:absolute;
+      inset:-12%;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.14), rgba(0,0,0,.66)),
+        radial-gradient(circle at 20% 20%, rgba(103,232,249,.25), transparent 26%),
+        radial-gradient(circle at 80% 30%, rgba(139,92,246,.22), transparent 24%),
+        linear-gradient(135deg,#151d2e,#0b0f18 40%, #192032 100%);
+      transform:translateY(-4%) scale(1.1);
+      background-attachment:fixed;
+    }
+    .parallax-band__body{position:relative;z-index:2;max-width:760px}
+    .parallax-band h2{margin:0 0 10px;font-size:clamp(28px,5vw,56px);letter-spacing:-.04em}
+    .parallax-band p{margin:0;color:#dce4f8;font-size:18px;line-height:1.65}
+
+    .schema-grid,
+    .features-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+      padding:0 22px 22px;
+    }
+    .schema-card,
+    .feature-card{
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+    }
+    .schema-card strong,.feature-card strong{display:block;font-size:18px;margin-bottom:8px}
+    .schema-card span,.feature-card span{color:var(--muted);line-height:1.6}
+
+    .modal{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:flex-end;
+      justify-content:center;
+      background:rgba(3,5,10,.66);
+      backdrop-filter:blur(8px);
+      z-index:100;
+      padding:18px;
+    }
+    .modal.active{display:flex}
+    .modal__sheet{
+      width:min(1120px,100%);
+      max-height:92svh;
+      overflow:auto;
+      border-radius:28px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,#101521,#0d1119);
+      box-shadow:var(--shadow);
+    }
+    .modal__hero{
+      position:relative;
+      min-height:280px;
+      padding:22px;
+      display:flex;
+      align-items:end;
+      overflow:hidden;
+      border-bottom:1px solid var(--line);
+    }
+    .modal__hero::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.7)),
+        var(--modal-bg),
+        linear-gradient(135deg,#171f31,#0b1017 55%,#1c2234);
+      background-size:cover;
+      background-position:center;
+      transform:scale(1.08);
+    }
+    .modal__heroContent{position:relative;z-index:2;max-width:760px}
+    .modal__hero h3{margin:0;font-size:clamp(30px,5vw,56px);letter-spacing:-.04em}
+    .modal__hero p{margin:12px 0 0;color:#dbe3f7;line-height:1.6}
+    .close-btn{
+      position:absolute;top:16px;right:16px;z-index:3;
+      width:46px;height:46px;border-radius:50%;border:1px solid var(--line-strong);
+      background:rgba(0,0,0,.35);color:#fff;cursor:pointer;font-size:20px;font-weight:900;
+    }
+    .products-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:14px;
+      padding:22px;
+    }
+    .product-card{
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      overflow:hidden;
+    }
+    .product-card__media{
+      aspect-ratio:16/10;
+      position:relative;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.46)),
+        radial-gradient(circle at 30% 20%, rgba(103,232,249,.22), transparent 24%),
+        radial-gradient(circle at 75% 28%, rgba(139,92,246,.22), transparent 22%),
+        linear-gradient(135deg,#171d2c,#0c1016 55%, #1c2435);
+    }
+    .product-card__media::after{
+      content:attr(data-label);
+      position:absolute;left:14px;bottom:14px;
+      padding:8px 10px;border-radius:999px;
+      background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);
+      font-size:12px;font-weight:800;
+    }
+    .product-card__body{padding:16px}
+    .product-card__body h4{margin:0 0 8px;font-size:20px;letter-spacing:-.02em}
+    .product-card__body p{margin:0;color:var(--muted);min-height:46px;line-height:1.55}
+    .price-row{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:14px}
+    .price{font-size:22px;font-weight:900}
+    .add-btn{
+      padding:12px 14px;border-radius:14px;border:none;cursor:pointer;font-weight:800;
+      background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#08101e;
+    }
+
+    .cart-drawer{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:min(420px, calc(100vw - 24px));
+      max-height:80svh;
+      overflow:auto;
+      z-index:110;
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:linear-gradient(180deg,#111725,#0c1018);
+      box-shadow:var(--shadow);
+      transform:translateY(calc(100% + 30px));
+      transition:transform .28s ease;
+    }
+    .cart-drawer.active{transform:translateY(0)}
+    .cart-head{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:18px;border-bottom:1px solid var(--line)}
+    .cart-head h3{margin:0;font-size:22px}
+    .cart-head button{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.05);color:#fff;border:1px solid var(--line);cursor:pointer}
+    .cart-items{display:grid;gap:10px;padding:14px}
+    .cart-item{padding:14px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+    .cart-item__row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+    .cart-item strong{display:block}
+    .cart-item small{color:var(--muted)}
+    .qty-row{display:flex;align-items:center;gap:8px;margin-top:12px}
+    .qty-row button{width:30px;height:30px;border-radius:10px;background:transparent;border:1px solid var(--line);color:#fff;cursor:pointer}
+    .cart-foot{padding:16px;border-top:1px solid var(--line);display:grid;gap:10px}
+    .sum-row{display:flex;justify-content:space-between;gap:10px;color:var(--muted)}
+    .sum-row strong{color:var(--text)}
+    .sum-final{font-size:20px;padding-top:10px;border-top:1px solid var(--line)}
+
+    .fab{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:109;
+      border:none;
+      padding:16px 18px;
+      border-radius:18px;
+      background:linear-gradient(135deg,var(--brand),var(--brand-2));
+      color:#08101e;
+      font-weight:900;
+      cursor:pointer;
+      box-shadow:var(--shadow);
+    }
+    .fab.hidden{display:none}
+
+    @media (max-width:900px){
+      .hero{min-height:auto}
+      .hero__content{padding-top:80px}
+      .floating-stats{grid-template-columns:1fr}
+      .brands-grid,.products-grid{grid-template-columns:1fr}
+      .brand-card{min-height:270px}
+      .parallax-band{min-height:300px;padding:20px}
+      .panel__head,.chips,.brands-grid,.schema-grid,.features-grid,.products-grid{padding-left:16px;padding-right:16px}
+    }
+    @media (max-width:640px){
+      .wrap{padding:0 12px}
+      .hero__actions{flex-direction:column;align-items:stretch}
+      .btn{width:100%}
+      .panel{border-radius:22px}
+      .modal{padding:10px}
+      .modal__sheet{border-radius:22px}
+      .cart-drawer{right:12px;left:12px;width:auto;bottom:12px}
+      .fab{right:12px;left:12px;bottom:12px;width:auto}
+    }
   </style>
 </head>
 <body>
+  <section class="hero">
+    <div class="wrap hero__content">
+      <div class="eyebrow">PORUCHKIBG · MAX DEMO</div>
+      <h1>Марки. Магазини. Поръчка.<br>Една количка за целия град.</h1>
+      <p>Натискаш бранда, виждаш какво има вътре в магазина, добавяш в количката и системата ти смята продуктите, маржа и доставката. Направено да изглежда силно и на телефон, и на PC.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#brands">Виж марки</a>
+        <a class="btn" href="#system">Виж системата</a>
+      </div>
+      <div class="floating-stats">
+        <div class="stat"><strong>20%</strong><span>марж модел</span></div>
+        <div class="stat"><strong>Multi-store</strong><span>една количка, много магазини</span></div>
+        <div class="stat"><strong>Phone + PC</strong><span>responsive и гладко</span></div>
+      </div>
+    </div>
+  </section>
+
   <div class="wrap">
-    <section class="hero">
-      <div class="eyebrow">PORUCHKIBG · DEMO</div>
-      <h1>Каквото искаш от града —<br>ние го взимаме и ти го носим.</h1>
-      <p class="sub">MiniMart, Kaufland, Lidl, аптеки, ресторанти, строителни материали и още. Това е demo версия на локална multi-store delivery система с марж, количка и заявка.</p>
-      <div class="cta"><a href="#stores" class="btn primary">Виж обектите</a><a href="#schema" class="btn">Виж схемата</a></div>
-      <div class="stats"><div class="stat"><strong>20%</strong><span>марж модел</span></div><div class="stat"><strong>1 количка</strong><span>много категории</span></div><div class="stat"><strong>1 куриер</strong><span>клиент → магазин → адрес</span></div></div>
+    <section class="section panel">
+      <div class="panel__head">
+        <h2>Категории вътре</h2>
+        <p>Най-правилният стартов микс за оборот, по-висока стойност и импулсни поръчки.</p>
+      </div>
+      <div class="chips">
+        <div class="chip">MiniMart</div>
+        <div class="chip">Kaufland</div>
+        <div class="chip">Lidl</div>
+        <div class="chip">Аптеки</div>
+        <div class="chip">Ресторанти</div>
+        <div class="chip">Masterhaus</div>
+        <div class="chip">Мебели</div>
+        <div class="chip">Зоомагазини</div>
+        <div class="chip">Цветя и подаръци</div>
+      </div>
     </section>
-    <section class="panel"><div class="section-head"><h2>Категории</h2><p>Най-правилният стартов микс за валидиране.</p></div><div class="chips"><div class="chip">MiniMart</div><div class="chip">Kaufland</div><div class="chip">Lidl</div><div class="chip">Аптеки</div><div class="chip">Ресторанти</div><div class="chip">Masterhaus</div><div class="chip">Мебели</div><div class="chip">Зоомагазини</div><div class="chip">Цветя и подаръци</div></div></section>
-    <section class="panel" id="stores"><div class="section-head"><h2>Демо обекти</h2><p>Примерни продукти за презентация и пилот.</p></div><div id="storeGrid" class="grid"></div></section>
-    <section class="panel"><div class="section-head"><h2>Количка и заявка</h2><p>Системата смята стойност, 20% марж и доставка.</p></div><div class="checkout"><div class="cart"><h3>Количка</h3><div id="cartItems" class="cart-items"></div><div class="summary"><div><span>Стойност на продукти</span><strong id="baseTotal">€0.00</strong></div><div><span>Марж 20%</span><strong id="feeTotal">€0.00</strong></div><div><span>Доставка</span><strong id="deliveryTotal">€3.00</strong></div><div class="final"><span>Общо</span><strong id="grandTotal">€0.00</strong></div></div></div><form id="orderForm" class="form"><label>Име<input name="name" required placeholder="Име"></label><label>Телефон<input name="phone" required placeholder="Телефон"></label><label>Адрес<input name="address" required placeholder="Адрес за доставка"></label><label>Бележка<textarea name="note" placeholder="Например: звънни при входа"></textarea></label><button class="btn primary" type="submit">Генерирай заявка</button><p class="hint">Demo: копира готов текст за пращане към оператор/куриер.</p></form></div></section>
-    <section class="panel" id="schema"><div class="section-head"><h2>Схема на системата</h2><p>Това е ядрото на PoruchkiBG.</p></div><div class="schema"><div class="schema-card"><strong>1. Клиент</strong><span>Отваря сайта и избира магазин.</span></div><div class="schema-card"><strong>2. Количка</strong><span>Добавя продукти от 1 или повече категории.</span></div><div class="schema-card"><strong>3. Марж</strong><span>Системата смята 20% + доставка.</span></div><div class="schema-card"><strong>4. Куриер</strong><span>Минава през магазина, купува, доставя.</span></div><div class="schema-card"><strong>5. Плащане</strong><span>Клиентът плаща общата стойност.</span></div><div class="schema-card"><strong>6. Печалба</strong><span>Остава марж - гориво - човек.</span></div></div><div class="flow"><div>Клиент</div><span>→</span><div>Избор</div><span>→</span><div>Количка</div><span>→</span><div>Куриер</div><span>→</span><div>Доставка</div></div></section>
-    <section class="panel"><div class="section-head"><h2>Следващо ниво</h2><p>Това е посоката след MVP.</p></div><div class="ideas"><div class="idea"><strong>Карта на България</strong><span>Всички обекти и навигация.</span></div><div class="idea"><strong>Admin panel</strong><span>Поръчки, статуси, куриери, магазини.</span></div><div class="idea"><strong>QR / AR</strong><span>Промо продукти, история, визуализация.</span></div><div class="idea"><strong>Реални магазини</strong><span>Истински каталози и реални наличности.</span></div></div></section>
+
+    <section class="section panel" id="brands">
+      <div class="panel__head">
+        <h2>Марки и магазини</h2>
+        <p>При клик отваряш магазина, виждаш какво има вътре и добавяш директно в количката.</p>
+      </div>
+      <div class="brands-grid" id="brandsGrid"></div>
+    </section>
   </div>
-  <div id="toast" class="toast"></div>
+
+  <section class="parallax-band">
+    <div class="wrap parallax-band__body">
+      <h2>Не просто списък. Истинско усещане за платформа.</h2>
+      <p>Секции с parallax фон, силни бранд панели, ясна структура за продукти и количка. Това е demo, което можеш да показваш на магазини, партньори и инвеститори.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="section panel" id="system">
+      <div class="panel__head">
+        <h2>Как работи системата</h2>
+        <p>Това е ядрото на PoruchkiBG.</p>
+      </div>
+      <div class="schema-grid">
+        <div class="schema-card"><strong>1. Клиент</strong><span>Отваря сайта и избира бранд или магазин.</span></div>
+        <div class="schema-card"><strong>2. Вътре в магазина</strong><span>Вижда налични продукти и ги добавя в количката.</span></div>
+        <div class="schema-card"><strong>3. Марж + доставка</strong><span>Системата смята продуктите, 20% марж и доставка.</span></div>
+        <div class="schema-card"><strong>4. Куриер</strong><span>Минава през магазина, купува и доставя.</span></div>
+        <div class="schema-card"><strong>5. Плащане</strong><span>Клиентът плаща крайната цена.</span></div>
+        <div class="schema-card"><strong>6. Печалба</strong><span>Остава маржът след гориво и човек.</span></div>
+      </div>
+    </section>
+
+    <section class="section panel">
+      <div class="panel__head">
+        <h2>Следващо ниво</h2>
+        <p>Това е посоката след demo версията.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card"><strong>Карта на България</strong><span>Всички обекти и навигация по градове.</span></div>
+        <div class="feature-card"><strong>Admin panel</strong><span>Поръчки, статуси, куриери и магазини.</span></div>
+        <div class="feature-card"><strong>QR / AR</strong><span>Промо продукти, истории и визуализация.</span></div>
+        <div class="feature-card"><strong>Реални магазини</strong><span>Истински каталози, наличности и поръчки.</span></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal" id="storeModal" aria-hidden="true">
+    <div class="modal__sheet">
+      <div class="modal__hero" id="modalHero">
+        <button class="close-btn" id="closeModal">✕</button>
+        <div class="modal__heroContent">
+          <div class="eyebrow" id="modalEyebrow">STORE</div>
+          <h3 id="modalTitle">Store</h3>
+          <p id="modalDescription"></p>
+        </div>
+      </div>
+      <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </div>
+
+  <button class="fab" id="openCartFab">Количка · <span id="fabCount">0</span></button>
+
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+      <h3>Твоята количка</h3>
+      <button id="closeCart">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-foot">
+      <div class="sum-row"><span>Продукти</span><strong id="cartBase">€0.00</strong></div>
+      <div class="sum-row"><span>Марж 20%</span><strong id="cartFee">€0.00</strong></div>
+      <div class="sum-row"><span>Доставка</span><strong id="cartDelivery">€3.00</strong></div>
+      <div class="sum-row sum-final"><span>Общо</span><strong id="cartTotal">€0.00</strong></div>
+    </div>
+  </aside>
+
   <script>
-    const stores=[
-      {name:'MiniMart Demo',category:'Минимаркет',products:[{name:'Coca-Cola 500ml',price:1.8},{name:'Сандвич',price:4.5},{name:'Чипс',price:2.2}]},
-      {name:'Kaufland Demo',category:'Хипермаркет',products:[{name:'Минерална вода',price:0.9},{name:'Пиле грил',price:6.8},{name:'Перилен препарат',price:8.9}]},
-      {name:'Lidl Demo',category:'Дискаунт магазин',products:[{name:'Кисело мляко',price:0.85},{name:'Протеинов бар',price:1.6},{name:'Замразена пица',price:3.9}]},
-      {name:'Аптека Demo',category:'Аптека',products:[{name:'Витамин C',price:4.2},{name:'Парацетамол',price:2.3},{name:'Термометър',price:5.8}]},
-      {name:'Restaurant Demo',category:'Ресторант',products:[{name:'Бургер меню',price:8.5},{name:'Пица Маргарита',price:7.4},{name:'Цезар салата',price:6.2}]},
-      {name:'Masterhaus Demo',category:'Строителни материали',products:[{name:'Боя 2.5L',price:17},{name:'Силикон',price:4.8},{name:'LED крушка',price:3.2}]}
+    const stores = [
+      {
+        id:'minimart',
+        name:'MiniMart',
+        label:'Минимаркет',
+        short:'Бързи ежедневни продукти, напитки и дребни покупки.',
+        tags:['24/7 vibe','Бърз оборот','Импулсни поръчки'],
+        bg:'radial-gradient(circle at 20% 20%, rgba(103,232,249,.25), transparent 24%), radial-gradient(circle at 82% 24%, rgba(255,255,255,.12), transparent 16%), linear-gradient(135deg,#14304a,#0b1119 55%,#1d3652)',
+        products:[
+          {name:'Coca-Cola 500ml', price:1.8, label:'Напитка', desc:'Студена напитка за бърза поръчка.'},
+          {name:'Сандвич', price:4.5, label:'Храна', desc:'Готов за взимане, идеален за обяд.'},
+          {name:'Чипс', price:2.2, label:'Snack', desc:'Импулсна покупка с бързо решение.'},
+          {name:'Шоколад', price:1.9, label:'Sweet', desc:'Малка добавка към всяка поръчка.'}
+        ]
+      },
+      {
+        id:'kaufland',
+        name:'Kaufland',
+        label:'Хипермаркет',
+        short:'По-голяма кошница, домашни продукти и седмични покупки.',
+        tags:['Голям чек','Седмична кошница','Хипермаркет'],
+        bg:'radial-gradient(circle at 25% 18%, rgba(255,90,90,.18), transparent 22%), radial-gradient(circle at 85% 22%, rgba(255,255,255,.1), transparent 16%), linear-gradient(135deg,#341822,#0c1118 54%,#4a2130)',
+        products:[
+          {name:'Минерална вода 1.5L', price:0.9, label:'Вода', desc:'Ниска цена, честа покупка.'},
+          {name:'Пиле грил', price:6.8, label:'Топ продукт', desc:'Готов продукт за вечеря.'},
+          {name:'Перилен препарат', price:8.9, label:'Дом', desc:'Домашна нужда с по-висока стойност.'},
+          {name:'Плодове микс', price:5.4, label:'Fresh', desc:'Бърза свежа кошница за дома.'}
+        ]
+      },
+      {
+        id:'lidl',
+        name:'Lidl',
+        label:'Дискаунт магазин',
+        short:'Изгодни продукти, бързи поръчки и добра средна стойност.',
+        tags:['Value','Бързо решение','Изгодно'],
+        bg:'radial-gradient(circle at 20% 20%, rgba(255,213,0,.18), transparent 22%), radial-gradient(circle at 80% 24%, rgba(0,92,184,.16), transparent 18%), linear-gradient(135deg,#1b2250,#0c1018 58%,#153b70)',
+        products:[
+          {name:'Кисело мляко', price:0.85, label:'Млечни', desc:'Ежедневна нужда на добра цена.'},
+          {name:'Протеинов бар', price:1.6, label:'Fit', desc:'Малък add-on към всяка поръчка.'},
+          {name:'Замразена пица', price:3.9, label:'Dinner', desc:'Лесно решение за вечерта.'},
+          {name:'Кафе пакет', price:4.8, label:'Coffee', desc:'Повтаряща се покупка с добър марж.'}
+        ]
+      },
+      {
+        id:'apteka',
+        name:'Аптека',
+        label:'Аптека',
+        short:'Бързи нужди, чувствителни покупки и удобство до вратата.',
+        tags:['Urgent','Полезно','Висока нужда'],
+        bg:'radial-gradient(circle at 20% 18%, rgba(134,239,172,.2), transparent 22%), radial-gradient(circle at 80% 24%, rgba(255,255,255,.1), transparent 14%), linear-gradient(135deg,#143127,#0c1118 55%,#1d4f3c)',
+        products:[
+          {name:'Витамин C', price:4.2, label:'Health', desc:'Често търсен продукт за сезона.'},
+          {name:'Парацетамол', price:2.3, label:'Need', desc:'Бързо решение при нужда.'},
+          {name:'Термометър', price:5.8, label:'Home Care', desc:'Полезен продукт за всяко семейство.'},
+          {name:'Маски', price:1.7, label:'Basic', desc:'Малка покупка, честа нужда.'}
+        ]
+      },
+      {
+        id:'restaurant',
+        name:'Restaurant',
+        label:'Ресторант',
+        short:'Топли ястия, готови менюта и по-емоционална покупка.',
+        tags:['Food','Вечеря','Бърза доставка'],
+        bg:'radial-gradient(circle at 22% 18%, rgba(255,158,96,.2), transparent 22%), radial-gradient(circle at 82% 24%, rgba(255,255,255,.08), transparent 15%), linear-gradient(135deg,#3b2219,#0c1018 58%,#4f2f22)',
+        products:[
+          {name:'Бургер меню', price:8.5, label:'Hot', desc:'Готово меню с добър чек.'},
+          {name:'Пица Маргарита', price:7.4, label:'Pizza', desc:'Един от най-лесните demo продукти.'},
+          {name:'Цезар салата', price:6.2, label:'Fresh', desc:'Лека поръчка с добър вид.'},
+          {name:'Паста', price:7.9, label:'Dinner', desc:'Още една силна вечерна опция.'}
+        ]
+      },
+      {
+        id:'masterhaus',
+        name:'Masterhaus',
+        label:'Строителни материали',
+        short:'По-висока стойност, по-рядка, но силна поръчка.',
+        tags:['High value','Дом','Ремонт'],
+        bg:'radial-gradient(circle at 20% 18%, rgba(255,196,120,.18), transparent 20%), radial-gradient(circle at 82% 24%, rgba(255,255,255,.08), transparent 14%), linear-gradient(135deg,#3a2b1d,#0c1018 58%,#4d3b25)',
+        products:[
+          {name:'Боя 2.5L', price:17, label:'Paint', desc:'Продукт с по-висока стойност.'},
+          {name:'Силикон', price:4.8, label:'Fix', desc:'Малка строителна поръчка.'},
+          {name:'LED крушка', price:3.2, label:'Light', desc:'Полезна и лесна за доставка.'},
+          {name:'Комплект инструменти', price:22, label:'Tools', desc:'Силен demo продукт за категорията.'}
+        ]
+      },
+      {
+        id:'mebeli',
+        name:'Мебели',
+        label:'Мебелен магазин',
+        short:'По-скъпи артикули и аксесоари с по-голям маржов потенциал.',
+        tags:['Premium','Дом','Higher ticket'],
+        bg:'radial-gradient(circle at 18% 16%, rgba(180,140,255,.18), transparent 22%), radial-gradient(circle at 82% 25%, rgba(255,255,255,.08), transparent 16%), linear-gradient(135deg,#251a37,#0c1018 58%,#3a2952)',
+        products:[
+          {name:'Нощно шкафче', price:34, label:'Home', desc:'Стилна demo мебел за платформата.'},
+          {name:'Лампа', price:19, label:'Interior', desc:'Продукт с хубава визуална стойност.'},
+          {name:'Сгъваем стол', price:22, label:'Utility', desc:'Практична покупка за дома.'},
+          {name:'Декоративна възглавница', price:12, label:'Soft', desc:'Лесен add-on към категорията.'}
+        ]
+      },
+      {
+        id:'petshop',
+        name:'Pet Shop',
+        label:'Зоомагазин',
+        short:'Емоционални покупки, повтарящи се нужди и хубав среден чек.',
+        tags:['Repeat orders','Pets','Emotion'],
+        bg:'radial-gradient(circle at 20% 18%, rgba(255,167,217,.18), transparent 22%), radial-gradient(circle at 82% 24%, rgba(255,255,255,.09), transparent 14%), linear-gradient(135deg,#341c2b,#0c1018 58%,#533049)',
+        products:[
+          {name:'Храна за куче 3kg', price:12.5, label:'Dog', desc:'Типична повтаряща се покупка.'},
+          {name:'Пясък за котка', price:6.4, label:'Cat', desc:'Практичен продукт с добра нужда.'},
+          {name:'Играчка за куче', price:4.1, label:'Toy', desc:'Импулсен add-on артикул.'},
+          {name:'Лакомства', price:3.7, label:'Treats', desc:'Малка добавка към поръчката.'}
+        ]
+      }
     ];
-    const state={cart:[]}; const feeRate=0.2; const deliveryFee=3;
-    const storeGrid=document.getElementById('storeGrid'),cartItems=document.getElementById('cartItems'),baseTotal=document.getElementById('baseTotal'),feeTotal=document.getElementById('feeTotal'),deliveryTotal=document.getElementById('deliveryTotal'),grandTotal=document.getElementById('grandTotal'),toast=document.getElementById('toast');
-    deliveryTotal.textContent=`€${deliveryFee.toFixed(2)}`;
-    function showToast(message){toast.textContent=message;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2200)}
-    function renderStores(){storeGrid.innerHTML=stores.map(store=>`<article class="store"><div><h3>${store.name}</h3><p>${store.category}</p></div><div class="products">${store.products.map(product=>`<div class="product"><div><strong>${product.name}</strong><small>€${product.price.toFixed(2)}</small></div><button data-store="${store.name}" data-name="${product.name}" data-price="${product.price}">Добави</button></div>`).join('')}</div></article>`).join('');storeGrid.querySelectorAll('button').forEach(button=>button.addEventListener('click',()=>{state.cart.push({store:button.dataset.store,name:button.dataset.name,price:Number(button.dataset.price)});renderCart();showToast(`Добавено: ${button.dataset.name}`)}))}
-    function renderCart(){if(!state.cart.length){cartItems.innerHTML='<div class="row"><span>Количката е празна</span><strong>—</strong></div>'}else{cartItems.innerHTML=state.cart.map(item=>`<div class="row"><div><strong>${item.name}</strong><div>${item.store}</div></div><strong>€${item.price.toFixed(2)}</strong></div>`).join('')} const base=state.cart.reduce((s,i)=>s+i.price,0), fee=base*feeRate, total=base?base+fee+deliveryFee:0; baseTotal.textContent=`€${base.toFixed(2)}`; feeTotal.textContent=`€${fee.toFixed(2)}`; grandTotal.textContent=`€${total.toFixed(2)}`; }
-    renderStores(); renderCart();
-    document.getElementById('orderForm').addEventListener('submit',(e)=>{e.preventDefault(); if(!state.cart.length)return showToast('Добави поне 1 продукт първо.'); const form=new FormData(e.target); const base=state.cart.reduce((s,i)=>s+i.price,0), fee=base*feeRate, total=base+fee+deliveryFee; const lines=['Нова поръчка - PoruchkiBG Demo',`Име: ${form.get('name')}`,`Телефон: ${form.get('phone')}`,`Адрес: ${form.get('address')}`,'','Продукти:']; state.cart.forEach(item=>lines.push(`- ${item.name} (${item.store}) - €${item.price.toFixed(2)}`)); lines.push('',`Стойност: €${base.toFixed(2)}`,`Марж 20%: €${fee.toFixed(2)}`,`Доставка: €${deliveryFee.toFixed(2)}`,`Общо: €${total.toFixed(2)}`,'',`Бележка: ${form.get('note')||'-'}`); navigator.clipboard.writeText(lines.join('\n')).then(()=>showToast('Заявката е копирана.')).catch(()=>alert(lines.join('\n'))); });
+
+    const feeRate = 0.2;
+    const deliveryFee = 3;
+    const state = { activeStore:null, cart:[] };
+
+    const brandsGrid = document.getElementById('brandsGrid');
+    const storeModal = document.getElementById('storeModal');
+    const modalHero = document.getElementById('modalHero');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalEyebrow = document.getElementById('modalEyebrow');
+    const modalDescription = document.getElementById('modalDescription');
+    const productsGrid = document.getElementById('productsGrid');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const cartItems = document.getElementById('cartItems');
+    const cartBase = document.getElementById('cartBase');
+    const cartFee = document.getElementById('cartFee');
+    const cartDelivery = document.getElementById('cartDelivery');
+    const cartTotal = document.getElementById('cartTotal');
+    const openCartFab = document.getElementById('openCartFab');
+    const fabCount = document.getElementById('fabCount');
+
+    cartDelivery.textContent = `€${deliveryFee.toFixed(2)}`;
+
+    function renderBrands(){
+      brandsGrid.innerHTML = stores.map(store => `
+        <article class="brand-card" data-id="${store.id}" style="--bg-image:${store.bg}">
+          <div class="brand-card__body">
+            <div class="brand-card__top">
+              <div>
+                <div class="mini-badge">${store.label}</div>
+                <h3>${store.name}</h3>
+              </div>
+            </div>
+            <p>${store.short}</p>
+            <div class="brand-meta">
+              ${store.tags.map(tag => `<span>${tag}</span>`).join('')}
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      brandsGrid.querySelectorAll('.brand-card').forEach(card => {
+        card.addEventListener('click', () => openStore(card.dataset.id));
+      });
+    }
+
+    function openStore(id){
+      const store = stores.find(s => s.id === id);
+      if(!store) return;
+      state.activeStore = store;
+      modalHero.style.setProperty('--modal-bg', store.bg);
+      modalTitle.textContent = store.name;
+      modalEyebrow.textContent = store.label;
+      modalDescription.textContent = `${store.short} Избери продукти директно отдолу и ги добави в количката.`;
+      productsGrid.innerHTML = store.products.map((product, index) => `
+        <article class="product-card">
+          <div class="product-card__media" data-label="${product.label}"></div>
+          <div class="product-card__body">
+            <h4>${product.name}</h4>
+            <p>${product.desc}</p>
+            <div class="price-row">
+              <div class="price">€${product.price.toFixed(2)}</div>
+              <button class="add-btn" data-store="${store.name}" data-name="${product.name}" data-price="${product.price}">Добави</button>
+            </div>
+          </div>
+        </article>
+      `).join('');
+      productsGrid.querySelectorAll('.add-btn').forEach(btn => {
+        btn.addEventListener('click', () => addToCart(btn.dataset.store, btn.dataset.name, Number(btn.dataset.price)));
+      });
+      storeModal.classList.add('active');
+      storeModal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeStore(){
+      storeModal.classList.remove('active');
+      storeModal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    function addToCart(store, name, price){
+      const existing = state.cart.find(item => item.store === store && item.name === name);
+      if(existing){ existing.qty += 1; }
+      else { state.cart.push({ store, name, price, qty:1 }); }
+      renderCart();
+      openCart();
+    }
+
+    function changeQty(store, name, delta){
+      const item = state.cart.find(i => i.store === store && i.name === name);
+      if(!item) return;
+      item.qty += delta;
+      if(item.qty <= 0){
+        state.cart = state.cart.filter(i => !(i.store === store && i.name === name));
+      }
+      renderCart();
+    }
+
+    function renderCart(){
+      if(!state.cart.length){
+        cartItems.innerHTML = '<div class="cart-item"><strong>Количката е празна</strong><small>Натисни върху бранд и добави продукти.</small></div>';
+      } else {
+        cartItems.innerHTML = state.cart.map(item => `
+          <div class="cart-item">
+            <div class="cart-item__row">
+              <div>
+                <strong>${item.name}</strong>
+                <small>${item.store}</small>
+              </div>
+              <strong>€${(item.price * item.qty).toFixed(2)}</strong>
+            </div>
+            <div class="qty-row">
+              <button data-store="${item.store}" data-name="${item.name}" data-delta="-1">−</button>
+              <span>${item.qty}</span>
+              <button data-store="${item.store}" data-name="${item.name}" data-delta="1">+</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      const base = state.cart.reduce((sum,item) => sum + item.price * item.qty, 0);
+      const fee = base * feeRate;
+      const total = base ? base + fee + deliveryFee : 0;
+      const count = state.cart.reduce((sum,item) => sum + item.qty, 0);
+
+      cartBase.textContent = `€${base.toFixed(2)}`;
+      cartFee.textContent = `€${fee.toFixed(2)}`;
+      cartTotal.textContent = `€${total.toFixed(2)}`;
+      fabCount.textContent = count;
+      openCartFab.classList.toggle('hidden', cartDrawer.classList.contains('active'));
+
+      cartItems.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => changeQty(btn.dataset.store, btn.dataset.name, Number(btn.dataset.delta)));
+      });
+    }
+
+    function openCart(){
+      cartDrawer.classList.add('active');
+      openCartFab.classList.add('hidden');
+    }
+    function closeCart(){
+      cartDrawer.classList.remove('active');
+      openCartFab.classList.remove('hidden');
+    }
+
+    renderBrands();
+    renderCart();
+
+    document.getElementById('closeModal').addEventListener('click', closeStore);
+    storeModal.addEventListener('click', (e) => { if(e.target === storeModal) closeStore(); });
+    document.getElementById('closeCart').addEventListener('click', closeCart);
+    openCartFab.addEventListener('click', openCart);
   </script>
 </body>
 </html>
