@@ -3,1006 +3,1142 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Двата Аслана | Soulflame Delivery</title>
+  <title>Двата Аслана Delivery | Soulflame</title>
   <style>
     * { box-sizing: border-box; }
 
     :root{
-      --bg:#f7f8fb;
-      --card:#ffffff;
-      --text:#111111;
-      --muted:#6b7280;
-      --line:rgba(0,0,0,.08);
-      --shadow:0 18px 50px rgba(0,0,0,.08);
-      --shadow-hover:0 24px 70px rgba(0,0,0,.14);
-      --radius:24px;
-      --accent:#111111;
-      --soft:#f3f4f6;
+      --bg: #eef2fb;
+      --bg-2: #f6f8ff;
+      --card: rgba(255,255,255,.74);
+      --card-strong: rgba(255,255,255,.88);
+      --text: #172247;
+      --muted: #7b89ac;
+      --line: rgba(130, 146, 189, .22);
+      --line-strong: rgba(130, 146, 189, .34);
+      --shadow: 0 16px 40px rgba(76, 94, 142, .12);
+      --shadow-hover: 0 22px 55px rgba(76, 94, 142, .18);
+      --accent: #6f84ff;
+      --accent-2: #ff786c;
+      --soft: #eef2ff;
+      --radius-xl: 34px;
+      --radius-lg: 28px;
+      --radius-md: 22px;
+      --radius-sm: 16px;
     }
 
-    html,body{
-      margin:0;
-      padding:0;
-      background:linear-gradient(180deg,#ffffff,#f6f7fb);
-      color:var(--text);
-      font-family:Inter, Arial, sans-serif;
-      overflow-x:hidden;
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: Inter, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(158,178,255,.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(255,196,166,.18), transparent 28%),
+        linear-gradient(180deg, #f3f5fc 0%, #edf1fb 100%);
     }
 
     body::before,
     body::after{
-      content:"";
-      position:fixed;
-      border-radius:999px;
-      filter:blur(80px);
-      pointer-events:none;
-      z-index:0;
-      opacity:.16;
+      content: "";
+      position: fixed;
+      width: 360px;
+      height: 360px;
+      border-radius: 999px;
+      filter: blur(90px);
+      opacity: .16;
+      pointer-events: none;
+      z-index: 0;
     }
 
     body::before{
-      width:320px;
-      height:320px;
-      top:-90px;
-      left:-90px;
-      background:#fde68a;
+      top: -120px;
+      left: -120px;
+      background: #b8c5ff;
     }
 
     body::after{
-      width:360px;
-      height:360px;
-      right:-120px;
-      bottom:-120px;
-      background:#fecaca;
+      right: -120px;
+      bottom: -120px;
+      background: #ffc7ad;
     }
 
     .page{
-      position:relative;
-      z-index:1;
-      width:min(1400px, calc(100% - 28px));
-      margin:0 auto;
-      padding:26px 0 80px;
+      position: relative;
+      z-index: 1;
+      width: min(1820px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 14px 0 28px;
     }
 
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      margin-bottom:20px;
-      flex-wrap:wrap;
+    .layout{
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 410px;
+      gap: 18px;
+      align-items: start;
     }
 
-    .back-btn,
-    .cart-btn,
-    .clear-btn,
-    .checkout-btn,
-    .qty-btn,
-    .add-btn,
-    .filter-btn{
-      border:none;
-      cursor:pointer;
-      transition:.22s ease;
-      font:inherit;
-    }
-
-    .back-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:999px;
-      padding:12px 16px;
-      box-shadow:var(--shadow);
-      color:var(--text);
-      text-decoration:none;
-      font-weight:700;
-    }
-
-    .back-btn:hover{ transform:translateY(-2px); }
-
-    .cart-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      background:#111111;
-      color:#fff;
-      padding:13px 18px;
-      border-radius:999px;
-      box-shadow:var(--shadow);
-      font-weight:800;
-    }
-
-    .cart-count{
-      min-width:26px;
-      height:26px;
-      border-radius:999px;
-      background:#fff;
-      color:#111;
-      display:grid;
-      place-items:center;
-      font-size:12px;
-      font-weight:900;
-      padding:0 6px;
+    .glass{
+      background: var(--card);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,.58);
+      box-shadow: var(--shadow);
     }
 
     .hero{
-      background:rgba(255,255,255,.84);
-      border:1px solid rgba(0,0,0,.06);
-      border-radius:32px;
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(12px);
-      overflow:hidden;
-      margin-bottom:20px;
+      border-radius: 36px;
+      padding: 18px 18px 22px;
+      overflow: hidden;
     }
 
-    .hero-inner{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:0;
+    .hero-top{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
     }
 
-    .hero-copy{
-      padding:34px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap:16px;
+    .brand-row{
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      min-width: 0;
     }
 
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      width:max-content;
-      padding:8px 12px;
-      border-radius:999px;
-      background:#fff7ed;
-      border:1px solid rgba(0,0,0,.06);
-      color:#9a3412;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.08em;
-      text-transform:uppercase;
+    .logo-box{
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.82);
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
-    .hero h1{
-      margin:0;
-      font-size:clamp(34px,5vw,68px);
-      line-height:.95;
-      letter-spacing:-.05em;
-      font-weight:900;
+    .logo-box img{
+      width: 84%;
+      height: 84%;
+      object-fit: contain;
+      display: block;
     }
 
-    .hero p{
-      margin:0;
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.65;
-      max-width:720px;
+    .hero-title{
+      margin: 0;
+      font-size: clamp(40px, 6vw, 86px);
+      line-height: .92;
+      letter-spacing: -.06em;
+      font-weight: 900;
+      color: #10204d;
     }
 
-    .hero-meta{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
+    .hero-sub{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.55;
+      max-width: 820px;
     }
 
-    .meta-pill{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:999px;
-      padding:10px 14px;
-      font-size:13px;
-      font-weight:800;
-      color:#374151;
+    .hero-dot{
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.45);
+      flex-shrink: 0;
     }
 
-    .hero-visual{
-      background:linear-gradient(135deg,#fff7ed,#fff1f2);
-      display:grid;
-      place-items:center;
-      min-height:280px;
-      padding:28px;
+    .stats{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
     }
 
-    .hero-visual img{
-      width:min(100%, 420px);
-      max-height:220px;
-      object-fit:contain;
-      border-radius:24px;
-      background:#fff;
-      padding:18px;
-      box-shadow:0 18px 50px rgba(0,0,0,.08);
+    .stat{
+      border-radius: 28px;
+      padding: 18px 22px 16px;
+      background: rgba(255,255,255,.78);
+      border: 1px solid rgba(255,255,255,.6);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+    }
+
+    .stat-label{
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .stat-value{
+      font-size: 18px;
+      font-weight: 900;
+      color: #14204b;
+      letter-spacing: -.03em;
     }
 
     .toolbar{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:16px;
-      margin-bottom:18px;
+      margin-top: 16px;
+      border-radius: 34px;
+      padding: 16px;
     }
 
-    .search-box,
-    .filters{
-      background:rgba(255,255,255,.86);
-      border:1px solid var(--line);
-      border-radius:22px;
-      box-shadow:var(--shadow);
-      padding:14px;
+    .toolbar-grid{
+      display: grid;
+      grid-template-columns: 1.15fr .8fr .85fr 140px;
+      gap: 12px;
     }
 
-    .search-input{
-      width:100%;
-      border:none;
-      outline:none;
-      background:var(--soft);
-      border-radius:16px;
-      padding:16px 18px;
-      font-size:15px;
+    .control{
+      width: 100%;
+      height: 58px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.74);
+      color: #1d274d;
+      font-size: 14px;
+      padding: 0 20px;
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.45);
     }
 
-    .filters{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
+    .control::placeholder{
+      color: #8a96b5;
     }
 
-    .filter-btn{
-      background:#fff;
-      border:1px solid var(--line);
-      color:#111;
-      padding:12px 14px;
-      border-radius:999px;
-      font-size:13px;
-      font-weight:800;
-    }
-
-    .filter-btn.active,
-    .filter-btn:hover{
-      background:#111;
-      color:#fff;
-      border-color:#111;
-    }
-
-    .section-title{
-      margin:24px 0 14px;
-      font-size:26px;
-      font-weight:900;
-      letter-spacing:-.03em;
-    }
-
-    .products-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
-      gap:18px;
-    }
-
-    .card{
-      background:rgba(255,255,255,.92);
-      border:1px solid var(--line);
-      border-radius:24px;
-      overflow:hidden;
-      box-shadow:var(--shadow);
-      transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-      display:flex;
-      flex-direction:column;
-      min-height:100%;
-    }
-
-    .card:hover{
-      transform:translateY(-6px);
-      box-shadow:var(--shadow-hover);
-      border-color:rgba(0,0,0,.14);
-    }
-
-    .card-media{
-      height:180px;
-      display:grid;
-      place-items:center;
-      background:linear-gradient(180deg,#fff,#f9fafb);
-      padding:18px;
-    }
-
-    .card-media img{
-      width:100%;
-      height:100%;
-      object-fit:contain;
-      border-radius:18px;
-    }
-
-    .card-body{
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      flex:1;
-    }
-
-    .card-category{
-      display:inline-flex;
-      width:max-content;
-      padding:7px 10px;
-      border-radius:999px;
-      background:#f3f4f6;
-      color:#4b5563;
-      font-size:11px;
-      font-weight:900;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-    }
-
-    .card h3{
-      margin:0;
-      font-size:19px;
-      line-height:1.16;
-      letter-spacing:-.03em;
-    }
-
-    .card-desc{
-      margin:0;
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.55;
-      min-height:42px;
-    }
-
-    .card-bottom{
-      margin-top:auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    .price{
-      font-size:22px;
-      font-weight:900;
-      letter-spacing:-.03em;
-    }
-
-    .add-btn{
-      background:#111;
-      color:#fff;
-      padding:12px 16px;
-      border-radius:14px;
-      font-weight:800;
-    }
-
-    .add-btn:hover{
-      transform:translateY(-2px);
-      background:#000;
-    }
-
-    .empty-state{
-      padding:28px;
-      border-radius:24px;
-      background:#fff;
-      border:1px solid var(--line);
-      color:var(--muted);
-      box-shadow:var(--shadow);
-      text-align:center;
-      font-weight:700;
-    }
-
-    .cart-overlay{
-      position:fixed;
-      inset:0;
-      background:rgba(15,23,42,.42);
-      opacity:0;
-      visibility:hidden;
-      transition:.25s ease;
-      z-index:50;
-    }
-
-    .cart-overlay.open{
-      opacity:1;
-      visibility:visible;
-    }
-
-    .cart-panel{
-      position:fixed;
-      top:0;
-      right:0;
-      height:100vh;
-      width:min(460px, 100%);
-      background:#fff;
-      box-shadow:-20px 0 60px rgba(0,0,0,.16);
-      transform:translateX(100%);
-      transition:.28s ease;
-      z-index:60;
-      display:flex;
-      flex-direction:column;
-    }
-
-    .cart-panel.open{
-      transform:translateX(0);
-    }
-
-    .cart-header{
-      padding:20px;
-      border-bottom:1px solid var(--line);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-
-    .cart-header h2{
-      margin:0;
-      font-size:26px;
-      letter-spacing:-.03em;
-    }
-
-    .close-btn{
-      border:none;
-      background:#f3f4f6;
-      width:42px;
-      height:42px;
-      border-radius:999px;
-      font-size:20px;
-      cursor:pointer;
-    }
-
-    .cart-items{
-      flex:1;
-      overflow:auto;
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-    }
-
-    .cart-item{
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:14px;
-      display:grid;
-      grid-template-columns:70px 1fr;
-      gap:12px;
-      background:#fff;
-    }
-
-    .cart-item img{
-      width:70px;
-      height:70px;
-      object-fit:contain;
-      border-radius:14px;
-      background:#f9fafb;
-      padding:8px;
-    }
-
-    .cart-item h4{
-      margin:0 0 6px;
-      font-size:16px;
-      line-height:1.2;
-    }
-
-    .cart-item p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .cart-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-top:10px;
-      flex-wrap:wrap;
-    }
-
-    .qty-wrap{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-
-    .qty-btn{
-      width:32px;
-      height:32px;
-      border-radius:10px;
-      background:#f3f4f6;
-      font-weight:900;
-    }
-
-    .qty-value{
-      min-width:24px;
-      text-align:center;
-      font-weight:900;
-    }
-
-    .remove-btn{
-      border:none;
-      background:transparent;
-      color:#dc2626;
-      font-weight:800;
-      cursor:pointer;
-      padding:0;
-    }
-
-    .cart-footer{
-      border-top:1px solid var(--line);
-      padding:18px;
-      background:#fff;
-      display:flex;
-      flex-direction:column;
-      gap:14px;
-    }
-
-    .note-box textarea{
-      width:100%;
-      min-height:90px;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
-      resize:vertical;
-      font:inherit;
-      background:#fafafa;
-      outline:none;
-    }
-
-    .summary{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      padding:14px;
-      border-radius:18px;
-      background:#f9fafb;
-      border:1px solid var(--line);
-    }
-
-    .summary-row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      font-size:15px;
-    }
-
-    .summary-row.total{
-      font-size:22px;
-      font-weight:900;
-      letter-spacing:-.03em;
-      color:#111;
-    }
-
-    .cart-actions{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
+    select.control{
+      appearance: none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, #56617f 50%),
+        linear-gradient(135deg, #56617f 50%, transparent 50%);
+      background-position:
+        calc(100% - 22px) calc(50% - 3px),
+        calc(100% - 16px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+      padding-right: 42px;
     }
 
     .clear-btn{
-      background:#f3f4f6;
-      color:#111;
-      border-radius:14px;
-      padding:14px;
-      font-weight:800;
+      height: 58px;
+      border: none;
+      border-radius: 22px;
+      background: #dfe4ff;
+      color: #1c2651;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .22s ease;
     }
 
-    .checkout-btn{
-      background:#111;
-      color:#fff;
-      border-radius:14px;
-      padding:14px;
-      font-weight:900;
+    .clear-btn:hover{
+      transform: translateY(-1px);
+      background: #d3dbff;
     }
 
-    .empty-cart{
-      color:var(--muted);
-      text-align:center;
-      padding:40px 12px;
-      font-weight:700;
+    .meta-row{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 16px 4px 14px;
+      color: #6f7fa7;
+      font-size: 14px;
     }
 
-    .footer-note{
-      margin-top:20px;
-      color:#6b7280;
-      font-size:13px;
-      line-height:1.6;
+    .meta-row strong{
+      color: #5d6f98;
     }
 
-    @media (max-width: 980px){
-      .hero-inner,
-      .toolbar{
-        grid-template-columns:1fr;
+    .products-grid{
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .product-card{
+      border-radius: 30px;
+      padding: 16px;
+      min-height: 456px;
+      display: flex;
+      flex-direction: column;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    }
+
+    .product-card:hover{
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .product-top{
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .cat-label{
+      color: #5c92e8;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.05;
+      max-width: 130px;
+      word-break: break-word;
+    }
+
+    .store-mini{
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #92a0bf;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .store-mini img{
+      width: 22px;
+      height: 22px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 2px;
+    }
+
+    .product-media{
+      height: 250px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.68);
+      border: 1px solid rgba(255,255,255,.52);
+      display: grid;
+      place-items: center;
+      padding: 16px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .product-media img{
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      transition: transform .25s ease;
+    }
+
+    .product-card:hover .product-media img{
+      transform: scale(1.04);
+    }
+
+    .product-name{
+      margin: 0 0 6px;
+      font-size: 17px;
+      line-height: 1.15;
+      letter-spacing: -.03em;
+      font-weight: 900;
+      color: #18234a;
+      min-height: 40px;
+    }
+
+    .product-desc{
+      margin: 0 0 12px;
+      color: #7b87a8;
+      font-size: 13px;
+      line-height: 1.45;
+      min-height: 36px;
+    }
+
+    .product-bottom{
+      margin-top: auto;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .price-wrap{
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .price-label{
+      font-size: 11px;
+      color: #94a1be;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .product-price{
+      font-size: 26px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      color: #14204b;
+    }
+
+    .add-btn{
+      min-width: 118px;
+      height: 46px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #ff8d83, #ff7367);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(255,115,103,.22);
+      transition: .22s ease;
+    }
+
+    .add-btn:hover{
+      transform: translateY(-2px);
+      filter: brightness(1.02);
+    }
+
+    .empty-state{
+      border-radius: 30px;
+      padding: 28px;
+      text-align: center;
+      color: #7b87a8;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .sidebar{
+      position: sticky;
+      top: 14px;
+    }
+
+    .order-box{
+      border-radius: 34px;
+      padding: 22px 20px 18px;
+    }
+
+    .order-head{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .order-head h2{
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
+      letter-spacing: -.05em;
+      font-weight: 900;
+      color: #152149;
+    }
+
+    .bubble{
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      background: #6f84ff;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      font-weight: 900;
+      box-shadow: 0 10px 20px rgba(111,132,255,.24);
+      flex-shrink: 0;
+    }
+
+    .hint{
+      border-radius: 22px;
+      padding: 16px 18px;
+      color: #7c89aa;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      background: rgba(255,255,255,.68);
+      border: 1px solid rgba(255,255,255,.5);
+    }
+
+    .cart-items{
+      border-radius: 30px;
+      min-height: 118px;
+      padding: 16px;
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(255,255,255,.48);
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cart-empty{
+      margin: auto;
+      text-align: center;
+      color: #7d89a7;
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 500;
+      max-width: 260px;
+    }
+
+    .cart-item{
+      display: grid;
+      grid-template-columns: 70px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed rgba(128,144,184,.26);
+    }
+
+    .cart-item:last-child{
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .cart-item img{
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      border-radius: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 6px;
+    }
+
+    .cart-item-name{
+      margin: 0 0 6px;
+      font-size: 15px;
+      line-height: 1.2;
+      font-weight: 900;
+      color: #172248;
+    }
+
+    .cart-item-meta{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: #7e89a9;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .cart-controls{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .qty-box{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qty-btn{
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 12px;
+      background: #edf1ff;
+      color: #162042;
+      font-size: 18px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .qty-value{
+      min-width: 22px;
+      text-align: center;
+      font-size: 15px;
+      font-weight: 900;
+      color: #152149;
+    }
+
+    .remove-btn{
+      border: none;
+      background: transparent;
+      color: #ff6d62;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .summary-box{
+      border-radius: 30px;
+      padding: 20px 18px 16px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(255,255,255,.5);
+      margin-bottom: 16px;
+    }
+
+    .sum-row{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 18px;
+      color: #232f56;
+      margin-bottom: 12px;
+    }
+
+    .sum-row span:last-child,
+    .sum-row strong:last-child{
+      font-weight: 900;
+    }
+
+    .sum-divider{
+      height: 1px;
+      background: repeating-linear-gradient(
+        to right,
+        rgba(128,144,184,.28),
+        rgba(128,144,184,.28) 4px,
+        transparent 4px,
+        transparent 8px
+      );
+      margin: 12px 0 14px;
+    }
+
+    .sum-total{
+      font-size: 22px;
+      font-weight: 900;
+      color: #162042;
+      letter-spacing: -.03em;
+    }
+
+    .form{
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .form-input,
+    .form-textarea{
+      width: 100%;
+      border-radius: 22px;
+      border: 1px solid rgba(128,144,184,.26);
+      background: rgba(255,255,255,.62);
+      color: #1d274d;
+      outline: none;
+      font-size: 16px;
+      padding: 0 18px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.44);
+    }
+
+    .form-input{
+      height: 58px;
+    }
+
+    .form-textarea{
+      min-height: 86px;
+      resize: vertical;
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder{
+      color: #7f8cad;
+    }
+
+    .order-actions{
+      position: sticky;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(238,242,251,0), rgba(238,242,251,.92) 35%, rgba(238,242,251,.98) 100%);
+      padding-top: 12px;
+      margin-top: 2px;
+    }
+
+    .send-btn{
+      width: 100%;
+      height: 62px;
+      border: none;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #ff867d, #ff7367);
+      color: #fff;
+      font-size: 21px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(255,115,103,.24);
+      transition: .22s ease;
+    }
+
+    .send-btn:hover{
+      transform: translateY(-2px);
+      filter: brightness(1.02);
+    }
+
+    .small-note{
+      margin-top: 10px;
+      color: #7c89aa;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1500px){
+      .products-grid{
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1180px){
+      .layout{
+        grid-template-columns: 1fr;
       }
 
-      .hero-visual{
-        min-height:220px;
-      }
-    }
-
-    @media (max-width: 640px){
-      .page{
-        width:min(100% - 16px, 1400px);
-        padding:16px 0 70px;
-      }
-
-      .hero-copy{
-        padding:22px;
-      }
-
-      .hero h1{
-        font-size:40px;
+      .sidebar{
+        position: static;
       }
 
       .products-grid{
-        grid-template-columns:1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .cart-actions{
-        grid-template-columns:1fr;
+      .toolbar-grid{
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 760px){
+      .page{
+        width: min(100% - 14px, 1820px);
+      }
+
+      .hero-title{
+        font-size: 38px;
+      }
+
+      .hero-top{
+        flex-direction: column;
+      }
+
+      .stats{
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar-grid{
+        grid-template-columns: 1fr;
+      }
+
+      .products-grid{
+        grid-template-columns: 1fr;
+      }
+
+      .order-head h2{
+        font-size: 28px;
+      }
+
+      .meta-row{
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .order-actions{
+        padding-bottom: 4px;
       }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <div class="topbar">
-      <a class="back-btn" href="../index.html">← Назад</a>
-      <button class="cart-btn" id="openCartBtn" type="button">
-        Количка
-        <span class="cart-count" id="cartCount">0</span>
-      </button>
-    </div>
-
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <span class="eyebrow">Soulflame Delivery • Bakery & Food</span>
-          <h1>Двата Аслана</h1>
-          <p>
-            Събран каталог с продукти в един чист интерфейс с количка, търсене и бележка към поръчката.
-          </p>
-          <div class="hero-meta">
-            <span class="meta-pill">Закуски</span>
-            <span class="meta-pill">Пици</span>
-            <span class="meta-pill">Хамбургери</span>
-            <span class="meta-pill">Напитки</span>
+    <div class="layout">
+      <main>
+        <section class="hero glass">
+          <div class="hero-top">
+            <div class="brand-row">
+              <div class="logo-box">
+                <img src="https://businessmedia.bg/wp-content/uploads/2019/10/dvata-aslana-logo.jpg" alt="Двата Аслана">
+              </div>
+              <div>
+                <h1 class="hero-title">Двата Аслана Delivery</h1>
+                <p class="hero-sub">Пълен локален каталог с количка, филтри, сортиране и поръчка.</p>
+              </div>
+            </div>
+            <div class="hero-dot"></div>
           </div>
-        </div>
-        <div class="hero-visual">
-          <img
-            src="https://businessmedia.bg/wp-content/uploads/2019/10/dvata-aslana-logo.jpg"
-            alt="Двата Аслана"
-            referrerpolicy="no-referrer"
-          />
-        </div>
-      </div>
-    </section>
 
-    <section class="toolbar">
-      <div class="search-box">
-        <input
-          type="text"
-          id="searchInput"
-          class="search-input"
-          placeholder="Търси продукт..."
-        />
-      </div>
-      <div class="filters" id="filters"></div>
-    </section>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-label">Продукти в пакета</div>
+              <div class="stat-value" id="statProducts">0</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">SoulFlame %</div>
+              <div class="stat-value" id="statMarkup">20%</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Доставка</div>
+              <div class="stat-value" id="statDelivery">1.00 €</div>
+            </div>
+          </div>
+        </section>
 
-    <section>
-      <div class="section-title">Всички продукти</div>
-      <div class="products-grid" id="productsGrid"></div>
-      <div id="emptyState" class="empty-state" style="display:none;">Няма намерени продукти.</div>
-      <div class="footer-note">
-        Данните в този каталог са попълнени по видимия публичен продуктов списък на обекта в Glovo. Видимите категории там са
-        „Най-продавани“, „Закуски“, „Пици“, „Тост и хамбургери“, „Coca-Cola напитки“ и „Напитки“. :contentReference[oaicite:1]{index=1}
-      </div>
-    </section>
+        <section class="toolbar glass">
+          <div class="toolbar-grid">
+            <input id="searchInput" class="control" type="text" placeholder="Търси по име на продукт...">
+            <select id="categorySelect" class="control"></select>
+            <select id="sortSelect" class="control">
+              <option value="default">Подреди: по подразбиране</option>
+              <option value="price-desc">Подреди: най-голяма цена</option>
+              <option value="price-asc">Подреди: най-ниска цена</option>
+              <option value="name-asc">Подреди: A-Я</option>
+              <option value="name-desc">Подреди: Я-A</option>
+            </select>
+            <button id="clearFiltersBtn" class="clear-btn" type="button">Изчисти</button>
+          </div>
+        </section>
+
+        <div class="meta-row">
+          <div>Показани продукти: <strong id="shownCount">0 / 0</strong></div>
+          <div>Всички карти са вързани към локални данни в този файл.</div>
+        </div>
+
+        <section id="productsGrid" class="products-grid"></section>
+        <div id="emptyState" class="empty-state glass" style="display:none;">Няма намерени продукти.</div>
+      </main>
+
+      <aside class="sidebar">
+        <section class="order-box glass">
+          <div class="order-head">
+            <h2>Поръчка</h2>
+            <div class="bubble" id="cartCountBubble">0</div>
+          </div>
+
+          <div class="hint">Сметка автоматично от конфигурацията.</div>
+
+          <div id="cartItems" class="cart-items">
+            <div class="cart-empty">Количката е празна. Добави продукти от каталога.</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="sum-row">
+              <span>Сума по Двата Аслана</span>
+              <span id="storeSubtotal">0.00 €</span>
+            </div>
+            <div class="sum-row">
+              <span>SoulFlame %</span>
+              <span id="markupValue">0.00 €</span>
+            </div>
+            <div class="sum-row">
+              <span>Доставка</span>
+              <span id="deliveryValue">0.00 €</span>
+            </div>
+            <div class="sum-divider"></div>
+            <div class="sum-row sum-total">
+              <strong>Крайна сума</strong>
+              <strong id="grandTotal">0.00 €</strong>
+            </div>
+          </div>
+
+          <div class="form">
+            <input id="customerName" class="form-input" type="text" placeholder="Име на клиент">
+            <input id="customerPhone" class="form-input" type="text" placeholder="Телефон">
+            <textarea id="customerAddress" class="form-textarea" placeholder="Адрес за доставка"></textarea>
+            <textarea id="customerNote" class="form-textarea" placeholder="Бележка към поръчката"></textarea>
+          </div>
+
+          <div class="order-actions">
+            <button id="sendOrderBtn" class="send-btn" type="button">Поръчай</button>
+            <div class="small-note">Запазва локално количката, данните и последната чернова на поръчката.</div>
+          </div>
+        </section>
+      </aside>
+    </div>
   </div>
 
-  <div class="cart-overlay" id="cartOverlay"></div>
-
-  <aside class="cart-panel" id="cartPanel">
-    <div class="cart-header">
-      <h2>Количка</h2>
-      <button class="close-btn" id="closeCartBtn" type="button">×</button>
-    </div>
-
-    <div class="cart-items" id="cartItems"></div>
-
-    <div class="cart-footer">
-      <div class="note-box">
-        <textarea id="orderNote" placeholder="Допълнителна бележка към поръчката..."></textarea>
-      </div>
-
-      <div class="summary">
-        <div class="summary-row">
-          <span>Брой артикули</span>
-          <strong id="summaryItems">0</strong>
-        </div>
-        <div class="summary-row total">
-          <span>Общо</span>
-          <strong id="summaryTotal">0.00 лв.</strong>
-        </div>
-      </div>
-
-      <div class="cart-actions">
-        <button class="clear-btn" id="clearCartBtn" type="button">Изчисти</button>
-        <button class="checkout-btn" id="checkoutBtn" type="button">Завърши</button>
-      </div>
-    </div>
-  </aside>
-
   <script>
-    const STORAGE_KEY = "soulflame_cart_dvata_aslana_v1";
-    const NOTE_KEY = "soulflame_cart_note_dvata_aslana_v1";
+    const CONFIG = {
+      storeName: "Двата Аслана",
+      markupPercent: 20,
+      deliveryFee: 1,
+      currency: "€"
+    };
 
-    const products = [
+    const PRODUCTS = [
       {
-        id: "banica-sirene",
+        id: "ladiya",
+        name: "Ладия",
+        category: "Закуски",
+        price: 1.79,
+        image: "https://glovo.dhmedia.io/image/customer-assets-glovo/store/productFallback.svg?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "Закуска."
+      },
+      {
+        id: "banitsa-sirene-180",
+        name: "Баница със сирене (180г)",
+        category: "Закуски",
+        price: 1.59,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/924b5f993b22fdd7ed82ba0fb6bd6a15803546f2e98cf92fe21c112831e8bfe7?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "180г"
+      },
+      {
+        id: "banitsa-sirene",
         name: "Баница със сирене",
         category: "Закуски",
-        price: 3.11,
-        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=1200&auto=format&fit=crop",
-        description: "Класическа баница със сирене."
+        price: 1.59,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/924b5f993b22fdd7ed82ba0fb6bd6a15803546f2e98cf92fe21c112831e8bfe7?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "Закуска."
       },
       {
         id: "karandilka",
         name: "Карандилка",
         category: "Закуски",
-        price: 2.99,
-        image: "https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?q=80&w=1200&auto=format&fit=crop",
-        description: "Традиционна печена закуска."
+        price: 1.53,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/e5eb05fd2cf843a6253acdc3c77a1cb7ae1c9acb2f2ccf60f855a1c6394dea82?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "Закуска."
       },
       {
-        id: "banica-izvara",
+        id: "banitsa-izvara",
         name: "Баница с извара",
         category: "Закуски",
-        price: 2.80,
-        image: "https://images.unsplash.com/photo-1587241321921-91a834d6d191?q=80&w=1200&auto=format&fit=crop",
-        description: "Баница с мек пълнеж от извара."
+        price: 1.43,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/924b5f993b22fdd7ed82ba0fb6bd6a15803546f2e98cf92fe21c112831e8bfe7?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "Закуска."
       },
       {
         id: "rogche",
         name: "Рогче",
         category: "Закуски",
-        price: 1.99,
-        image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=1200&auto=format&fit=crop",
-        description: "Лека и бърза закуска."
+        price: 1.02,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/008be3f7a6d1c736b0098a5aa297700ceb13a8e2f6fb65df953b2f22b6d3dcf3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "Закуска."
       },
       {
         id: "pizza-shunka-kashkaval-maslini",
         name: "Пица с шунка, кашкавал и маслини (220г)",
         category: "Пици",
-        price: 4.01,
-        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop",
-        description: "Пица с шунка, кашкавал и маслини."
+        price: 2.05,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/042cd859115c7ddddff7cce26c02d72cb20d88546f856565d75637528f20553f?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "220г"
       },
       {
         id: "pizza-hamburgski-salam",
         name: "Пица с хамбургски салам (180г)",
         category: "Пици",
-        price: 3.50,
-        image: "https://images.unsplash.com/photo-1548365328-9f547fb0953b?q=80&w=1200&auto=format&fit=crop",
-        description: "Пица с хамбургски салам."
+        price: 1.79,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/9049463492ececcdbe85698fb8941b29a43ba420a6c6eed32279fa7a9c98598b?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "180г"
       },
       {
         id: "hamburger-lukanka",
         name: "Хамбургер с луканка (320г)",
         category: "Тост и хамбургери",
-        price: 6.00,
-        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=1200&auto=format&fit=crop",
-        description: "С 3 салати."
+        price: 3.07,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/82d30209c9407ce026e0ff89460f30ab08f6165c9c13cc2158b2e208b6ba3341?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "320г • С 3 салати"
       },
       {
         id: "hamburger-shunka",
         name: "Хамбургер с шунка (320г)",
         category: "Тост и хамбургери",
-        price: 5.59,
-        image: "https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1200&auto=format&fit=crop",
-        description: "С 3 салати."
+        price: 2.86,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/8796118f94c50172600734ab5197188c9e9cffe5c18d2a2604d09bc05ac686b3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
+        description: "320г • С 3 салати"
       },
       {
         id: "coca-cola-500",
         name: "Coca-Cola Original Taste (500мл)",
         category: "Coca-Cola напитки",
-        price: 3.50,
-        image: "https://images.unsplash.com/photo-1624517452488-04869289c4ca?q=80&w=1200&auto=format&fit=crop",
+        price: 1.79,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/4909cdcc50f01c1e11b2062b2aba6abc6ef2b5fb0db74c8d9e76abe2e3ae7096?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "500мл"
       },
       {
         id: "fanta-500",
         name: "Fanta Портокал (500мл)",
         category: "Coca-Cola напитки",
-        price: 3.50,
-        image: "https://images.unsplash.com/photo-1625772452859-1c03d5bf1137?q=80&w=1200&auto=format&fit=crop",
+        price: 1.79,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/ba438611e4c1bb91dab79ce73374a5b7f51d4ad412a7ca31bfbe95fcdc61fb42?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "500мл"
       },
       {
         id: "coca-cola-330",
         name: "Coca-Cola Original Taste (330мл)",
         category: "Coca-Cola напитки",
-        price: 2.80,
-        image: "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?q=80&w=1200&auto=format&fit=crop",
+        price: 1.43,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/bad34da6ce672f1f1305a9aac9d682bc516e165787fbf2e75fa9852907cfd4e3?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "330мл"
       },
       {
         id: "fanta-330",
         name: "Fanta Портокал (330мл)",
         category: "Coca-Cola напитки",
-        price: 2.80,
-        image: "https://images.unsplash.com/photo-1581006852262-e4307cf6283a?q=80&w=1200&auto=format&fit=crop",
+        price: 1.43,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/5eda53efdbbfea9618f331e3aee8cea25bcc83916657ba2800668daca965e8fd?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "330мл"
       },
       {
-        id: "schweppes-soda-500",
+        id: "schweppes-500",
         name: "Schweppes Клуб Сода (500мл)",
         category: "Coca-Cola напитки",
-        price: 2.09,
-        image: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1200&auto=format&fit=crop",
+        price: 1.07,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/af058464fd0f723f7c89f764a680b89592b9a308a15ebb3d2ea9417e876aaab7?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "500мл"
       },
       {
-        id: "airan-vereya-golqm",
+        id: "airan-vereya-large",
         name: "Айран Верея голям",
         category: "Напитки",
-        price: 3.79,
-        image: "https://images.unsplash.com/photo-1559561853-08451507cbe7?q=80&w=1200&auto=format&fit=crop",
+        price: 1.94,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/7d6f95a20623e216f14fe18c2a07e51eba2a6d36d4801aa6be0fd547d08ae90c?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "950мл"
       },
       {
-        id: "queens-portokal",
+        id: "queens-orange",
         name: "Сок Queen's Портокал",
         category: "Напитки",
-        price: 3.50,
-        image: "https://images.unsplash.com/photo-1600271886742-f049cd5bba3f?q=80&w=1200&auto=format&fit=crop",
+        price: 1.79,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/28d57c939622baacb5460a988dd250ba7e256525a8500f27459bcadd36cba828?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "250мл"
       },
       {
         id: "airan-megle",
         name: "Айран Мегле",
         category: "Напитки",
-        price: 2.41,
-        image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?q=80&w=1200&auto=format&fit=crop",
+        price: 1.23,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/85fd84e6c249525b7f0ca0ba05dd2efbbda68668f2587e5cdba1d3b0f227d604?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "330мл"
       },
       {
-        id: "airan-vereya-sreden",
+        id: "airan-vereya-medium",
         name: "Айран Верея среден",
         category: "Напитки",
-        price: 2.09,
-        image: "https://images.unsplash.com/photo-1551024709-8f23befc6cf7?q=80&w=1200&auto=format&fit=crop",
+        price: 1.07,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/650a2999d189ec3dca559374514903e65156e4382d2fef32e04cefdb657e73ba?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "480мл"
       },
       {
-        id: "mineralna-voda-golqma",
+        id: "mineral-water-large",
         name: "Минерална вода голяма",
         category: "Напитки",
-        price: 2.09,
-        image: "https://images.unsplash.com/photo-1616118132534-381148898bb4?q=80&w=1200&auto=format&fit=crop",
+        price: 1.07,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/3061a0101cc9b418b8afe3ea6a8b18f3a99aababb8c0e14bede5cd364a3176f5?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "1.5л"
       },
       {
-        id: "boza-golqma",
+        id: "boza-large",
         name: "Напитка Боза голяма",
         category: "Напитки",
-        price: 1.99,
-        image: "https://images.unsplash.com/photo-1543253687-c931c8e01820?q=80&w=1200&auto=format&fit=crop",
+        price: 1.02,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/74f6a77c5baaacfc73772ce7cfb6cb03146dd684e448232b87d0e5589831f038?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "1л"
       },
       {
-        id: "airan-vereya-maluk",
+        id: "airan-vereya-small",
         name: "Айран Верея малък",
         category: "Напитки",
-        price: 1.70,
-        image: "https://images.unsplash.com/photo-1576186726580-a5ca4ce6a4e3?q=80&w=1200&auto=format&fit=crop",
+        price: 0.87,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/052988955e3cfedcda9da1accde1d442d58c31df60587db1536090efcad92cb8?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "330мл"
       },
       {
-        id: "airan-nasi-golqm",
+        id: "airan-nasi-large",
         name: "Айран Наси голям",
         category: "Напитки",
-        price: 1.70,
-        image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?q=80&w=1200&auto=format&fit=crop",
+        price: 0.87,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/04df217e33f1ae42db9fa32298ca5af363bf93aee1ef48ebb069a925fac43033?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "400мл"
       },
       {
-        id: "boza-sredna",
+        id: "boza-medium",
         name: "Напитка Боза средна",
         category: "Напитки",
-        price: 1.60,
-        image: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=1200&auto=format&fit=crop",
+        price: 0.82,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/74f6a77c5baaacfc73772ce7cfb6cb03146dd684e448232b87d0e5589831f038?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "500мл"
       },
       {
-        id: "mineralna-voda-malka",
+        id: "mineral-water-small",
         name: "Минерална вода малка",
         category: "Напитки",
-        price: 1.51,
-        image: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=1200&auto=format&fit=crop",
+        price: 0.77,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/3061a0101cc9b418b8afe3ea6a8b18f3a99aababb8c0e14bede5cd364a3176f5?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "500мл"
       },
       {
-        id: "airan-nasi-maluk",
+        id: "airan-nasi-small",
         name: "Айран Наси малък",
         category: "Напитки",
-        price: 1.41,
-        image: "https://images.unsplash.com/photo-1576186726580-a5ca4ce6a4e3?q=80&w=1200&auto=format&fit=crop",
+        price: 0.72,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/04df217e33f1ae42db9fa32298ca5af363bf93aee1ef48ebb069a925fac43033?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "250мл"
       },
       {
-        id: "boza-malka",
+        id: "boza-small",
         name: "Напитка Боза малка",
         category: "Напитки",
-        price: 1.19,
-        image: "https://images.unsplash.com/photo-1543253687-c931c8e01820?q=80&w=1200&auto=format&fit=crop",
+        price: 0.61,
+        image: "https://glovo.dhmedia.io/image/menus-glovo/products/74f6a77c5baaacfc73772ce7cfb6cb03146dd684e448232b87d0e5589831f038?t=W3sicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MzIwLCJoZWlnaHQiOjMyMH19XQ%3D%3D",
         description: "250мл"
       }
     ];
 
-    const filtersWrap = document.getElementById("filters");
+    const STORAGE = {
+      cart: "dvata_aslana_cart_v3",
+      name: "dvata_aslana_name_v3",
+      phone: "dvata_aslana_phone_v3",
+      address: "dvata_aslana_address_v3",
+      note: "dvata_aslana_note_v3",
+      draft: "dvata_aslana_order_draft_v3"
+    };
+
+    const searchInput = document.getElementById("searchInput");
+    const categorySelect = document.getElementById("categorySelect");
+    const sortSelect = document.getElementById("sortSelect");
+    const clearFiltersBtn = document.getElementById("clearFiltersBtn");
     const productsGrid = document.getElementById("productsGrid");
     const emptyState = document.getElementById("emptyState");
-    const searchInput = document.getElementById("searchInput");
+    const shownCount = document.getElementById("shownCount");
 
-    const cartPanel = document.getElementById("cartPanel");
-    const cartOverlay = document.getElementById("cartOverlay");
-    const openCartBtn = document.getElementById("openCartBtn");
-    const closeCartBtn = document.getElementById("closeCartBtn");
+    const statProducts = document.getElementById("statProducts");
+    const statMarkup = document.getElementById("statMarkup");
+    const statDelivery = document.getElementById("statDelivery");
+
     const cartItems = document.getElementById("cartItems");
-    const cartCount = document.getElementById("cartCount");
-    const summaryItems = document.getElementById("summaryItems");
-    const summaryTotal = document.getElementById("summaryTotal");
-    const clearCartBtn = document.getElementById("clearCartBtn");
-    const checkoutBtn = document.getElementById("checkoutBtn");
-    const orderNote = document.getElementById("orderNote");
+    const cartCountBubble = document.getElementById("cartCountBubble");
+    const storeSubtotal = document.getElementById("storeSubtotal");
+    const markupValue = document.getElementById("markupValue");
+    const deliveryValue = document.getElementById("deliveryValue");
+    const grandTotal = document.getElementById("grandTotal");
 
-    let activeCategory = "Всички";
-    let cart = loadCart();
+    const customerName = document.getElementById("customerName");
+    const customerPhone = document.getElementById("customerPhone");
+    const customerAddress = document.getElementById("customerAddress");
+    const customerNote = document.getElementById("customerNote");
+    const sendOrderBtn = document.getElementById("sendOrderBtn");
 
-    function loadCart() {
+    let cart = loadJSON(STORAGE.cart, []);
+
+    function loadJSON(key, fallback) {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? JSON.parse(raw) : [];
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
       } catch {
-        return [];
+        return fallback;
       }
     }
 
-    function saveCart() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    function saveJSON(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
     }
 
-    function loadNote() {
-      try {
-        return localStorage.getItem(NOTE_KEY) || "";
-      } catch {
-        return "";
-      }
+    function saveValue(key, value) {
+      localStorage.setItem(key, value || "");
     }
 
-    function saveNote() {
-      localStorage.setItem(NOTE_KEY, orderNote.value || "");
+    function loadValue(key) {
+      return localStorage.getItem(key) || "";
     }
 
     function money(value) {
-      return `${Number(value).toFixed(2)} лв.`;
-    }
-
-    function categories() {
-      return ["Всички", ...new Set(products.map(p => p.category))];
-    }
-
-    function renderFilters() {
-      filtersWrap.innerHTML = categories().map(cat => `
-        <button
-          type="button"
-          class="filter-btn ${cat === activeCategory ? "active" : ""}"
-          data-category="${escapeHtml(cat)}"
-        >
-          ${escapeHtml(cat)}
-        </button>
-      `).join("");
+      return `${Number(value).toFixed(2)} ${CONFIG.currency}`;
     }
 
     function escapeHtml(value) {
@@ -1014,19 +1150,44 @@
         .replace(/'/g, "&#39;");
     }
 
-    function filteredProducts() {
-      const query = searchInput.value.trim().toLowerCase();
+    function getCategories() {
+      return ["Всички", ...new Set(PRODUCTS.map(p => p.category))];
+    }
 
-      return products.filter(product => {
-        const inCategory = activeCategory === "Всички" || product.category === activeCategory;
-        const hay = `${product.name} ${product.category} ${product.description}`.toLowerCase();
-        const inSearch = !query || hay.includes(query);
-        return inCategory && inSearch;
+    function renderCategories() {
+      categorySelect.innerHTML = getCategories().map(cat => `
+        <option value="${escapeHtml(cat)}">${escapeHtml(cat)}</option>
+      `).join("");
+    }
+
+    function getFilteredProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+      const category = categorySelect.value;
+      const sort = sortSelect.value;
+
+      let list = PRODUCTS.filter(product => {
+        const haystack = `${product.name} ${product.category} ${product.description || ""}`.toLowerCase();
+        const matchQuery = !query || haystack.includes(query);
+        const matchCategory = category === "Всички" || product.category === category;
+        return matchQuery && matchCategory;
       });
+
+      if (sort === "price-asc") {
+        list.sort((a, b) => a.price - b.price);
+      } else if (sort === "price-desc") {
+        list.sort((a, b) => b.price - a.price);
+      } else if (sort === "name-asc") {
+        list.sort((a, b) => a.name.localeCompare(b.name, "bg"));
+      } else if (sort === "name-desc") {
+        list.sort((a, b) => b.name.localeCompare(a.name, "bg"));
+      }
+
+      return list;
     }
 
     function renderProducts() {
-      const list = filteredProducts();
+      const list = getFilteredProducts();
+      shownCount.textContent = `${list.length} / ${PRODUCTS.length}`;
 
       if (!list.length) {
         productsGrid.innerHTML = "";
@@ -1037,28 +1198,47 @@
       emptyState.style.display = "none";
 
       productsGrid.innerHTML = list.map(product => `
-        <article class="card">
-          <div class="card-media">
-            <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" />
-          </div>
-          <div class="card-body">
-            <span class="card-category">${escapeHtml(product.category)}</span>
-            <h3>${escapeHtml(product.name)}</h3>
-            <p class="card-desc">${escapeHtml(product.description || "")}</p>
-            <div class="card-bottom">
-              <div class="price">${money(product.price)}</div>
-              <button class="add-btn" type="button" data-id="${escapeHtml(product.id)}">Добави</button>
+        <article class="product-card glass">
+          <div class="product-top">
+            <div class="cat-label">${escapeHtml(product.category)}</div>
+            <div class="store-mini">
+              <img src="https://businessmedia.bg/wp-content/uploads/2019/10/dvata-aslana-logo.jpg" alt="">
+              <span>Двата Аслана</span>
             </div>
+          </div>
+
+          <div class="product-media">
+            <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" referrerpolicy="no-referrer">
+          </div>
+
+          <h3 class="product-name">${escapeHtml(product.name)}</h3>
+          <p class="product-desc">${escapeHtml(product.description || "")}</p>
+
+          <div class="product-bottom">
+            <div class="price-wrap">
+              <div class="price-label">цена</div>
+              <div class="product-price">${money(product.price)}</div>
+            </div>
+            <button class="add-btn" type="button" data-id="${escapeHtml(product.id)}">Добави</button>
           </div>
         </article>
       `).join("");
     }
 
-    function addToCart(id) {
-      const product = products.find(p => p.id === id);
+    function getProductById(id) {
+      return PRODUCTS.find(item => item.id === id);
+    }
+
+    function saveCart() {
+      saveJSON(STORAGE.cart, cart);
+    }
+
+    function addToCart(productId) {
+      const product = getProductById(productId);
       if (!product) return;
 
-      const existing = cart.find(item => item.id === id);
+      const existing = cart.find(item => item.id === productId);
+
       if (existing) {
         existing.qty += 1;
       } else {
@@ -1066,8 +1246,8 @@
           id: product.id,
           name: product.name,
           category: product.category,
-          price: product.price,
           image: product.image,
+          price: product.price,
           qty: 1
         });
       }
@@ -1076,58 +1256,65 @@
       renderCart();
     }
 
-    function changeQty(id, delta) {
-      const item = cart.find(i => i.id === id);
+    function changeQty(productId, delta) {
+      const item = cart.find(entry => entry.id === productId);
       if (!item) return;
 
       item.qty += delta;
+
       if (item.qty <= 0) {
-        cart = cart.filter(i => i.id !== id);
+        cart = cart.filter(entry => entry.id !== productId);
       }
 
       saveCart();
       renderCart();
     }
 
-    function removeItem(id) {
-      cart = cart.filter(i => i.id !== id);
+    function removeFromCart(productId) {
+      cart = cart.filter(entry => entry.id !== productId);
       saveCart();
       renderCart();
     }
 
-    function cartTotals() {
-      const items = cart.reduce((sum, item) => sum + item.qty, 0);
-      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      return { items, total };
+    function getSummary() {
+      const itemCount = cart.reduce((sum, item) => sum + item.qty, 0);
+      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+      const markup = subtotal * (CONFIG.markupPercent / 100);
+      const delivery = cart.length ? CONFIG.deliveryFee : 0;
+      const total = subtotal + markup + delivery;
+
+      return { itemCount, subtotal, markup, delivery, total };
     }
 
     function renderCart() {
-      const { items, total } = cartTotals();
+      const summary = getSummary();
 
-      cartCount.textContent = items;
-      summaryItems.textContent = items;
-      summaryTotal.textContent = money(total);
+      cartCountBubble.textContent = summary.itemCount;
+      storeSubtotal.textContent = money(summary.subtotal);
+      markupValue.textContent = money(summary.markup);
+      deliveryValue.textContent = money(summary.delivery);
+      grandTotal.textContent = money(summary.total);
 
       if (!cart.length) {
-        cartItems.innerHTML = `<div class="empty-cart">Количката е празна.</div>`;
+        cartItems.innerHTML = `<div class="cart-empty">Количката е празна. Добави продукти от каталога.</div>`;
         return;
       }
 
       cartItems.innerHTML = cart.map(item => `
         <div class="cart-item">
-          <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" />
+          <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" referrerpolicy="no-referrer">
           <div>
-            <h4>${escapeHtml(item.name)}</h4>
-            <p>${escapeHtml(item.category)} • ${money(item.price)}</p>
-            <div class="cart-row">
-              <div class="qty-wrap">
+            <div class="cart-item-name">${escapeHtml(item.name)}</div>
+            <div class="cart-item-meta">
+              <span>${money(item.price)} / бр.</span>
+              <strong>${money(item.price * item.qty)}</strong>
+            </div>
+            <div class="cart-controls">
+              <div class="qty-box">
                 <button class="qty-btn" type="button" data-action="minus" data-id="${escapeHtml(item.id)}">−</button>
                 <span class="qty-value">${item.qty}</span>
                 <button class="qty-btn" type="button" data-action="plus" data-id="${escapeHtml(item.id)}">+</button>
               </div>
-              <strong>${money(item.price * item.qty)}</strong>
-            </div>
-            <div class="cart-row">
               <button class="remove-btn" type="button" data-action="remove" data-id="${escapeHtml(item.id)}">Премахни</button>
             </div>
           </div>
@@ -1135,67 +1322,96 @@
       `).join("");
     }
 
-    function openCart() {
-      cartPanel.classList.add("open");
-      cartOverlay.classList.add("open");
-      document.body.style.overflow = "hidden";
+    function updateStats() {
+      statProducts.textContent = PRODUCTS.length;
+      statMarkup.textContent = `${CONFIG.markupPercent}%`;
+      statDelivery.textContent = money(CONFIG.deliveryFee);
     }
 
-    function closeCart() {
-      cartPanel.classList.remove("open");
-      cartOverlay.classList.remove("open");
-      document.body.style.overflow = "";
+    function clearFilters() {
+      searchInput.value = "";
+      categorySelect.value = "Всички";
+      sortSelect.value = "default";
+      renderProducts();
     }
 
-    function clearCart() {
-      cart = [];
-      saveCart();
-      renderCart();
+    function saveForm() {
+      saveValue(STORAGE.name, customerName.value);
+      saveValue(STORAGE.phone, customerPhone.value);
+      saveValue(STORAGE.address, customerAddress.value);
+      saveValue(STORAGE.note, customerNote.value);
     }
 
-    function checkout() {
+    function restoreForm() {
+      customerName.value = loadValue(STORAGE.name);
+      customerPhone.value = loadValue(STORAGE.phone);
+      customerAddress.value = loadValue(STORAGE.address);
+      customerNote.value = loadValue(STORAGE.note);
+    }
+
+    function buildOrderObject() {
+      const summary = getSummary();
+
+      return {
+        store: CONFIG.storeName,
+        createdAt: new Date().toISOString(),
+        customer: {
+          name: customerName.value.trim(),
+          phone: customerPhone.value.trim(),
+          address: customerAddress.value.trim(),
+          note: customerNote.value.trim()
+        },
+        items: cart.map(item => ({
+          id: item.id,
+          name: item.name,
+          qty: item.qty,
+          unitPrice: item.price,
+          totalPrice: Number((item.qty * item.price).toFixed(2))
+        })),
+        pricing: {
+          subtotal: Number(summary.subtotal.toFixed(2)),
+          markupPercent: CONFIG.markupPercent,
+          markupValue: Number(summary.markup.toFixed(2)),
+          deliveryFee: Number(summary.delivery.toFixed(2)),
+          grandTotal: Number(summary.total.toFixed(2)),
+          currency: CONFIG.currency
+        }
+      };
+    }
+
+    function submitOrder() {
       if (!cart.length) {
         alert("Количката е празна.");
         return;
       }
 
-      const { items, total } = cartTotals();
-      const note = orderNote.value.trim();
+      if (!customerName.value.trim() || !customerPhone.value.trim() || !customerAddress.value.trim()) {
+        alert("Попълни име, телефон и адрес.");
+        return;
+      }
 
-      const lines = cart.map(item =>
-        `• ${item.name} x${item.qty} = ${money(item.price * item.qty)}`
-      ).join("\n");
+      saveForm();
 
-      const message =
-`Поръчка към Двата Аслана
+      const orderDraft = buildOrderObject();
+      saveJSON(STORAGE.draft, orderDraft);
 
-${lines}
-
-Общ брой артикули: ${items}
-Обща сума: ${money(total)}
-
-Бележка:
-${note || "Няма бележка."}`;
-
-      alert(message);
+      alert(
+        `Поръчката е запазена локално.\n\n` +
+        `Клиент: ${orderDraft.customer.name}\n` +
+        `Артикули: ${orderDraft.items.length}\n` +
+        `Крайна сума: ${money(orderDraft.pricing.grandTotal)}\n\n` +
+        `Следващата стъпка е връзка с Firebase.`
+      );
     }
 
-    filtersWrap.addEventListener("click", (e) => {
-      const btn = e.target.closest(".filter-btn");
-      if (!btn) return;
-      activeCategory = btn.dataset.category;
-      renderFilters();
-      renderProducts();
-    });
-
-    productsGrid.addEventListener("click", (e) => {
-      const btn = e.target.closest(".add-btn");
+    productsGrid.addEventListener("click", (event) => {
+      const btn = event.target.closest(".add-btn");
       if (!btn) return;
       addToCart(btn.dataset.id);
     });
 
-    cartItems.addEventListener("click", (e) => {
-      const btn = e.target.closest("button[data-action]");
+    cartItems.addEventListener("click", (event) => {
+      const btn = event.target.closest("button[data-action]");
       if (!btn) return;
 
       const id = btn.dataset.id;
@@ -1203,20 +1419,24 @@ ${note || "Няма бележка."}`;
 
       if (action === "plus") changeQty(id, 1);
       if (action === "minus") changeQty(id, -1);
-      if (action === "remove") removeItem(id);
+      if (action === "remove") removeFromCart(id);
     });
 
     searchInput.addEventListener("input", renderProducts);
-    openCartBtn.addEventListener("click", openCart);
-    closeCartBtn.addEventListener("click", closeCart);
-    cartOverlay.addEventListener("click", closeCart);
-    clearCartBtn.addEventListener("click", clearCart);
-    checkoutBtn.addEventListener("click", checkout);
-    orderNote.addEventListener("input", saveNote);
+    categorySelect.addEventListener("change", renderProducts);
+    sortSelect.addEventListener("change", renderProducts);
+    clearFiltersBtn.addEventListener("click", clearFilters);
 
-    orderNote.value = loadNote();
+    customerName.addEventListener("input", saveForm);
+    customerPhone.addEventListener("input", saveForm);
+    customerAddress.addEventListener("input", saveForm);
+    customerNote.addEventListener("input", saveForm);
 
-    renderFilters();
+    sendOrderBtn.addEventListener("click", submitOrder);
+
+    renderCategories();
+    restoreForm();
+    updateStats();
     renderProducts();
     renderCart();
   </script>
