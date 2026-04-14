@@ -3,169 +3,177 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Masterhouse Catalog</title>
+  <title>Mini Mart Catalog</title>
   <style>
     *{box-sizing:border-box}
     :root{
-      --bg:#f6f8fb;
+      --bg:#f6f9f3;
       --card:#ffffff;
-      --text:#111318;
-      --muted:#5f6975;
-      --line:rgba(17,19,24,.08);
+      --text:#0f172a;
+      --muted:#64748b;
+      --line:rgba(15,23,42,0.08);
       --shadow:0 18px 46px rgba(9,15,24,.08);
-      --accent:#121417;
-      --soft:#edf2f7;
-      --ok:#0f9d58;
-      --warn:#c77b00;
-      --run:#1769ff;
-      --err:#c62828;
+      --green:#8cc63f;
+      --green-dark:#5e8f1d;
+      --dark:#0f172a;
+      --soft:#eef5e8;
+      --accent:#1f2937;
     }
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-    .page{max-width:1400px;margin:0 auto;padding:20px}
-    .hero{
-      background:linear-gradient(135deg,#fff,#eef4fb);
-      border:1px solid var(--line);
-      border-radius:28px;
-      box-shadow:var(--shadow);
-      padding:20px;
-      display:grid;
-      grid-template-columns:180px 1fr;
-      gap:20px;
+
+    html,body{
+      margin:0;
+      padding:0;
+      background:linear-gradient(180deg,#fbfff8,#f2f8ee);
+      color:var(--text);
+      font-family:Arial,sans-serif;
+    }
+
+    .page{
+      max-width:1440px;
+      margin:0 auto;
+      padding:18px;
+    }
+
+    .topbar{
+      display:flex;
       align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+      background:rgba(255,255,255,.9);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:14px 16px;
+      box-shadow:var(--shadow);
+      position:sticky;
+      top:10px;
+      z-index:50;
+      backdrop-filter:blur(10px);
     }
-    .hero img{
-      width:100%;
-      border-radius:20px;
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:132px;
+      max-width:100%;
       display:block;
-      object-fit:cover;
-      min-height:140px;
-      max-height:180px;
-      background:#fff;
     }
-    .hero h1{
-      margin:0 0 10px;
-      font-size:clamp(28px,4vw,48px);
+
+    .brand-text{
+      min-width:0;
+    }
+
+    .brand-text h1{
+      margin:0 0 4px;
+      font-size:clamp(22px,3vw,34px);
       line-height:1;
-      letter-spacing:-0.03em;
+      letter-spacing:-0.04em;
     }
-    .hero p{
+
+    .brand-text p{
       margin:0;
       color:var(--muted);
-      line-height:1.6;
-      font-size:15px;
-      max-width:70ch;
+      font-size:14px;
+      line-height:1.5;
     }
-    .toolbar{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns:1.25fr .7fr .7fr auto auto;
-      gap:12px;
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
     }
-    .control,.button{
-      height:48px;
-      border:none;
-      border-radius:16px;
-      padding:0 14px;
-      font-size:15px;
-    }
+
     .control{
-      background:#fff;
+      height:46px;
       border:1px solid var(--line);
+      background:#fff;
+      border-radius:14px;
+      padding:0 14px;
+      font-size:14px;
       outline:none;
+      min-width:220px;
     }
+
     .button{
+      height:46px;
+      border:none;
+      border-radius:14px;
+      padding:0 16px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      text-decoration:none;
       cursor:pointer;
-      font-weight:700;
-      background:#111;
-      color:#fff;
-      padding:0 18px;
+      font-weight:800;
+      font-size:14px;
+      text-decoration:none;
       transition:transform .18s ease, opacity .18s ease;
     }
+
     .button:hover{transform:translateY(-1px)}
-    .button.secondary{
-      background:#eef2f7;
-      color:#111;
+    .button.primary{
+      background:linear-gradient(135deg,var(--green),var(--green-dark));
+      color:#fff;
+      box-shadow:0 14px 30px rgba(140,198,63,.24);
     }
+    .button.secondary{
+      background:#fff;
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+
     .stats{
-      margin-top:18px;
       display:grid;
       grid-template-columns:repeat(4,1fr);
       gap:12px;
+      margin-bottom:18px;
     }
-    .stat,.status{
+
+    .stat{
       background:var(--card);
       border:1px solid var(--line);
       border-radius:20px;
       box-shadow:var(--shadow);
       padding:16px;
     }
-    .stat .label,.status .label{
+
+    .stat .label{
       color:var(--muted);
       font-size:12px;
       text-transform:uppercase;
       letter-spacing:.08em;
       margin-bottom:8px;
     }
+
     .stat .value{
       font-size:24px;
       font-weight:800;
       letter-spacing:-.03em;
     }
-    .status-row{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    .status .big{
-      font-size:18px;
-      font-weight:800;
-      letter-spacing:-.02em;
-    }
-    .status .text{
-      margin-top:8px;
-      color:var(--muted);
-      line-height:1.55;
-      font-size:14px;
-      white-space:pre-wrap;
-      word-break:break-word;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      border-radius:999px;
-      padding:8px 12px;
-      font-size:12px;
-      font-weight:800;
-      letter-spacing:.05em;
-      text-transform:uppercase;
-      margin-top:6px;
-    }
-    .badge.running{background:rgba(23,105,255,.1);color:var(--run)}
-    .badge.finished{background:rgba(15,157,88,.12);color:var(--ok)}
-    .badge.error{background:rgba(198,40,40,.12);color:var(--err)}
-    .badge.idle{background:rgba(199,123,0,.12);color:var(--warn)}
+
     .grid{
-      margin-top:18px;
       display:grid;
       grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
       gap:16px;
     }
+
     .card{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius:22px;
+      border-radius:24px;
       box-shadow:var(--shadow);
       overflow:hidden;
       display:flex;
       flex-direction:column;
       min-height:100%;
     }
+
     .image-wrap{
       aspect-ratio:1/1;
       background:#fff;
@@ -173,68 +181,80 @@
       align-items:center;
       justify-content:center;
       overflow:hidden;
+      border-bottom:1px solid var(--line);
     }
+
     .image-wrap img{
       width:100%;
       height:100%;
-      object-fit:contain;
+      object-fit:cover;
       display:block;
     }
+
     .body{
       padding:14px;
       display:flex;
       flex-direction:column;
       gap:8px;
+      flex:1;
     }
-    .title{
-      font-size:15px;
-      line-height:1.42;
-      font-weight:700;
-      min-height:42px;
-    }
-    .meta{
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.45;
-    }
-    .price{
-      display:flex;
-      gap:8px;
-      align-items:baseline;
-      flex-wrap:wrap;
-    }
-    .bgn{
-      font-size:22px;
-      font-weight:800;
-      letter-spacing:-.03em;
-    }
-    .eur{
-      font-size:14px;
-      color:var(--muted);
-      font-weight:700;
-    }
-    .availability{
-      margin-top:2px;
+
+    .tag{
       display:inline-flex;
-      align-items:center;
       width:max-content;
+      padding:7px 10px;
       border-radius:999px;
-      padding:6px 10px;
+      background:rgba(140,198,63,.14);
+      color:var(--green-dark);
       font-size:11px;
       font-weight:800;
-      letter-spacing:.04em;
+      letter-spacing:.05em;
       text-transform:uppercase;
-      background:#eef2f7;
     }
+
+    .title{
+      font-size:16px;
+      line-height:1.38;
+      font-weight:800;
+      min-height:44px;
+    }
+
+    .meta{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .price{
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:2px;
+    }
+
+    .bgn{
+      font-size:22px;
+      font-weight:900;
+      letter-spacing:-.03em;
+    }
+
+    .hint{
+      font-size:13px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
     .actions{
       margin-top:auto;
       display:flex;
       gap:8px;
-      padding-top:4px;
+      padding-top:6px;
     }
+
     .mini-btn{
       flex:1;
-      height:38px;
+      height:40px;
       border-radius:12px;
       border:1px solid var(--line);
       background:#fff;
@@ -244,10 +264,69 @@
       align-items:center;
       justify-content:center;
       font-size:13px;
-      font-weight:700;
+      font-weight:800;
+      cursor:pointer;
     }
+
+    .mini-btn.dark{
+      background:var(--dark);
+      color:#fff;
+      border-color:var(--dark);
+    }
+
+    .cart-panel{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:80;
+      background:#111827;
+      color:#fff;
+      border-radius:20px;
+      padding:14px 16px;
+      box-shadow:0 20px 50px rgba(0,0,0,.22);
+      min-width:220px;
+    }
+
+    .cart-panel .small{
+      font-size:12px;
+      opacity:.78;
+      margin-bottom:4px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+
+    .cart-panel .big{
+      font-size:24px;
+      font-weight:900;
+      letter-spacing:-.03em;
+      margin-bottom:10px;
+    }
+
+    .cart-panel .row{
+      display:flex;
+      gap:8px;
+    }
+
+    .cart-panel button{
+      flex:1;
+      height:38px;
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:800;
+    }
+
+    .cart-panel .light{
+      background:#fff;
+      color:#111827;
+    }
+
+    .cart-panel .green{
+      background:linear-gradient(135deg,var(--green),var(--green-dark));
+      color:#fff;
+    }
+
     .empty{
-      margin-top:18px;
       background:#fff;
       border:1px solid var(--line);
       border-radius:20px;
@@ -255,58 +334,49 @@
       color:var(--muted);
       line-height:1.6;
       box-shadow:var(--shadow);
+      display:none;
     }
+
     @media (max-width:980px){
-      .toolbar{grid-template-columns:1fr 1fr}
       .stats{grid-template-columns:repeat(2,1fr)}
-      .status-row{grid-template-columns:1fr}
     }
-    @media (max-width:700px){
+
+    @media (max-width:720px){
       .page{padding:14px}
-      .hero{grid-template-columns:1fr;padding:16px}
-      .toolbar{grid-template-columns:1fr}
-      .stats{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width:480px){
+      .topbar{position:static}
+      .top-actions{width:100%}
+      .control{min-width:100%; width:100%}
+      .button{flex:1}
       .stats{grid-template-columns:1fr}
+      .cart-panel{
+        right:12px;
+        left:12px;
+        bottom:12px;
+        min-width:auto;
+      }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <section class="hero">
-      <img src="https://www.masterhaus.bg/images/default-og-image.jpg?m=1696323554" alt="Masterhouse Logo">
-      <div>
-        <h1>Masterhouse каталог</h1>
-        <p>
-          Локален каталог със зареждане от <b>data/products.json</b>. Статусът на scraper-а идва от
-          <b>data/meta.json</b>. Натисни <b>start_masterhouse.bat</b> от папката, за да пуснеш сървъра и
-          автоматичното обновяване.
-        </p>
+    <section class="topbar">
+      <div class="brand">
+        <img src="https://mini-mart.bg/wp-content/uploads/2023/08/logo-copy.png" alt="Mini Mart Logo">
+        <div class="brand-text">
+          <h1>Mini Mart каталог</h1>
+          <p>Всички box-ове за изброените продукти директно в index.html</p>
+        </div>
       </div>
-    </section>
 
-    <section class="toolbar">
-      <input id="searchInput" class="control" type="text" placeholder="Търси по име, категория, артикулен номер..." />
-      <select id="sortSelect" class="control">
-        <option value="default">Подредба</option>
-        <option value="price_asc">Цена ↑</option>
-        <option value="price_desc">Цена ↓</option>
-        <option value="title_asc">Име A-Z</option>
-        <option value="title_desc">Име Z-A</option>
-      </select>
-      <select id="availabilitySelect" class="control">
-        <option value="all">Всичко</option>
-        <option value="available">Налични</option>
-        <option value="not_available">Неналични</option>
-      </select>
-      <a class="button secondary" href="launcher.html">Назад</a>
-      <button class="button" id="reloadBtn">Обнови</button>
+      <div class="top-actions">
+        <input id="searchInput" class="control" type="text" placeholder="Търси продукт..." />
+        <button class="button secondary" id="resetBtn">Изчисти</button>
+      </div>
     </section>
 
     <section class="stats">
       <div class="stat">
-        <div class="label">Продукти</div>
+        <div class="label">Общо продукти</div>
         <div class="value" id="totalProducts">0</div>
       </div>
       <div class="stat">
@@ -314,198 +384,182 @@
         <div class="value" id="shownProducts">0</div>
       </div>
       <div class="stat">
+        <div class="label">В количката</div>
+        <div class="value" id="cartCount">0</div>
+      </div>
+      <div class="stat">
         <div class="label">Категории</div>
         <div class="value" id="totalCategories">0</div>
       </div>
-      <div class="stat">
-        <div class="label">Последно обновяване</div>
-        <div class="value" id="lastUpdated" style="font-size:18px;">—</div>
-      </div>
     </section>
 
-    <section class="status-row">
-      <div class="status">
-        <div class="label">Статус на scraper</div>
-        <div class="big" id="statusTitle">Няма данни</div>
-        <div id="statusBadge" class="badge idle">Idle</div>
-        <div class="text" id="statusText">Стартирай start_masterhouse.bat</div>
-      </div>
-      <div class="status">
-        <div class="label">Файлове</div>
-        <div class="text">
-          <b>Данни:</b> data/products.json<br>
-          <b>CSV:</b> data/products.csv<br>
-          <b>Статус:</b> data/meta.json
-        </div>
-      </div>
-    </section>
-
-    <div id="emptyState" class="empty" style="display:none;">
-      Няма заредени продукти. Пусни <b>start_masterhouse.bat</b> или <b>update_masterhouse.bat</b>,
-      за да се изтеглят данните в папката.
-    </div>
+    <div id="emptyState" class="empty">Няма продукти по това търсене.</div>
 
     <section id="productGrid" class="grid"></section>
   </div>
 
+  <div class="cart-panel">
+    <div class="small">Mini Mart количка</div>
+    <div class="big" id="floatingCartCount">0 продукта</div>
+    <div class="row">
+      <button class="light" id="clearCartBtn">Изчисти</button>
+      <button class="green" id="viewCartBtn">Виж количка</button>
+    </div>
+  </div>
+
   <script>
-    let allProducts = [];
-    let filteredProducts = [];
+    const products = [
+      { title: "Зърнена закуска Nesquik + Верея прясно мляко", category: "Закуски", priceLabel: "Цена по обект", image: makePlaceholder("Nesquik + Vereya") },
+      { title: "Кейк Milkiss + вода Devin", category: "Комбо", priceLabel: "Цена по обект", image: makePlaceholder("Milkiss + Devin") },
+      { title: "Солети Elephant + Vitamin Aqua", category: "Комбо", priceLabel: "Цена по обект", image: makePlaceholder("Elephant + Vitamin Aqua") },
+      { title: "Десерт Kit Kat", category: "Десерти", priceLabel: "Цена по обект", image: makePlaceholder("Kit Kat") },
+      { title: "Брускети Maretti", category: "Снаксове", priceLabel: "Цена по обект", image: makePlaceholder("Maretti") },
+      { title: "Шоколадови бонбони Toffifee", category: "Сладки", priceLabel: "Цена по обект", image: makePlaceholder("Toffifee") },
+      { title: "Протеинов бар Fit Spo", category: "Барове", priceLabel: "Цена по обект", image: makePlaceholder("Fit Spo") },
+      { title: "Десерт Serenata", category: "Десерти", priceLabel: "Цена по обект", image: makePlaceholder("Serenata") },
+      { title: "Тунквани бисквити Coffee", category: "Бисквити", priceLabel: "Цена по обект", image: makePlaceholder("Coffee biscuits") },
+      { title: "Крекери Croco", category: "Снаксове", priceLabel: "Цена по обект", image: makePlaceholder("Croco") },
+      { title: "Чипс Pringles", category: "Чипс", priceLabel: "Цена по обект", image: makePlaceholder("Pringles") },
+      { title: "Снакс Hula Hoops", category: "Снаксове", priceLabel: "Цена по обект", image: makePlaceholder("Hula Hoops") },
+      { title: "BIO Harmonica вафла", category: "BIO", priceLabel: "Цена по обект", image: makePlaceholder("Harmonica wafer") },
+      { title: "Сладолед Familia", category: "Сладоледи", priceLabel: "Цена по обект", image: makePlaceholder("Familia ice cream") },
+      { title: "Бира Heineken", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Heineken") },
+      { title: "Бира Бургаско", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Burgasko") },
+      { title: "Газирана напитка Pepsi 2 л", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Pepsi 2L") },
+      { title: "Плодова напитка Queen 1 л", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Queen 1L") },
+      { title: "Вода Devin 425 мл", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Devin 425ml") },
+      { title: "Alaska Pure Grain Vodka", category: "Алкохол", priceLabel: "Цена по обект", image: makePlaceholder("Alaska Vodka") },
+      { title: "Уиски Bushmills Black", category: "Алкохол", priceLabel: "Цена по обект", image: makePlaceholder("Bushmills Black") },
+      { title: "Jameson ирландско уиски", category: "Алкохол", priceLabel: "Цена по обект", image: makePlaceholder("Jameson") },
+      { title: "Вино ВИА ВИНЕРА", category: "Алкохол", priceLabel: "Цена по обект", image: makePlaceholder("VIA VINERA") },
+      { title: "Compass риба тон филе", category: "Консерви", priceLabel: "Цена по обект", image: makePlaceholder("Compass tuna") },
+      { title: "Krina ориз бял 1 кг", category: "Основни храни", priceLabel: "Цена по обект", image: makePlaceholder("Krina rice 1kg") },
+      { title: "Дерони домашна едросмляна лютеница", category: "Основни храни", priceLabel: "Цена по обект", image: makePlaceholder("Deroni lutenitsa") },
+      { title: "Грах Bonduelle", category: "Консерви", priceLabel: "Цена по обект", image: makePlaceholder("Bonduelle peas") },
+      { title: "Паста за зъби Aquafresh", category: "Нехранителни", priceLabel: "Цена по обект", image: makePlaceholder("Aquafresh") },
+      { title: "Захар Сладея 1 кг", category: "Основни храни", priceLabel: "Цена по обект", image: makePlaceholder("Sladeya sugar") },
+      { title: "Пица Passionata + Coca-Cola", category: "Комбо", priceLabel: "Цена по обект", image: makePlaceholder("Passionata + Coke") },
+      { title: "Клуб сандвич", category: "Сандвичи", priceLabel: "Цена по обект", image: makePlaceholder("Club sandwich") },
+      { title: "Хотдог Tokyo", category: "Хотдог", priceLabel: "Цена по обект", image: makePlaceholder("Tokyo hotdog") },
+      { title: "Хотдог New York", category: "Хотдог", priceLabel: "Цена по обект", image: makePlaceholder("New York hotdog") },
+      { title: "Хотдог Paris", category: "Хотдог", priceLabel: "Цена по обект", image: makePlaceholder("Paris hotdog") },
+      { title: "Кроасан с пушено филе и айсберг", category: "Закуски", priceLabel: "Цена по обект", image: makePlaceholder("Croissant") }
+    ];
+
+    const CART_KEY = "minimart_cart_boxes_v1";
 
     const els = {
-      searchInput: document.getElementById('searchInput'),
-      sortSelect: document.getElementById('sortSelect'),
-      availabilitySelect: document.getElementById('availabilitySelect'),
-      reloadBtn: document.getElementById('reloadBtn'),
-      totalProducts: document.getElementById('totalProducts'),
-      shownProducts: document.getElementById('shownProducts'),
-      totalCategories: document.getElementById('totalCategories'),
-      lastUpdated: document.getElementById('lastUpdated'),
-      statusTitle: document.getElementById('statusTitle'),
-      statusText: document.getElementById('statusText'),
-      statusBadge: document.getElementById('statusBadge'),
-      productGrid: document.getElementById('productGrid'),
-      emptyState: document.getElementById('emptyState')
+      searchInput: document.getElementById("searchInput"),
+      resetBtn: document.getElementById("resetBtn"),
+      totalProducts: document.getElementById("totalProducts"),
+      shownProducts: document.getElementById("shownProducts"),
+      totalCategories: document.getElementById("totalCategories"),
+      cartCount: document.getElementById("cartCount"),
+      floatingCartCount: document.getElementById("floatingCartCount"),
+      productGrid: document.getElementById("productGrid"),
+      emptyState: document.getElementById("emptyState"),
+      clearCartBtn: document.getElementById("clearCartBtn"),
+      viewCartBtn: document.getElementById("viewCartBtn")
     };
 
-    function formatBgPrice(value) {
-      const n = Number(value);
-      if (!Number.isFinite(n)) return '—';
-      return n.toFixed(2) + ' лв';
+    function makePlaceholder(text) {
+      const safe = encodeURIComponent(text);
+      return `data:image/svg+xml;utf8,
+        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'>
+          <defs>
+            <linearGradient id='g' x1='0' x2='1' y1='0' y2='1'>
+              <stop offset='0%' stop-color='%23b6e56d'/>
+              <stop offset='100%' stop-color='%238cc63f'/>
+            </linearGradient>
+          </defs>
+          <rect width='800' height='800' fill='url(%23g)'/>
+          <rect x='28' y='28' width='744' height='744' rx='36' fill='none' stroke='%23ef4444' stroke-width='6'/>
+          <text x='50%' y='44%' font-family='Arial' font-size='56' font-weight='800' text-anchor='middle' fill='%230f2e15'>Mini Mart</text>
+          <text x='50%' y='54%' font-family='Arial' font-size='34' font-weight='700' text-anchor='middle' fill='%230f2e15'>${safe}</text>
+        </svg>`.replace(/\n/g, "");
     }
 
-    function formatEuPrice(value) {
-      const n = Number(value);
-      if (!Number.isFinite(n)) return '';
-      return n.toFixed(2) + ' €';
-    }
-
-    function safeText(value, fallback='—') {
-      return value == null || value === '' ? fallback : String(value);
-    }
-
-    function formatDate(value) {
-      if (!value) return '—';
+    function getCart() {
       try {
-        const d = new Date(value);
-        if (Number.isNaN(d.getTime())) return value;
-        return d.toLocaleString('bg-BG');
+        return JSON.parse(localStorage.getItem(CART_KEY)) || [];
       } catch {
-        return value;
+        return [];
       }
     }
 
-    async function loadJSON(path, fallback) {
-      try {
-        const res = await fetch(path + '?t=' + Date.now(), { cache: 'no-store' });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        return await res.json();
-      } catch (err) {
-        return fallback;
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function addToCart(productTitle) {
+      const cart = getCart();
+      const found = cart.find(x => x.title === productTitle);
+
+      if (found) {
+        found.qty += 1;
+      } else {
+        cart.push({ title: productTitle, qty: 1 });
       }
+
+      saveCart(cart);
     }
 
-    function applyStatus(meta) {
-      const status = meta?.status || 'idle';
-      const titleMap = {
-        idle: 'Изчакване',
-        running: 'Тече обновяване',
-        finished: 'Готово',
-        error: 'Грешка'
-      };
-      els.statusTitle.textContent = titleMap[status] || status;
-      els.statusText.textContent = meta?.message || 'Няма активен scraper.';
-      els.statusBadge.className = 'badge ' + (status in titleMap ? status : 'idle');
-      els.statusBadge.textContent = status;
-      els.lastUpdated.textContent = formatDate(meta?.last_updated || meta?.started_at);
+    function clearCart() {
+      localStorage.removeItem(CART_KEY);
+      updateCartUI();
     }
 
-    function matchesFilters(product) {
-      const q = els.searchInput.value.trim().toLowerCase();
-      const avail = els.availabilitySelect.value;
-      const text = [
-        product.title,
-        product.category,
-        product.item_number,
-        product.url,
-        product.availability
-      ].join(' ').toLowerCase();
-
-      if (q && !text.includes(q)) return false;
-
-      const isAvailable = /налич|available|in stock|online price/i.test(product.availability || '');
-      if (avail === 'available' && !isAvailable) return false;
-      if (avail === 'not_available' && isAvailable) return false;
-
-      return true;
-    }
-
-    function sortProducts(products) {
-      const mode = els.sortSelect.value;
-      const arr = [...products];
-      switch (mode) {
-        case 'price_asc':
-          arr.sort((a,b) => (Number(a.price_bgn)||Infinity) - (Number(b.price_bgn)||Infinity));
-          break;
-        case 'price_desc':
-          arr.sort((a,b) => (Number(b.price_bgn)||-Infinity) - (Number(a.price_bgn)||-Infinity));
-          break;
-        case 'title_asc':
-          arr.sort((a,b) => String(a.title||'').localeCompare(String(b.title||''), 'bg'));
-          break;
-        case 'title_desc':
-          arr.sort((a,b) => String(b.title||'').localeCompare(String(a.title||''), 'bg'));
-          break;
-        default:
-          break;
-      }
-      return arr;
+    function updateCartUI() {
+      const cart = getCart();
+      const count = cart.reduce((sum, item) => sum + item.qty, 0);
+      els.cartCount.textContent = count;
+      els.floatingCartCount.textContent = `${count} продукта`;
     }
 
     function renderProducts() {
-      filteredProducts = sortProducts(allProducts.filter(matchesFilters));
-      els.productGrid.innerHTML = '';
-      els.totalProducts.textContent = allProducts.length.toLocaleString('bg-BG');
-      els.shownProducts.textContent = filteredProducts.length.toLocaleString('bg-BG');
+      const q = els.searchInput.value.trim().toLowerCase();
 
-      const categories = new Set(allProducts.map(x => x.category).filter(Boolean));
-      els.totalCategories.textContent = categories.size.toLocaleString('bg-BG');
+      const filtered = products.filter(product => {
+        const text = `${product.title} ${product.category}`.toLowerCase();
+        return !q || text.includes(q);
+      });
 
-      if (!filteredProducts.length) {
-        els.emptyState.style.display = 'block';
+      els.productGrid.innerHTML = "";
+      els.totalProducts.textContent = products.length;
+      els.shownProducts.textContent = filtered.length;
+      els.totalCategories.textContent = new Set(products.map(p => p.category)).size;
+
+      if (!filtered.length) {
+        els.emptyState.style.display = "block";
         return;
       }
 
-      els.emptyState.style.display = 'none';
+      els.emptyState.style.display = "none";
 
       const frag = document.createDocumentFragment();
 
-      filteredProducts.forEach(product => {
-        const card = document.createElement('article');
-        card.className = 'card';
-
-        const imageUrl = product.image || 'https://www.masterhaus.bg/images/default-og-image.jpg?m=1696323554';
-        const url = product.url || '#';
+      filtered.forEach((product, index) => {
+        const card = document.createElement("article");
+        card.className = "card";
 
         card.innerHTML = `
           <div class="image-wrap">
-            <img src="${imageUrl}" alt="${safeText(product.title, 'Product')}" loading="lazy" onerror="this.src='https://www.masterhaus.bg/images/default-og-image.jpg?m=1696323554'">
+            <img src="${product.image}" alt="${escapeHtml(product.title)}" loading="lazy">
           </div>
           <div class="body">
-            <div class="title">${safeText(product.title)}</div>
+            <div class="tag">${escapeHtml(product.category)}</div>
+            <div class="title">${escapeHtml(product.title)}</div>
             <div class="price">
-              <div class="bgn">${formatBgPrice(product.price_bgn)}</div>
-              <div class="eur">${formatEuPrice(product.price_eur)}</div>
+              <div class="bgn">${escapeHtml(product.priceLabel)}</div>
+              <div class="hint">Mini Mart box</div>
             </div>
-            <div class="availability">${safeText(product.availability, 'Без статус')}</div>
             <div class="meta">
-              <b>Категория:</b> ${safeText(product.category)}<br>
-              <b>Артикул:</b> ${safeText(product.item_number)}<br>
-              <b>Обновен:</b> ${formatDate(product.scraped_at)}
+              Продукт #${index + 1}<br>
+              Категория: ${escapeHtml(product.category)}
             </div>
             <div class="actions">
-              <a class="mini-btn" href="${url}" target="_blank" rel="noopener noreferrer">Продукт</a>
-              <a class="mini-btn" href="${imageUrl}" target="_blank" rel="noopener noreferrer">Снимка</a>
+              <button class="mini-btn dark" data-add="${escapeHtml(product.title)}">Добави в количката</button>
             </div>
           </div>
         `;
@@ -514,26 +568,44 @@
       });
 
       els.productGrid.appendChild(frag);
+
+      document.querySelectorAll("[data-add]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          addToCart(btn.getAttribute("data-add"));
+        });
+      });
     }
 
-    async function refreshAll() {
-      const [products, meta] = await Promise.all([
-        loadJSON('data/products.json', []),
-        loadJSON('data/meta.json', { status: 'idle', message: 'Няма meta файл.' })
-      ]);
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
 
-      allProducts = Array.isArray(products) ? products : [];
-      applyStatus(meta || {});
+    els.searchInput.addEventListener("input", renderProducts);
+    els.resetBtn.addEventListener("click", () => {
+      els.searchInput.value = "";
       renderProducts();
-    }
+    });
 
-    els.searchInput.addEventListener('input', renderProducts);
-    els.sortSelect.addEventListener('change', renderProducts);
-    els.availabilitySelect.addEventListener('change', renderProducts);
-    els.reloadBtn.addEventListener('click', refreshAll);
+    els.clearCartBtn.addEventListener("click", clearCart);
 
-    refreshAll();
-    setInterval(refreshAll, 12000);
+    els.viewCartBtn.addEventListener("click", () => {
+      const cart = getCart();
+      if (!cart.length) {
+        alert("Количката е празна.");
+        return;
+      }
+
+      const text = cart.map(item => `• ${item.title} x${item.qty}`).join("\n");
+      alert("Количка:\n\n" + text);
+    });
+
+    renderProducts();
+    updateCartUI();
   </script>
 </body>
 </html>
