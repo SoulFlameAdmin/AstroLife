@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mini Mart Catalog</title>
   <style>
-    *{box-sizing:border-box}
+    * { box-sizing: border-box; }
+
     :root{
       --bg:#f6f9f3;
       --card:#ffffff;
@@ -41,7 +42,7 @@
       gap:14px;
       flex-wrap:wrap;
       margin-bottom:18px;
-      background:rgba(255,255,255,.9);
+      background:rgba(255,255,255,.92);
       border:1px solid var(--line);
       border-radius:24px;
       padding:14px 16px;
@@ -116,12 +117,14 @@
       transition:transform .18s ease, opacity .18s ease;
     }
 
-    .button:hover{transform:translateY(-1px)}
+    .button:hover{ transform:translateY(-1px); }
+
     .button.primary{
       background:linear-gradient(135deg,var(--green),var(--green-dark));
       color:#fff;
       box-shadow:0 14px 30px rgba(140,198,63,.24);
     }
+
     .button.secondary{
       background:#fff;
       color:var(--text);
@@ -159,7 +162,7 @@
 
     .grid{
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+      grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
       gap:16px;
     }
 
@@ -182,6 +185,7 @@
       justify-content:center;
       overflow:hidden;
       border-bottom:1px solid var(--line);
+      position:relative;
     }
 
     .image-wrap img{
@@ -189,6 +193,20 @@
       height:100%;
       object-fit:cover;
       display:block;
+    }
+
+    .source-badge{
+      position:absolute;
+      top:12px;
+      left:12px;
+      background:rgba(255,255,255,.92);
+      color:#111;
+      border-radius:999px;
+      padding:8px 11px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.04em;
+      box-shadow:0 8px 18px rgba(0,0,0,.08);
     }
 
     .body{
@@ -250,10 +268,12 @@
       display:flex;
       gap:8px;
       padding-top:6px;
+      flex-wrap:wrap;
     }
 
     .mini-btn{
       flex:1;
+      min-width:120px;
       height:40px;
       border-radius:12px;
       border:1px solid var(--line);
@@ -284,7 +304,7 @@
       border-radius:20px;
       padding:14px 16px;
       box-shadow:0 20px 50px rgba(0,0,0,.22);
-      min-width:220px;
+      min-width:240px;
     }
 
     .cart-panel .small{
@@ -338,16 +358,16 @@
     }
 
     @media (max-width:980px){
-      .stats{grid-template-columns:repeat(2,1fr)}
+      .stats{ grid-template-columns:repeat(2,1fr); }
     }
 
     @media (max-width:720px){
-      .page{padding:14px}
-      .topbar{position:static}
-      .top-actions{width:100%}
-      .control{min-width:100%; width:100%}
-      .button{flex:1}
-      .stats{grid-template-columns:1fr}
+      .page{ padding:14px; }
+      .topbar{ position:static; }
+      .top-actions{ width:100%; }
+      .control{ min-width:100%; width:100%; }
+      .button{ flex:1; }
+      .stats{ grid-template-columns:1fr; }
       .cart-panel{
         right:12px;
         left:12px;
@@ -364,7 +384,7 @@
         <img src="https://mini-mart.bg/wp-content/uploads/2023/08/logo-copy.png" alt="Mini Mart Logo">
         <div class="brand-text">
           <h1>Mini Mart каталог</h1>
-          <p>Всички box-ове за изброените продукти директно в index.html</p>
+          <p>Точни official снимки за наличните standalone меню артикули + чист fallback за останалите</p>
         </div>
       </div>
 
@@ -408,45 +428,91 @@
   </div>
 
   <script>
-    const products = [
-      { title: "Зърнена закуска Nesquik + Верея прясно мляко", category: "Закуски", priceLabel: "Цена по обект", image: makePlaceholder("Nesquik + Vereya") },
-      { title: "Кейк Milkiss + вода Devin", category: "Комбо", priceLabel: "Цена по обект", image: makePlaceholder("Milkiss + Devin") },
-      { title: "Солети Elephant + Vitamin Aqua", category: "Комбо", priceLabel: "Цена по обект", image: makePlaceholder("Elephant + Vitamin Aqua") },
-      { title: "Десерт Kit Kat", category: "Десерти", priceLabel: "Цена по обект", image: makePlaceholder("Kit Kat") },
-      { title: "Брускети Maretti", category: "Снаксове", priceLabel: "Цена по обект", image: makePlaceholder("Maretti") },
-      { title: "Шоколадови бонбони Toffifee", category: "Сладки", priceLabel: "Цена по обект", image: makePlaceholder("Toffifee") },
-      { title: "Протеинов бар Fit Spo", category: "Барове", priceLabel: "Цена по обект", image: makePlaceholder("Fit Spo") },
-      { title: "Десерт Serenata", category: "Десерти", priceLabel: "Цена по обект", image: makePlaceholder("Serenata") },
-      { title: "Тунквани бисквити Coffee", category: "Бисквити", priceLabel: "Цена по обект", image: makePlaceholder("Coffee biscuits") },
-      { title: "Крекери Croco", category: "Снаксове", priceLabel: "Цена по обект", image: makePlaceholder("Croco") },
-      { title: "Чипс Pringles", category: "Чипс", priceLabel: "Цена по обект", image: makePlaceholder("Pringles") },
-      { title: "Снакс Hula Hoops", category: "Снаксове", priceLabel: "Цена по обект", image: makePlaceholder("Hula Hoops") },
-      { title: "BIO Harmonica вафла", category: "BIO", priceLabel: "Цена по обект", image: makePlaceholder("Harmonica wafer") },
-      { title: "Сладолед Familia", category: "Сладоледи", priceLabel: "Цена по обект", image: makePlaceholder("Familia ice cream") },
-      { title: "Бира Heineken", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Heineken") },
-      { title: "Бира Бургаско", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Burgasko") },
-      { title: "Газирана напитка Pepsi 2 л", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Pepsi 2L") },
-      { title: "Плодова напитка Queen 1 л", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Queen 1L") },
-      { title: "Вода Devin 425 мл", category: "Напитки", priceLabel: "Цена по обект", image: makePlaceholder("Devin 425ml") },
-      { title: "Alaska Pure Grain Vodka", category: "Алкохол", priceLabel: "Цена по обект", image: makePlaceholder("Alaska Vodka") },
-      { title: "Уиски Bushmills Black", category: "Алкохол", priceLabel: "Цена по обект", image: makePlaceholder("Bushmills Black") },
-      { title: "Jameson ирландско уиски", category: "Алкохол", priceLabel: "Цена по обект", image: makePlaceholder("Jameson") },
-      { title: "Вино ВИА ВИНЕРА", category: "Алкохол", priceLabel: "Цена по обект", image: makePlaceholder("VIA VINERA") },
-      { title: "Compass риба тон филе", category: "Консерви", priceLabel: "Цена по обект", image: makePlaceholder("Compass tuna") },
-      { title: "Krina ориз бял 1 кг", category: "Основни храни", priceLabel: "Цена по обект", image: makePlaceholder("Krina rice 1kg") },
-      { title: "Дерони домашна едросмляна лютеница", category: "Основни храни", priceLabel: "Цена по обект", image: makePlaceholder("Deroni lutenitsa") },
-      { title: "Грах Bonduelle", category: "Консерви", priceLabel: "Цена по обект", image: makePlaceholder("Bonduelle peas") },
-      { title: "Паста за зъби Aquafresh", category: "Нехранителни", priceLabel: "Цена по обект", image: makePlaceholder("Aquafresh") },
-      { title: "Захар Сладея 1 кг", category: "Основни храни", priceLabel: "Цена по обект", image: makePlaceholder("Sladeya sugar") },
-      { title: "Пица Passionata + Coca-Cola", category: "Комбо", priceLabel: "Цена по обект", image: makePlaceholder("Passionata + Coke") },
-      { title: "Клуб сандвич", category: "Сандвичи", priceLabel: "Цена по обект", image: makePlaceholder("Club sandwich") },
-      { title: "Хотдог Tokyo", category: "Хотдог", priceLabel: "Цена по обект", image: makePlaceholder("Tokyo hotdog") },
-      { title: "Хотдог New York", category: "Хотдог", priceLabel: "Цена по обект", image: makePlaceholder("New York hotdog") },
-      { title: "Хотдог Paris", category: "Хотдог", priceLabel: "Цена по обект", image: makePlaceholder("Paris hotdog") },
-      { title: "Кроасан с пушено филе и айсберг", category: "Закуски", priceLabel: "Цена по обект", image: makePlaceholder("Croissant") }
-    ];
+    const CART_KEY = "minimart_cart_boxes_v2";
 
-    const CART_KEY = "minimart_cart_boxes_v1";
+    function makePlaceholder(text) {
+      const safe = escapeXml(text);
+      return `data:image/svg+xml;utf8,
+<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'>
+  <defs>
+    <linearGradient id='g' x1='0' x2='1' y1='0' y2='1'>
+      <stop offset='0%' stop-color='%23c8ef8d'/>
+      <stop offset='100%' stop-color='%238cc63f'/>
+    </linearGradient>
+  </defs>
+  <rect width='800' height='800' fill='url(%23g)'/>
+  <rect x='28' y='28' width='744' height='744' rx='36' fill='none' stroke='%23ffffff' stroke-width='6' opacity='0.85'/>
+  <text x='50%' y='42%' font-family='Arial' font-size='56' font-weight='800' text-anchor='middle' fill='%230f2e15'>Mini Mart</text>
+  <text x='50%' y='52%' font-family='Arial' font-size='30' font-weight='700' text-anchor='middle' fill='%230f2e15'>${encodeURIComponent(safe)}</text>
+</svg>`.replace(/\n/g, "");
+    }
+
+    function escapeXml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+    }
+
+    const exactImages = {
+      "Един Рап цезар": "https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_01.png",
+      "Един Рап с шунка": "https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_02.png",
+      "Един Тост шунка": "https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_03.png",
+
+      "Хотдог Classic": "https://mini-mart.bg/wp-content/uploads/2025/09/01-Classic.png",
+      "Хотдог Multigrain": "https://mini-mart.bg/wp-content/uploads/2025/09/02-Multigrain.png",
+      "Хотдог Gymbo": "https://mini-mart.bg/wp-content/uploads/2025/09/03-Gymbo.png",
+      "Хотдог New York": "https://mini-mart.bg/wp-content/uploads/2026/02/04-New-York-New-1.png",
+      "Хотдог Paris": "https://mini-mart.bg/wp-content/uploads/2025/09/05-Paris.png",
+      "Хотдог Tokyo": "https://mini-mart.bg/wp-content/uploads/2025/09/07-Tokyo-NEW.png"
+    };
+
+    const products = [
+      { title: "Зърнена закуска Nesquik + Верея прясно мляко", category: "Закуски", priceLabel: "Цена по обект" },
+      { title: "Кейк Milkiss + вода Devin", category: "Комбо", priceLabel: "Цена по обект" },
+      { title: "Солети Elephant + Vitamin Aqua", category: "Комбо", priceLabel: "Цена по обект" },
+      { title: "Десерт Kit Kat", category: "Десерти", priceLabel: "Цена по обект" },
+      { title: "Брускети Maretti", category: "Снаксове", priceLabel: "Цена по обект" },
+      { title: "Шоколадови бонбони Toffifee", category: "Сладки", priceLabel: "Цена по обект" },
+      { title: "Протеинов бар Fit Spo", category: "Барове", priceLabel: "Цена по обект" },
+      { title: "Десерт Serenata", category: "Десерти", priceLabel: "Цена по обект" },
+      { title: "Тунквани бисквити Coffee", category: "Бисквити", priceLabel: "Цена по обект" },
+      { title: "Крекери Croco", category: "Снаксове", priceLabel: "Цена по обект" },
+      { title: "Чипс Pringles", category: "Чипс", priceLabel: "Цена по обект" },
+      { title: "Снакс Hula Hoops", category: "Снаксове", priceLabel: "Цена по обект" },
+      { title: "BIO Harmonica вафла", category: "BIO", priceLabel: "Цена по обект" },
+      { title: "Сладолед Familia", category: "Сладоледи", priceLabel: "Цена по обект" },
+      { title: "Бира Heineken", category: "Напитки", priceLabel: "Цена по обект" },
+      { title: "Бира Бургаско", category: "Напитки", priceLabel: "Цена по обект" },
+      { title: "Газирана напитка Pepsi 2 л", category: "Напитки", priceLabel: "Цена по обект" },
+      { title: "Плодова напитка Queen 1 л", category: "Напитки", priceLabel: "Цена по обект" },
+      { title: "Вода Devin 425 мл", category: "Напитки", priceLabel: "Цена по обект" },
+      { title: "Alaska Pure Grain Vodka", category: "Алкохол", priceLabel: "Цена по обект" },
+      { title: "Уиски Bushmills Black", category: "Алкохол", priceLabel: "Цена по обект" },
+      { title: "Jameson ирландско уиски", category: "Алкохол", priceLabel: "Цена по обект" },
+      { title: "Вино ВИА ВИНЕРА", category: "Алкохол", priceLabel: "Цена по обект" },
+      { title: "Compass риба тон филе", category: "Консерви", priceLabel: "Цена по обект" },
+      { title: "Krina ориз бял 1 кг", category: "Основни храни", priceLabel: "Цена по обект" },
+      { title: "Дерони домашна едросмляна лютеница", category: "Основни храни", priceLabel: "Цена по обект" },
+      { title: "Грах Bonduelle", category: "Консерви", priceLabel: "Цена по обект" },
+      { title: "Паста за зъби Aquafresh", category: "Нехранителни", priceLabel: "Цена по обект" },
+      { title: "Захар Сладея 1 кг", category: "Основни храни", priceLabel: "Цена по обект" },
+      { title: "Пица Passionata + Coca-Cola", category: "Комбо", priceLabel: "Цена по обект" },
+      { title: "Клуб сандвич", category: "Сандвичи", priceLabel: "Цена по обект" },
+      { title: "Хотдог Tokyo", category: "Хотдог", priceLabel: "Цена по обект" },
+      { title: "Хотдог New York", category: "Хотдог", priceLabel: "Цена по обект" },
+      { title: "Хотдог Paris", category: "Хотдог", priceLabel: "Цена по обект" },
+      { title: "Кроасан с пушено филе и айсберг", category: "Закуски", priceLabel: "Цена по обект" },
+
+      { title: "Един Рап цезар", category: "Сандвичи", priceLabel: "Цена по обект" },
+      { title: "Един Рап с шунка", category: "Сандвичи", priceLabel: "Цена по обект" },
+      { title: "Един Тост шунка", category: "Сандвичи", priceLabel: "Цена по обект" },
+      { title: "Хотдог Classic", category: "Хотдог", priceLabel: "Цена по обект" },
+      { title: "Хотдог Multigrain", category: "Хотдог", priceLabel: "Цена по обект" },
+      { title: "Хотдог Gymbo", category: "Хотдог", priceLabel: "Цена по обект" }
+    ];
 
     const els = {
       searchInput: document.getElementById("searchInput"),
@@ -462,21 +528,18 @@
       viewCartBtn: document.getElementById("viewCartBtn")
     };
 
-    function makePlaceholder(text) {
-      const safe = encodeURIComponent(text);
-      return `data:image/svg+xml;utf8,
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'>
-          <defs>
-            <linearGradient id='g' x1='0' x2='1' y1='0' y2='1'>
-              <stop offset='0%' stop-color='%23b6e56d'/>
-              <stop offset='100%' stop-color='%238cc63f'/>
-            </linearGradient>
-          </defs>
-          <rect width='800' height='800' fill='url(%23g)'/>
-          <rect x='28' y='28' width='744' height='744' rx='36' fill='none' stroke='%23ef4444' stroke-width='6'/>
-          <text x='50%' y='44%' font-family='Arial' font-size='56' font-weight='800' text-anchor='middle' fill='%230f2e15'>Mini Mart</text>
-          <text x='50%' y='54%' font-family='Arial' font-size='34' font-weight='700' text-anchor='middle' fill='%230f2e15'>${safe}</text>
-        </svg>`.replace(/\n/g, "");
+    function getImageForProduct(product) {
+      if (exactImages[product.title]) {
+        return {
+          url: exactImages[product.title],
+          source: "Official"
+        };
+      }
+
+      return {
+        url: makePlaceholder(product.title),
+        source: "Fallback"
+      };
     }
 
     function getCart() {
@@ -517,6 +580,15 @@
       els.floatingCartCount.textContent = `${count} продукта`;
     }
 
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
     function renderProducts() {
       const q = els.searchInput.value.trim().toLowerCase();
 
@@ -543,9 +615,12 @@
         const card = document.createElement("article");
         card.className = "card";
 
+        const imageData = getImageForProduct(product);
+
         card.innerHTML = `
           <div class="image-wrap">
-            <img src="${product.image}" alt="${escapeHtml(product.title)}" loading="lazy">
+            <span class="source-badge">${escapeHtml(imageData.source)}</span>
+            <img src="${imageData.url}" alt="${escapeHtml(product.title)}" loading="lazy">
           </div>
           <div class="body">
             <div class="tag">${escapeHtml(product.category)}</div>
@@ -576,16 +651,8 @@
       });
     }
 
-    function escapeHtml(text) {
-      return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
     els.searchInput.addEventListener("input", renderProducts);
+
     els.resetBtn.addEventListener("click", () => {
       els.searchInput.value = "";
       renderProducts();
@@ -595,6 +662,7 @@
 
     els.viewCartBtn.addEventListener("click", () => {
       const cart = getCart();
+
       if (!cart.length) {
         alert("Количката е празна.");
         return;
