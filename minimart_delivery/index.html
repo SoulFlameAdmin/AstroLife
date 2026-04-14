@@ -3,433 +3,653 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mini Mart Delivery | Каталог</title>
-  <meta name="description" content="Mini Mart delivery каталог с продуктови снимки, реални публично потвърдени цени и количка." />
+  <title>Mini Mart Delivery</title>
   <style>
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      font-family:Inter,Arial,sans-serif;
-      background:linear-gradient(180deg,#f8fff4,#f2f7ee 55%,#edf4e8);
-      color:#122018;
-    }
+    * { box-sizing: border-box; }
+
     :root{
+      --bg:#f4f8f2;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
       --green:#8cc63f;
-      --green-dark:#5d8f1a;
-      --line:rgba(18,32,24,.09);
-      --card:#fff;
-      --muted:#617069;
-      --shadow:0 18px 50px rgba(18,32,24,.10);
-      --radius:26px;
+      --green-dark:#5e8f1d;
+      --line:rgba(15,23,42,0.08);
+      --shadow:0 18px 46px rgba(9,15,24,.08);
+      --dark:#0b2230;
     }
+
+    html,body{
+      margin:0;
+      padding:0;
+      background:linear-gradient(180deg,#fbfff8,#eef5e9);
+      color:var(--text);
+      font-family:Arial,sans-serif;
+    }
+
+    .page{
+      max-width:1720px;
+      margin:0 auto;
+      padding:0 18px 24px;
+    }
+
     .topbar{
-      position:sticky;top:0;z-index:50;
-      background:rgba(255,255,255,.88);
-      backdrop-filter:blur(16px);
+      position:sticky;
+      top:0;
+      z-index:60;
+      background:rgba(255,255,255,.94);
+      backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);
+      margin:0 -18px 18px;
+      padding:14px 18px;
+      box-shadow:0 8px 24px rgba(0,0,0,.03);
     }
+
     .topbar-inner{
-      max-width:1500px;margin:0 auto;padding:14px 18px;
-      display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      max-width:1720px;
+      margin:0 auto;
+      flex-wrap:wrap;
     }
-    .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
-    .brand img{width:140px;display:block}
-    .brand-copy strong{display:block;font-size:17px}
-    .brand-copy span{font-size:13px;color:var(--muted)}
-    .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      min-width:0;
+    }
+
+    .brand img{
+      width:160px;
+      max-width:100%;
+      display:block;
+    }
+
+    .brand-copy h1{
+      margin:0 0 4px;
+      font-size:22px;
+      line-height:1.05;
+      letter-spacing:-.03em;
+    }
+
+    .brand-copy p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
     .search{
-      min-width:min(48vw,340px);height:48px;padding:0 16px;border-radius:999px;
-      border:1px solid var(--line);outline:none;background:#fff;font-size:14px;
+      width:390px;
+      max-width:100%;
+      height:54px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:0 20px;
+      font-size:16px;
+      background:#fff;
+      outline:none;
     }
-    .cart-btn,.filter-btn{
-      height:48px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
-      background:#fff;font-weight:800;cursor:pointer;color:#122018;
-    }
-    .cart-btn{background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;border:none}
 
-    .hero{max-width:1500px;margin:0 auto;padding:24px 18px 8px}
-    .hero-card{
-      display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center;
-      background:linear-gradient(135deg,#ffffff,#f5ffea);
-      border:1px solid rgba(140,198,63,.18);box-shadow:var(--shadow);
-      border-radius:34px;padding:26px;
+    .cart-btn{
+      min-width:138px;
+      height:54px;
+      border:none;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--green),#78b727);
+      color:#fff;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      padding:0 20px;
+      box-shadow:0 14px 28px rgba(140,198,63,.22);
     }
-    .badge{
-      display:inline-flex;padding:10px 15px;border-radius:999px;
-      background:rgba(140,198,63,.14);color:var(--green-dark);font-weight:800;font-size:13px;
-      margin-bottom:14px;
-    }
-    h1{font-size:clamp(34px,5vw,62px);line-height:.94;letter-spacing:-1.7px;margin:0 0 12px}
-    .hero p{margin:0 0 16px;color:var(--muted);font-size:17px;line-height:1.75;max-width:760px}
-    .hero-note{font-size:13px;color:#4f5e57;background:#fff;border:1px solid var(--line);padding:12px 14px;border-radius:18px}
-    .hero-visual{
-      display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
-    }
-    .mini-card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 10px 26px rgba(18,32,24,.06)}
-    .mini-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#eef6e5}
-    .mini-card div{padding:12px 14px;font-weight:800}
 
-    .section{max-width:1500px;margin:0 auto;padding:24px 18px 34px}
-    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-    .filter-btn.active{background:#122018;color:#fff;border-color:#122018}
-    .summary{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
-    .summary p{margin:0;color:var(--muted)}
+    .filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin:12px 0 14px;
+    }
 
-    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+    .pill{
+      border:none;
+      background:#fff;
+      color:var(--text);
+      height:54px;
+      padding:0 22px;
+      border-radius:999px;
+      font-size:16px;
+      font-weight:900;
+      cursor:pointer;
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+
+    .pill.active{
+      background:#07222a;
+      color:#fff;
+      border-color:#07222a;
+    }
+
+    .head-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin:12px 0 16px;
+      flex-wrap:wrap;
+    }
+
+    .head-row h2{
+      margin:0;
+      font-size:54px;
+      line-height:.95;
+      letter-spacing:-.05em;
+    }
+
+    .results{
+      color:var(--muted);
+      font-size:18px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+      gap:22px;
+    }
+
     .card{
-      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-      overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:100%;
     }
-    .thumb{position:relative}
-    .thumb img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#edf6e6}
-    .tag{
-      position:absolute;left:14px;top:14px;padding:8px 11px;border-radius:999px;
-      background:rgba(255,255,255,.92);backdrop-filter:blur(6px);font-size:12px;font-weight:900;
-    }
-    .body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
-    .title{font-size:22px;font-weight:900;line-height:1.1}
-    .desc{font-size:14px;line-height:1.65;color:var(--muted);min-height:68px}
-    .price{font-size:28px;font-weight:900;letter-spacing:-.8px}
-    .price small{font-size:12px;color:var(--muted);display:block;font-weight:700;letter-spacing:0;margin-top:4px}
-    .meta{font-size:12px;color:#496154;background:#f7faf7;border:1px solid var(--line);border-radius:14px;padding:10px 12px;line-height:1.55}
-    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
-    .btn{height:46px;padding:0 16px;border-radius:999px;border:none;cursor:pointer;font-weight:900}
-    .btn-add{background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;box-shadow:0 12px 24px rgba(140,198,63,.24)}
-    .btn-secondary{background:#122018;color:#fff;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
-    .btn[disabled]{background:#dce6d6;color:#68766f;cursor:not-allowed;box-shadow:none}
 
-    .cart-drawer{
-      position:fixed;right:18px;bottom:18px;width:min(420px,calc(100vw - 24px));max-height:78vh;
-      background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 24px 70px rgba(18,32,24,.20);
-      z-index:80;display:none;flex-direction:column;overflow:hidden;
+    .image-wrap{
+      aspect-ratio:1/1;
+      overflow:hidden;
+      background:#fff;
+      position:relative;
     }
-    .cart-drawer.open{display:flex}
-    .cart-head{padding:18px 18px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
-    .cart-head strong{font-size:20px}
-    .cart-list{padding:12px 18px;overflow:auto;display:flex;flex-direction:column;gap:10px;max-height:46vh}
-    .cart-item{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:10px}
-    .cart-item img{width:72px;height:72px;object-fit:cover;border-radius:14px;background:#edf6e6}
-    .cart-item-title{font-weight:900;font-size:15px}
-    .cart-item-price{font-size:13px;color:var(--muted);margin-top:4px}
-    .qty{display:flex;align-items:center;gap:8px;margin-top:8px}
-    .qty button{width:28px;height:28px;border:none;border-radius:999px;cursor:pointer;background:#122018;color:#fff;font-weight:900}
-    .remove{border:none;background:transparent;color:#b42318;font-weight:800;cursor:pointer}
-    .cart-foot{border-top:1px solid var(--line);padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px}
-    .row{display:flex;justify-content:space-between;gap:14px;align-items:center}
-    .checkout{height:50px;border:none;border-radius:999px;background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;font-weight:900;cursor:pointer}
-    .muted{color:var(--muted);font-size:13px;line-height:1.5}
-    .empty{padding:18px;border:1px dashed var(--line);border-radius:18px;text-align:center;color:var(--muted)}
 
-    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-    @media (max-width:960px){.hero-card{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media (max-width:680px){
-      .grid{grid-template-columns:1fr}
-      .hero-visual{grid-template-columns:1fr}
-      .search{min-width:100%}
-      .top-actions{width:100%}
-      .cart-btn,.filter-btn{flex:1}
-      .cart-drawer{right:12px;left:12px;width:auto;bottom:12px}
+    .image-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      background:#fff;
+    }
+
+    .badge{
+      position:absolute;
+      top:16px;
+      left:16px;
+      z-index:2;
+      background:rgba(255,255,255,.93);
+      color:#111;
+      padding:10px 16px;
+      border-radius:999px;
+      font-size:14px;
+      font-weight:900;
+      box-shadow:0 8px 20px rgba(0,0,0,.08);
+    }
+
+    .source-badge{
+      position:absolute;
+      top:16px;
+      right:16px;
+      z-index:2;
+      background:rgba(7,34,42,.92);
+      color:#fff;
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+
+    .body{
+      padding:20px 18px 18px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      flex:1;
+    }
+
+    .title{
+      font-size:28px;
+      line-height:1.08;
+      font-weight:900;
+      letter-spacing:-.04em;
+    }
+
+    .desc{
+      color:#55687b;
+      font-size:15px;
+      line-height:1.5;
+      min-height:44px;
+    }
+
+    .price{
+      font-size:28px;
+      font-weight:900;
+      letter-spacing:-.03em;
+      margin-top:6px;
+    }
+
+    .subprice{
+      color:#55687b;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    .meta-box{
+      margin-top:2px;
+      padding:14px 16px;
+      background:#f7faf7;
+      border:1px solid rgba(15,23,42,0.08);
+      border-radius:18px;
+      color:#55687b;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      margin-top:auto;
+      padding-top:4px;
+      flex-wrap:wrap;
+    }
+
+    .mini-btn{
+      flex:1;
+      min-width:130px;
+      height:44px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#111;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .mini-btn.dark{
+      background:#081e2a;
+      color:#fff;
+      border-color:#081e2a;
+    }
+
+    .empty{
+      display:none;
+      padding:18px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      color:var(--muted);
+      box-shadow:var(--shadow);
+      margin-bottom:16px;
+    }
+
+    @media (max-width:900px){
+      .head-row h2{ font-size:42px; }
+      .grid{ grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); }
+    }
+
+    @media (max-width:720px){
+      .page{ padding:0 14px 20px; }
+      .topbar{ margin:0 -14px 16px; padding:12px 14px; }
+      .topbar-inner{ align-items:flex-start; }
+      .search{ width:100%; }
+      .top-actions{ width:100%; }
+      .cart-btn{ width:100%; }
+      .head-row h2{ font-size:34px; }
+      .grid{ grid-template-columns:1fr; gap:16px; }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <a class="brand" href="#top">
-        <img src="https://mini-mart.bg/wp-content/uploads/2023/08/logo-copy.png" alt="Mini Mart logo">
-        <div class="brand-copy">
-          <strong>Mini Mart Delivery</strong>
-          <span>Единен каталог + количка в самия index</span>
+  <div class="page">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <img src="https://mini-mart.bg/wp-content/uploads/2023/08/logo-copy.png" alt="Mini Mart Logo">
+          <div class="brand-copy">
+            <h1>Mini Mart Delivery</h1>
+            <p>Единен каталог + количка + точни direct URL изображения, където са потвърдени</p>
+          </div>
         </div>
-      </a>
 
-      <div class="top-actions">
-        <input id="searchInput" class="search" type="text" placeholder="Търси продукт..." />
-        <button class="cart-btn" id="openCartBtn">Количка (<span id="cartCount">0</span>)</button>
+        <div class="top-actions">
+          <input id="searchInput" class="search" type="text" placeholder="Търси продукт..." />
+          <button id="cartOpenBtn" class="cart-btn">Количка (0)</button>
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <section class="section">
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">Всички</button>
-      <button class="filter-btn" data-filter="hotdog">Хотдог</button>
-      <button class="filter-btn" data-filter="sandwich">Сандвич</button>
-      <button class="filter-btn" data-filter="drink">Напитки</button>
-      <button class="filter-btn" data-filter="combo">Комбо</button>
+    <section class="filters">
+      <button class="pill active" data-filter="all">Всички</button>
+      <button class="pill" data-filter="Хотдог">Хотдог</button>
+      <button class="pill" data-filter="Сандвичи">Сандвичи</button>
+      <button class="pill" data-filter="Напитки">Напитки</button>
+      <button class="pill" data-filter="Комбо">Комбо</button>
+      <button class="pill" data-filter="Закуски">Закуски</button>
+      <button class="pill" data-filter="Десерти">Десерти</button>
+      <button class="pill" data-filter="Алкохол">Алкохол</button>
+      <button class="pill" data-filter="Основни храни">Основни храни</button>
+      <button class="pill" data-filter="Консерви">Консерви</button>
+      <button class="pill" data-filter="Нехранителни">Нехранителни</button>
+    </section>
+
+    <div class="head-row">
+      <h2>Продукти</h2>
+      <div class="results" id="resultsText">Показани 0 продукта</div>
     </div>
 
-    <div class="summary">
-      <h2 style="margin:0;font-size:30px">Продукти</h2>
-      <p id="resultsText">Показани 10 продукта</p>
-    </div>
-
-    <div class="grid" id="productGrid"></div>
-  </section>
-
-  <aside class="cart-drawer" id="cartDrawer">
-    <div class="cart-head">
-      <strong>Твоята количка</strong>
-      <button class="filter-btn" id="closeCartBtn">Затвори</button>
-    </div>
-    <div class="cart-list" id="cartList"></div>
-    <div class="cart-foot">
-      <div class="row"><span>Общо</span><strong id="cartTotal">0.00 лв</strong></div>
-      <button class="checkout" id="checkoutBtn">Завърши заявка</button>
-      <div class="muted">Количката е front-end демо с localStorage. За реални поръчки после се връзва към Firebase / имейл / админ панел.</div>
-    </div>
-  </aside>
+    <div id="emptyState" class="empty">Няма продукти по това търсене.</div>
+    <section id="productGrid" class="grid"></section>
+  </div>
 
   <script>
-    const STORAGE_KEY = 'minimart_delivery_cart_v1';
+    const CART_KEY = "minimart_real_images_cart_v4";
+
+    function usgImg(code) {
+      return `https://usg.bg/cdn-cgi/imagedelivery/ObffgCV-C0AAn5AgP1N3FA/0_${code}_1/public`;
+    }
+
+    function svgFallback(text) {
+      const safe = String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+      return `data:image/svg+xml;utf8,
+      <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 900'>
+        <defs>
+          <linearGradient id='g' x1='0' x2='1' y1='0' y2='1'>
+            <stop offset='0%' stop-color='%23c7ee92'/>
+            <stop offset='100%' stop-color='%238cc63f'/>
+          </linearGradient>
+        </defs>
+        <rect width='900' height='900' fill='url(%23g)'/>
+        <rect x='30' y='30' width='840' height='840' rx='42' fill='none' stroke='%23ffffff' stroke-width='7' opacity='0.85'/>
+        <text x='50%' y='42%' font-family='Arial' font-size='62' font-weight='900' text-anchor='middle' fill='%230d2f16'>Mini Mart</text>
+        <text x='50%' y='53%' font-family='Arial' font-size='28' font-weight='800' text-anchor='middle' fill='%230d2f16'>${encodeURIComponent(safe)}</text>
+      </svg>`.replace(/\n/g,'');
+    }
+
+    const directImages = {
+      "Един Рап цезар": "https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_01.png",
+      "Един Рап с шунка": "https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_02.png",
+      "Един Тост шунка": "https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_03.png",
+      "Хотдог Classic": "https://mini-mart.bg/wp-content/uploads/2025/09/01-Classic.png",
+      "Хотдог Multigrain": "https://mini-mart.bg/wp-content/uploads/2025/09/02-Multigrain.png",
+      "Хотдог Gymbo": "https://mini-mart.bg/wp-content/uploads/2025/09/03-Gymbo.png",
+      "Хотдог New York": "https://mini-mart.bg/wp-content/uploads/2026/02/04-New-York-New-1.png",
+      "Хотдог Paris": "https://mini-mart.bg/wp-content/uploads/2025/09/05-Paris.png",
+      "Хотдог Tokyo": "https://mini-mart.bg/wp-content/uploads/2025/09/07-Tokyo-NEW.png",
+
+      "Devin 500 ml": "https://usg.bg/cdn-cgi/imagedelivery/ObffgCV-C0AAn5AgP1N3FA/0_5015200130_1/public",
+      "Десерт Kit Kat": usgImg("5110120182"),
+      "Бира Heineken": usgImg("5015260099"),
+      "Coca-Cola 2 l": usgImg("5015180145")
+    };
 
     const products = [
-      {
-        id: 'classic-hotdog',
-        title: 'Classic Hotdog',
-        category: 'hotdog',
-        price: 3.50,
-        image: 'https://mini-mart.bg/wp-content/uploads/2025/09/01-Classic.png',
-        tag: 'Хотдог',
-        desc: 'Класически хотдог 130 g.',
-        note: 'Публично потвърдена регулярна цена.',
-        source: 'https://mini-mart.bg/aktualno/'
-      },
-      {
-        id: 'new-york-hotdog',
-        title: 'New York Hotdog',
-        category: 'hotdog',
-        price: 4.30,
-        image: 'https://mini-mart.bg/wp-content/uploads/2026/02/04-New-York-New-1.png',
-        tag: 'Хотдог',
-        desc: 'Хотдог в стил New York 170 g.',
-        note: 'Публично потвърдена цена от официална брошурна PDF политика.',
-        source: 'https://mini-mart.bg/aktualno/'
-      },
-      {
-        id: 'espresso',
-        title: 'Кафе Еспресо',
-        category: 'drink',
-        price: 1.19,
-        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
-        tag: 'Напитка',
-        desc: 'Еспресо 25/45/75 ml.',
-        note: 'Публично потвърдена регулярна цена от Комбо меню.',
-        source: 'https://mini-mart.bg/wp-content/uploads/2026/01/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-1-2.pdf'
-      },
-      {
-        id: 'devin-water',
-        title: 'Devin 500 ml',
-        category: 'drink',
-        price: 0.99,
-        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
-        tag: 'Напитка',
-        desc: 'Изворна или минерална вода 500 ml.',
-        note: 'Публично потвърдена регулярна цена от Комбо меню.',
-        source: 'https://mini-mart.bg/wp-content/uploads/2026/01/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-1-2.pdf'
-      },
-      {
-        id: 'pepsi-330',
-        title: '7UP / Mirinda / Pepsi 330 ml',
-        category: 'drink',
-        price: 1.59,
-        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
-        tag: 'Напитка',
-        desc: 'Газирана напитка 330 ml кен.',
-        note: 'Публично потвърдена регулярна цена от Комбо меню.',
-        source: 'https://mini-mart.bg/wp-content/uploads/2026/01/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-1-2.pdf'
-      },
-      {
-        id: 'ariana-radler',
-        title: 'Ariana Radler 0.0% 330 ml',
-        category: 'drink',
-        price: 1.49,
-        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
-        tag: 'Напитка',
-        desc: 'Радлер Ariana различни видове 0.0% vol. 330 ml.',
-        note: 'Публично потвърдена регулярна цена от Комбо меню.',
-        source: 'https://mini-mart.bg/wp-content/uploads/2026/01/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-1-2.pdf'
-      },
-      {
-        id: 'rap-cezar',
-        title: 'Един Рап цезар',
-        category: 'sandwich',
-        price: null,
-        image: 'https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_01.png',
-        tag: 'Сандвич',
-        desc: 'Официално публикувана продуктова визия.',
-        note: 'Има официална снимка, но не намерих публично структурирана отделна цена.',
-        source: 'https://mini-mart.bg/aktualno/'
-      },
-      {
-        id: 'rap-ham',
-        title: 'Един Рап с шунка',
-        category: 'sandwich',
-        price: null,
-        image: 'https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_02.png',
-        tag: 'Сандвич',
-        desc: 'Официално публикувана продуктова визия.',
-        note: 'Има официална снимка, но не намерих публично структурирана отделна цена.',
-        source: 'https://mini-mart.bg/aktualno/'
-      },
-      {
-        id: 'toast-ham',
-        title: 'Един Тост шунка',
-        category: 'sandwich',
-        price: null,
-        image: 'https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_03.png',
-        tag: 'Сандвич',
-        desc: 'Официално публикувана продуктова визия.',
-        note: 'Има официална снимка, но не намерих публично структурирана отделна цена.',
-        source: 'https://mini-mart.bg/aktualno/'
-      },
-      {
-        id: 'combo-menu',
-        title: 'Комбо меню визия',
-        category: 'combo',
-        price: null,
-        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
-        tag: 'Комбо',
-        desc: 'Официална комбо визия. Вътре има различни комбинации по обект и период.',
-        note: 'Комбото има публични регулярни цени за отделни артикули, но не една универсална цена за цялата визия.',
-        source: 'https://mini-mart.bg/brochure/'
-      }
+      { title: "Хотдог Tokyo", category: "Хотдог", desc: "Official Mini Mart image.", priceLabel: "Цена по обект" },
+      { title: "Хотдог New York", category: "Хотдог", desc: "Official Mini Mart image.", priceLabel: "Цена по обект" },
+      { title: "Хотдог Paris", category: "Хотдог", desc: "Official Mini Mart image.", priceLabel: "Цена по обект" },
+      { title: "Хотдог Classic", category: "Хотдог", desc: "Official Mini Mart image.", priceLabel: "Цена по обект" },
+      { title: "Хотдог Multigrain", category: "Хотдог", desc: "Official Mini Mart image.", priceLabel: "Цена по обект" },
+      { title: "Хотдог Gymbo", category: "Хотдог", desc: "Official Mini Mart image.", priceLabel: "Цена по обект" },
+
+      { title: "Клуб сандвич", category: "Сандвичи", desc: "Клуб сандвич.", priceLabel: "Цена по обект" },
+      { title: "Един Рап цезар", category: "Сандвичи", desc: "Official Mini Mart image.", priceLabel: "Цена по обект" },
+      { title: "Един Рап с шунка", category: "Сандвичи", desc: "Official Mini Mart image.", priceLabel: "Цена по обект" },
+      { title: "Един Тост шунка", category: "Сандвичи", desc: "Official Mini Mart image.", priceLabel: "Цена по обект" },
+
+      { title: "Газирана напитка Pepsi 2 л", category: "Напитки", desc: "Pepsi 2 l.", priceLabel: "Цена по обект" },
+      { title: "Плодова напитка Queen 1 л", category: "Напитки", desc: "Плодова напитка 1 l.", priceLabel: "Цена по обект" },
+      { title: "Devin 500 ml", category: "Напитки", desc: "Минерална вода 500 ml.", priceLabel: "Цена по обект" },
+
+      { title: "Кейк Milkiss + вода Devin", category: "Комбо", desc: "Кейк + вода.", priceLabel: "Цена по обект" },
+      { title: "Солети Elephant + Vitamin Aqua", category: "Комбо", desc: "Солети + вода.", priceLabel: "Цена по обект" },
+      { title: "Пица Passionata + Coca-Cola", category: "Комбо", desc: "Пица + Coca-Cola.", priceLabel: "Цена по обект" },
+
+      { title: "Зърнена закуска Nesquik + Верея прясно мляко", category: "Закуски", desc: "Комбо закуска.", priceLabel: "Цена по обект" },
+      { title: "Брускети Maretti", category: "Закуски", desc: "Брускети.", priceLabel: "Цена по обект" },
+      { title: "Протеинов бар Fit Spo", category: "Закуски", desc: "Протеинов бар.", priceLabel: "Цена по обект" },
+      { title: "Крекери Croco", category: "Закуски", desc: "Крекери.", priceLabel: "Цена по обект" },
+      { title: "Чипс Pringles", category: "Закуски", desc: "Чипс.", priceLabel: "Цена по обект" },
+      { title: "Снакс Hula Hoops", category: "Закуски", desc: "Снакс.", priceLabel: "Цена по обект" },
+      { title: "BIO Harmonica вафла", category: "Закуски", desc: "Био вафла.", priceLabel: "Цена по обект" },
+      { title: "Кроасан с пушено филе и айсберг", category: "Закуски", desc: "Кроасан.", priceLabel: "Цена по обект" },
+
+      { title: "Десерт Kit Kat", category: "Десерти", desc: "Kit Kat 4 Finger.", priceLabel: "Цена по обект" },
+      { title: "Шоколадови бонбони Toffifee", category: "Десерти", desc: "Шоколадови бонбони.", priceLabel: "Цена по обект" },
+      { title: "Десерт Serenata", category: "Десерти", desc: "Шоколадов десерт.", priceLabel: "Цена по обект" },
+      { title: "Тунквани бисквити Coffee", category: "Десерти", desc: "Бисквити.", priceLabel: "Цена по обект" },
+      { title: "Сладолед Familia", category: "Десерти", desc: "Сладолед.", priceLabel: "Цена по обект" },
+
+      { title: "Бира Heineken", category: "Алкохол", desc: "Heineken.", priceLabel: "Цена по обект" },
+      { title: "Бира Бургаско", category: "Алкохол", desc: "Бира.", priceLabel: "Цена по обект" },
+      { title: "Alaska Pure Grain Vodka", category: "Алкохол", desc: "Водка.", priceLabel: "Цена по обект" },
+      { title: "Уиски Bushmills Black", category: "Алкохол", desc: "Уиски.", priceLabel: "Цена по обект" },
+      { title: "Jameson ирландско уиски", category: "Алкохол", desc: "Ирландско уиски.", priceLabel: "Цена по обект" },
+      { title: "Вино ВИА ВИНЕРА", category: "Алкохол", desc: "Вино.", priceLabel: "Цена по обект" },
+
+      { title: "Krina ориз бял 1 кг", category: "Основни храни", desc: "Ориз 1 кг.", priceLabel: "Цена по обект" },
+      { title: "Дерони домашна едросмляна лютеница", category: "Основни храни", desc: "Лютеница.", priceLabel: "Цена по обект" },
+      { title: "Захар Сладея 1 кг", category: "Основни храни", desc: "Захар 1 кг.", priceLabel: "Цена по обект" },
+
+      { title: "Compass риба тон филе", category: "Консерви", desc: "Риба тон.", priceLabel: "Цена по обект" },
+      { title: "Грах Bonduelle", category: "Консерви", desc: "Грах.", priceLabel: "Цена по обект" },
+
+      { title: "Паста за зъби Aquafresh", category: "Нехранителни", desc: "Паста за зъби.", priceLabel: "Цена по обект" }
     ];
 
-    let cart = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    let activeFilter = 'all';
-    let query = '';
+    let currentFilter = "all";
 
-    const grid = document.getElementById('productGrid');
-    const cartList = document.getElementById('cartList');
-    const cartCount = document.getElementById('cartCount');
-    const cartTotal = document.getElementById('cartTotal');
-    const resultsText = document.getElementById('resultsText');
-    const cartDrawer = document.getElementById('cartDrawer');
-    const searchInput = document.getElementById('searchInput');
+    const categoryPriority = {
+      "Хотдог": 1,
+      "Сандвичи": 2,
+      "Напитки": 3,
+      "Комбо": 4,
+      "Закуски": 5,
+      "Десерти": 6,
+      "Алкохол": 7,
+      "Основни храни": 8,
+      "Консерви": 9,
+      "Нехранителни": 10
+    };
 
-    function money(v){ return `${v.toFixed(2)} лв`; }
+    const els = {
+      searchInput: document.getElementById("searchInput"),
+      cartOpenBtn: document.getElementById("cartOpenBtn"),
+      productGrid: document.getElementById("productGrid"),
+      emptyState: document.getElementById("emptyState"),
+      resultsText: document.getElementById("resultsText"),
+      pills: [...document.querySelectorAll(".pill")]
+    };
 
-    function renderProducts(){
-      const filtered = products.filter(p => {
-        const filterMatch = activeFilter === 'all' || p.category === activeFilter;
-        const searchMatch = !query || `${p.title} ${p.desc} ${p.tag}`.toLowerCase().includes(query);
-        return filterMatch && searchMatch;
-      });
-
-      resultsText.textContent = `Показани ${filtered.length} продукта`;
-
-      grid.innerHTML = filtered.map(p => `
-        <article class="card">
-          <div class="thumb">
-            <img src="${p.image}" alt="${p.title}">
-            <div class="tag">${p.tag}</div>
-          </div>
-          <div class="body">
-            <div class="title">${p.title}</div>
-            <div class="desc">${p.desc}</div>
-            <div class="price">
-              ${p.price != null ? money(p.price) : 'Няма цена'}
-              <small>${p.price != null ? 'публично потвърдена' : 'няма публично потвърдена стойност'}</small>
-            </div>
-            <div class="meta">${p.note}</div>
-            <div class="actions">
-              <button class="btn btn-add" ${p.price == null ? 'disabled' : ''} onclick="addToCart('${p.id}')">${p.price == null ? 'Няма цена' : 'Добави в количката'}</button>
-              <a class="btn btn-secondary" href="${p.source}" target="_blank" rel="noopener">Източник</a>
-            </div>
-          </div>
-        </article>
-      `).join('');
-    }
-
-    function addToCart(id){
-      const product = products.find(p => p.id === id);
-      if(!product || product.price == null) return;
-      const existing = cart.find(item => item.id === id);
-      if(existing){
-        existing.qty += 1;
-      } else {
-        cart.push({ id: product.id, title: product.title, price: product.price, image: product.image, qty: 1 });
+    function getImageFor(product) {
+      if (directImages[product.title]) {
+        return { url: directImages[product.title], source: "Direct" };
       }
-      persistCart();
-      renderCart();
-      cartDrawer.classList.add('open');
+      return { url: svgFallback(product.title), source: "Pending" };
     }
 
-    function changeQty(id, delta){
-      const item = cart.find(i => i.id === id);
-      if(!item) return;
-      item.qty += delta;
-      if(item.qty <= 0) cart = cart.filter(i => i.id !== id);
-      persistCart();
-      renderCart();
+    function getCart() {
+      try {
+        return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+      } catch {
+        return [];
+      }
     }
 
-    function removeItem(id){
-      cart = cart.filter(i => i.id !== id);
-      persistCart();
-      renderCart();
+    function saveCart(cart) {
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      updateCartUi();
     }
 
-    function persistCart(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    function addToCart(title) {
+      const cart = getCart();
+      const found = cart.find(x => x.title === title);
+
+      if (found) {
+        found.qty += 1;
+      } else {
+        cart.push({ title, qty: 1 });
+      }
+
+      saveCart(cart);
     }
 
-    function renderCart(){
-      cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
-      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      cartTotal.textContent = money(total);
+    function clearCart() {
+      localStorage.removeItem(CART_KEY);
+      updateCartUi();
+    }
 
-      if(!cart.length){
-        cartList.innerHTML = '<div class="empty">Количката е празна.</div>';
+    function updateCartUi() {
+      const count = getCart().reduce((sum, item) => sum + item.qty, 0);
+      els.cartOpenBtn.textContent = `Количка (${count})`;
+    }
+
+    function showCart() {
+      const cart = getCart();
+
+      if (!cart.length) {
+        alert("Количката е празна.");
         return;
       }
 
-      cartList.innerHTML = cart.map(item => `
-        <div class="cart-item">
-          <img src="${item.image}" alt="${item.title}">
-          <div>
-            <div class="cart-item-title">${item.title}</div>
-            <div class="cart-item-price">${money(item.price)} / бр.</div>
-            <div class="qty">
-              <button onclick="changeQty('${item.id}', -1)">−</button>
-              <strong>${item.qty}</strong>
-              <button onclick="changeQty('${item.id}', 1)">+</button>
-            </div>
-          </div>
-          <div>
-            <div style="font-weight:900;text-align:right">${money(item.price * item.qty)}</div>
-            <button class="remove" onclick="removeItem('${item.id}')">Премахни</button>
-          </div>
-        </div>
-      `).join('');
+      const text = cart.map(item => `• ${item.title} x${item.qty}`).join("\n");
+      const shouldClear = confirm(`Количка:\n\n${text}\n\nOK = Изчисти количката\nCancel = Затвори`);
+      if (shouldClear) clearCart();
     }
 
-    document.querySelectorAll('[data-filter]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeFilter = btn.dataset.filter;
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function matchesProduct(product) {
+      const q = els.searchInput.value.trim().toLowerCase();
+      const filterOk = currentFilter === "all" || product.category === currentFilter;
+      const text = `${product.title} ${product.category} ${product.desc}`.toLowerCase();
+      const searchOk = !q || text.includes(q);
+      return filterOk && searchOk;
+    }
+
+    function sortProducts(list) {
+      if (currentFilter !== "all") return list;
+
+      return [...list].sort((a, b) => {
+        const priorityA = categoryPriority[a.category] || 999;
+        const priorityB = categoryPriority[b.category] || 999;
+
+        if (priorityA !== priorityB) {
+          return priorityA - priorityB;
+        }
+
+        return a.title.localeCompare(b.title, "bg");
+      });
+    }
+
+    function renderProducts() {
+      const filtered = sortProducts(products.filter(matchesProduct));
+
+      els.productGrid.innerHTML = "";
+      els.resultsText.textContent = `Показани ${filtered.length} продукта`;
+      els.emptyState.style.display = filtered.length ? "none" : "block";
+
+      const frag = document.createDocumentFragment();
+
+      filtered.forEach((product) => {
+        const imageData = getImageFor(product);
+        const card = document.createElement("article");
+        card.className = "card";
+
+        card.innerHTML = `
+          <div class="image-wrap">
+            <div class="badge">${escapeHtml(product.category)}</div>
+            <div class="source-badge">${escapeHtml(imageData.source)}</div>
+            <img src="${imageData.url}" alt="${escapeHtml(product.title)}" loading="lazy">
+          </div>
+          <div class="body">
+            <div class="title">${escapeHtml(product.title)}</div>
+            <div class="desc">${escapeHtml(product.desc)}</div>
+            <div class="price">${escapeHtml(product.priceLabel)}</div>
+            <div class="subprice">при „Всички“ започва с hotdog</div>
+            <div class="meta-box">
+              Ако има потвърден direct URL, се зарежда той.<br>
+              Ако още не е вързан exact линк, показва отделна карта с името на продукта, не чужда снимка.
+            </div>
+            <div class="actions">
+              <button class="mini-btn dark">Добави в количката</button>
+              <button class="mini-btn">Виж снимка</button>
+            </div>
+          </div>
+        `;
+
+        const img = card.querySelector("img");
+        const addBtn = card.querySelectorAll(".mini-btn")[0];
+        const viewBtn = card.querySelectorAll(".mini-btn")[1];
+
+        img.addEventListener("error", () => {
+          img.src = svgFallback(product.title);
+        });
+
+        addBtn.addEventListener("click", () => addToCart(product.title));
+        viewBtn.addEventListener("click", () => window.open(imageData.url, "_blank"));
+
+        frag.appendChild(card);
+      });
+
+      els.productGrid.appendChild(frag);
+    }
+
+    els.searchInput.addEventListener("input", renderProducts);
+    els.cartOpenBtn.addEventListener("click", showCart);
+
+    els.pills.forEach(btn => {
+      btn.addEventListener("click", () => {
+        els.pills.forEach(x => x.classList.remove("active"));
+        btn.classList.add("active");
+        currentFilter = btn.dataset.filter;
         renderProducts();
       });
     });
 
-    searchInput.addEventListener('input', e => {
-      query = e.target.value.trim().toLowerCase();
-      renderProducts();
-    });
-
-    document.getElementById('openCartBtn').addEventListener('click', () => cartDrawer.classList.add('open'));
-    document.getElementById('closeCartBtn').addEventListener('click', () => cartDrawer.classList.remove('open'));
-    document.getElementById('checkoutBtn').addEventListener('click', () => {
-      if(!cart.length){ alert('Количката е празна.'); return; }
-      const text = cart.map(i => `• ${i.title} x${i.qty} = ${money(i.price * i.qty)}`).join('\n');
-      alert(`Заявка:\n\n${text}\n\nОбщо: ${money(cart.reduce((s,i)=>s+i.price*i.qty,0))}\n\nСледваща стъпка: вържи бутона към форма, имейл или Firebase.`);
-    });
-
     renderProducts();
-    renderCart();
+    updateCartUi();
   </script>
 </body>
 </html>
