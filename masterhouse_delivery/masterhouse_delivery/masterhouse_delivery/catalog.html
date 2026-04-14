@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masterhouse Catalog</title>
+  <style>
+    *{box-sizing:border-box}
+    :root{
+      --bg:#f6f8fb;
+      --card:#ffffff;
+      --text:#111318;
+      --muted:#5f6975;
+      --line:rgba(17,19,24,.08);
+      --shadow:0 18px 46px rgba(9,15,24,.08);
+      --accent:#121417;
+      --soft:#edf2f7;
+      --ok:#0f9d58;
+      --warn:#c77b00;
+      --run:#1769ff;
+      --err:#c62828;
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+    .page{max-width:1400px;margin:0 auto;padding:20px}
+    .hero{
+      background:linear-gradient(135deg,#fff,#eef4fb);
+      border:1px solid var(--line);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:20px;
+      display:grid;
+      grid-template-columns:180px 1fr;
+      gap:20px;
+      align-items:center;
+    }
+    .hero img{
+      width:100%;
+      border-radius:20px;
+      display:block;
+      object-fit:cover;
+      min-height:140px;
+      max-height:180px;
+      background:#fff;
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-size:clamp(28px,4vw,48px);
+      line-height:1;
+      letter-spacing:-0.03em;
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:15px;
+      max-width:70ch;
+    }
+    .toolbar{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:1.25fr .7fr .7fr auto auto;
+      gap:12px;
+    }
+    .control,.button{
+      height:48px;
+      border:none;
+      border-radius:16px;
+      padding:0 14px;
+      font-size:15px;
+    }
+    .control{
+      background:#fff;
+      border:1px solid var(--line);
+      outline:none;
+    }
+    .button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      text-decoration:none;
+      cursor:pointer;
+      font-weight:700;
+      background:#111;
+      color:#fff;
+      padding:0 18px;
+      transition:transform .18s ease, opacity .18s ease;
+    }
+    .button:hover{transform:translateY(-1px)}
+    .button.secondary{
+      background:#eef2f7;
+      color:#111;
+    }
+    .stats{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+    }
+    .stat,.status{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:16px;
+    }
+    .stat .label,.status .label{
+      color:var(--muted);
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:8px;
+    }
+    .stat .value{
+      font-size:24px;
+      font-weight:800;
+      letter-spacing:-.03em;
+    }
+    .status-row{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .status .big{
+      font-size:18px;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+    .status .text{
+      margin-top:8px;
+      color:var(--muted);
+      line-height:1.55;
+      font-size:14px;
+      white-space:pre-wrap;
+      word-break:break-word;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+      margin-top:6px;
+    }
+    .badge.running{background:rgba(23,105,255,.1);color:var(--run)}
+    .badge.finished{background:rgba(15,157,88,.12);color:var(--ok)}
+    .badge.error{background:rgba(198,40,40,.12);color:var(--err)}
+    .badge.idle{background:rgba(199,123,0,.12);color:var(--warn)}
+    .grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+      gap:16px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height:100%;
+    }
+    .image-wrap{
+      aspect-ratio:1/1;
+      background:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .image-wrap img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      display:block;
+    }
+    .body{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .title{
+      font-size:15px;
+      line-height:1.42;
+      font-weight:700;
+      min-height:42px;
+    }
+    .meta{
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+    .price{
+      display:flex;
+      gap:8px;
+      align-items:baseline;
+      flex-wrap:wrap;
+    }
+    .bgn{
+      font-size:22px;
+      font-weight:800;
+      letter-spacing:-.03em;
+    }
+    .eur{
+      font-size:14px;
+      color:var(--muted);
+      font-weight:700;
+    }
+    .availability{
+      margin-top:2px;
+      display:inline-flex;
+      align-items:center;
+      width:max-content;
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      background:#eef2f7;
+    }
+    .actions{
+      margin-top:auto;
+      display:flex;
+      gap:8px;
+      padding-top:4px;
+    }
+    .mini-btn{
+      flex:1;
+      height:38px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:#111;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:13px;
+      font-weight:700;
+    }
+    .empty{
+      margin-top:18px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      color:var(--muted);
+      line-height:1.6;
+      box-shadow:var(--shadow);
+    }
+    @media (max-width:980px){
+      .toolbar{grid-template-columns:1fr 1fr}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .status-row{grid-template-columns:1fr}
+    }
+    @media (max-width:700px){
+      .page{padding:14px}
+      .hero{grid-template-columns:1fr;padding:16px}
+      .toolbar{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr 1fr}
+    }
+    @media (max-width:480px){
+      .stats{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="hero">
+      <img src="https://www.masterhaus.bg/images/default-og-image.jpg?m=1696323554" alt="Masterhouse Logo">
+      <div>
+        <h1>Masterhouse каталог</h1>
+        <p>
+          Локален каталог със зареждане от <b>data/products.json</b>. Статусът на scraper-а идва от
+          <b>data/meta.json</b>. Натисни <b>start_masterhouse.bat</b> от папката, за да пуснеш сървъра и
+          автоматичното обновяване.
+        </p>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <input id="searchInput" class="control" type="text" placeholder="Търси по име, категория, артикулен номер..." />
+      <select id="sortSelect" class="control">
+        <option value="default">Подредба</option>
+        <option value="price_asc">Цена ↑</option>
+        <option value="price_desc">Цена ↓</option>
+        <option value="title_asc">Име A-Z</option>
+        <option value="title_desc">Име Z-A</option>
+      </select>
+      <select id="availabilitySelect" class="control">
+        <option value="all">Всичко</option>
+        <option value="available">Налични</option>
+        <option value="not_available">Неналични</option>
+      </select>
+      <a class="button secondary" href="launcher.html">Назад</a>
+      <button class="button" id="reloadBtn">Обнови</button>
+    </section>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="label">Продукти</div>
+        <div class="value" id="totalProducts">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Показани</div>
+        <div class="value" id="shownProducts">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Категории</div>
+        <div class="value" id="totalCategories">0</div>
+      </div>
+      <div class="stat">
+        <div class="label">Последно обновяване</div>
+        <div class="value" id="lastUpdated" style="font-size:18px;">—</div>
+      </div>
+    </section>
+
+    <section class="status-row">
+      <div class="status">
+        <div class="label">Статус на scraper</div>
+        <div class="big" id="statusTitle">Няма данни</div>
+        <div id="statusBadge" class="badge idle">Idle</div>
+        <div class="text" id="statusText">Стартирай start_masterhouse.bat</div>
+      </div>
+      <div class="status">
+        <div class="label">Файлове</div>
+        <div class="text">
+          <b>Данни:</b> data/products.json<br>
+          <b>CSV:</b> data/products.csv<br>
+          <b>Статус:</b> data/meta.json
+        </div>
+      </div>
+    </section>
+
+    <div id="emptyState" class="empty" style="display:none;">
+      Няма заредени продукти. Пусни <b>start_masterhouse.bat</b> или <b>update_masterhouse.bat</b>,
+      за да се изтеглят данните в папката.
+    </div>
+
+    <section id="productGrid" class="grid"></section>
+  </div>
+
+  <script>
+    let allProducts = [];
+    let filteredProducts = [];
+
+    const els = {
+      searchInput: document.getElementById('searchInput'),
+      sortSelect: document.getElementById('sortSelect'),
+      availabilitySelect: document.getElementById('availabilitySelect'),
+      reloadBtn: document.getElementById('reloadBtn'),
+      totalProducts: document.getElementById('totalProducts'),
+      shownProducts: document.getElementById('shownProducts'),
+      totalCategories: document.getElementById('totalCategories'),
+      lastUpdated: document.getElementById('lastUpdated'),
+      statusTitle: document.getElementById('statusTitle'),
+      statusText: document.getElementById('statusText'),
+      statusBadge: document.getElementById('statusBadge'),
+      productGrid: document.getElementById('productGrid'),
+      emptyState: document.getElementById('emptyState')
+    };
+
+    function formatBgPrice(value) {
+      const n = Number(value);
+      if (!Number.isFinite(n)) return '—';
+      return n.toFixed(2) + ' лв';
+    }
+
+    function formatEuPrice(value) {
+      const n = Number(value);
+      if (!Number.isFinite(n)) return '';
+      return n.toFixed(2) + ' €';
+    }
+
+    function safeText(value, fallback='—') {
+      return value == null || value === '' ? fallback : String(value);
+    }
+
+    function formatDate(value) {
+      if (!value) return '—';
+      try {
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) return value;
+        return d.toLocaleString('bg-BG');
+      } catch {
+        return value;
+      }
+    }
+
+    async function loadJSON(path, fallback) {
+      try {
+        const res = await fetch(path + '?t=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+      } catch (err) {
+        return fallback;
+      }
+    }
+
+    function applyStatus(meta) {
+      const status = meta?.status || 'idle';
+      const titleMap = {
+        idle: 'Изчакване',
+        running: 'Тече обновяване',
+        finished: 'Готово',
+        error: 'Грешка'
+      };
+      els.statusTitle.textContent = titleMap[status] || status;
+      els.statusText.textContent = meta?.message || 'Няма активен scraper.';
+      els.statusBadge.className = 'badge ' + (status in titleMap ? status : 'idle');
+      els.statusBadge.textContent = status;
+      els.lastUpdated.textContent = formatDate(meta?.last_updated || meta?.started_at);
+    }
+
+    function matchesFilters(product) {
+      const q = els.searchInput.value.trim().toLowerCase();
+      const avail = els.availabilitySelect.value;
+      const text = [
+        product.title,
+        product.category,
+        product.item_number,
+        product.url,
+        product.availability
+      ].join(' ').toLowerCase();
+
+      if (q && !text.includes(q)) return false;
+
+      const isAvailable = /налич|available|in stock|online price/i.test(product.availability || '');
+      if (avail === 'available' && !isAvailable) return false;
+      if (avail === 'not_available' && isAvailable) return false;
+
+      return true;
+    }
+
+    function sortProducts(products) {
+      const mode = els.sortSelect.value;
+      const arr = [...products];
+      switch (mode) {
+        case 'price_asc':
+          arr.sort((a,b) => (Number(a.price_bgn)||Infinity) - (Number(b.price_bgn)||Infinity));
+          break;
+        case 'price_desc':
+          arr.sort((a,b) => (Number(b.price_bgn)||-Infinity) - (Number(a.price_bgn)||-Infinity));
+          break;
+        case 'title_asc':
+          arr.sort((a,b) => String(a.title||'').localeCompare(String(b.title||''), 'bg'));
+          break;
+        case 'title_desc':
+          arr.sort((a,b) => String(b.title||'').localeCompare(String(a.title||''), 'bg'));
+          break;
+        default:
+          break;
+      }
+      return arr;
+    }
+
+    function renderProducts() {
+      filteredProducts = sortProducts(allProducts.filter(matchesFilters));
+      els.productGrid.innerHTML = '';
+      els.totalProducts.textContent = allProducts.length.toLocaleString('bg-BG');
+      els.shownProducts.textContent = filteredProducts.length.toLocaleString('bg-BG');
+
+      const categories = new Set(allProducts.map(x => x.category).filter(Boolean));
+      els.totalCategories.textContent = categories.size.toLocaleString('bg-BG');
+
+      if (!filteredProducts.length) {
+        els.emptyState.style.display = 'block';
+        return;
+      }
+
+      els.emptyState.style.display = 'none';
+
+      const frag = document.createDocumentFragment();
+
+      filteredProducts.forEach(product => {
+        const card = document.createElement('article');
+        card.className = 'card';
+
+        const imageUrl = product.image || 'https://www.masterhaus.bg/images/default-og-image.jpg?m=1696323554';
+        const url = product.url || '#';
+
+        card.innerHTML = `
+          <div class="image-wrap">
+            <img src="${imageUrl}" alt="${safeText(product.title, 'Product')}" loading="lazy" onerror="this.src='https://www.masterhaus.bg/images/default-og-image.jpg?m=1696323554'">
+          </div>
+          <div class="body">
+            <div class="title">${safeText(product.title)}</div>
+            <div class="price">
+              <div class="bgn">${formatBgPrice(product.price_bgn)}</div>
+              <div class="eur">${formatEuPrice(product.price_eur)}</div>
+            </div>
+            <div class="availability">${safeText(product.availability, 'Без статус')}</div>
+            <div class="meta">
+              <b>Категория:</b> ${safeText(product.category)}<br>
+              <b>Артикул:</b> ${safeText(product.item_number)}<br>
+              <b>Обновен:</b> ${formatDate(product.scraped_at)}
+            </div>
+            <div class="actions">
+              <a class="mini-btn" href="${url}" target="_blank" rel="noopener noreferrer">Продукт</a>
+              <a class="mini-btn" href="${imageUrl}" target="_blank" rel="noopener noreferrer">Снимка</a>
+            </div>
+          </div>
+        `;
+
+        frag.appendChild(card);
+      });
+
+      els.productGrid.appendChild(frag);
+    }
+
+    async function refreshAll() {
+      const [products, meta] = await Promise.all([
+        loadJSON('data/products.json', []),
+        loadJSON('data/meta.json', { status: 'idle', message: 'Няма meta файл.' })
+      ]);
+
+      allProducts = Array.isArray(products) ? products : [];
+      applyStatus(meta || {});
+      renderProducts();
+    }
+
+    els.searchInput.addEventListener('input', renderProducts);
+    els.sortSelect.addEventListener('change', renderProducts);
+    els.availabilitySelect.addEventListener('change', renderProducts);
+    els.reloadBtn.addEventListener('click', refreshAll);
+
+    refreshAll();
+    setInterval(refreshAll, 12000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masterhouse Delivery</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root{
+      --bg1:#f5f7fa;
+      --bg2:#dfe7ef;
+      --card:#ffffff;
+      --text:#101418;
+      --muted:#66707a;
+      --line:rgba(16,20,24,.08);
+      --shadow:0 20px 50px rgba(0,0,0,.12);
+    }
+    body{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      background:linear-gradient(135deg,var(--bg1),var(--bg2));
+      font-family:Arial,sans-serif;
+      color:var(--text);
+    }
+    .wrap{
+      width:min(92vw,700px);
+      background:var(--card);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      border:1px solid var(--line);
+    }
+    .top{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      align-items:center;
+      text-align:center;
+    }
+    .logo-button{
+      width:min(100%,560px);
+      border:none;
+      background:#fff;
+      border-radius:24px;
+      padding:18px;
+      cursor:pointer;
+      box-shadow:0 16px 40px rgba(0,0,0,.10);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .logo-button:hover{
+      transform:translateY(-4px);
+      box-shadow:0 22px 52px rgba(0,0,0,.14);
+    }
+    .logo-button img{
+      width:100%;
+      max-height:260px;
+      object-fit:cover;
+      border-radius:18px;
+      display:block;
+    }
+    h1{
+      font-size:clamp(28px,4vw,42px);
+      line-height:1.05;
+      letter-spacing:-0.02em;
+    }
+    p{
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.6;
+      max-width:58ch;
+    }
+    .actions{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .btn{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:54px;
+      border-radius:16px;
+      text-decoration:none;
+      font-weight:700;
+      font-size:15px;
+      transition:transform .18s ease, opacity .18s ease;
+    }
+    .btn:hover{ transform:translateY(-2px); }
+    .btn.primary{ background:#111; color:#fff; }
+    .btn.secondary{ background:#eef2f6; color:#111; }
+    .tip{
+      margin-top:18px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:#f7fafc;
+      border:1px solid var(--line);
+      color:#52606d;
+      font-size:14px;
+      line-height:1.55;
+    }
+    code{
+      background:#eef2f6;
+      padding:2px 6px;
+      border-radius:8px;
+    }
+    @media (max-width:640px){
+      .actions{ grid-template-columns:1fr; }
+      .wrap{ padding:20px; border-radius:24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <button class="logo-button" onclick="openCatalog()">
+        <img src="https://www.masterhaus.bg/images/default-og-image.jpg?m=1696323554" alt="Masterhouse Logo">
+      </button>
+
+      <h1>Masterhouse Delivery</h1>
+      <p>
+        Натисни логото и влизаш в каталога. Данните се четат от
+        <code>data/products.json</code>, който се обновява от локалния scraper.
+      </p>
+    </div>
+
+    <div class="actions">
+      <a class="btn primary" href="catalog.html">Отвори каталог</a>
+      <a class="btn secondary" href="README.txt" target="_blank">Инструкции</a>
+    </div>
+
+    <div class="tip">
+      Първо стартирай <b>start_masterhouse.bat</b>. Той отваря локалния сайт,
+      пуска обновяване на продуктите и записва данните в тази папка.
+    </div>
+  </div>
+
+  <script>
+    function openCatalog() {
+      window.location.href = "catalog.html";
+    }
+  </script>
+</body>
+</html>

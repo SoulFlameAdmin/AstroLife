@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Mart | Реален каталог</title>
+  <meta name="description" content="Mini Mart каталог с реални публични изображения и линкове." />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root{
+      --bg:#f4f8f2;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --green:#8cc63f;
+      --green-dark:#5e8f1d;
+      --line:rgba(15, 23, 42, 0.08);
+      --shadow:0 20px 60px rgba(15, 23, 42, 0.12);
+      --radius:28px;
+    }
+
+    body{
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(140,198,63,0.18), transparent 32%),
+        radial-gradient(circle at bottom right, rgba(140,198,63,0.12), transparent 28%),
+        linear-gradient(135deg, #f8fff6, var(--bg));
+      color:var(--text);
+      min-height:100vh;
+      padding:24px;
+    }
+
+    .wrap{
+      max-width:1280px;
+      margin:0 auto;
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns:1.05fr 0.95fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-left{
+      padding:38px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height:560px;
+    }
+
+    .badge{
+      display:inline-flex;
+      width:fit-content;
+      padding:10px 16px;
+      border-radius:999px;
+      background:rgba(140,198,63,0.14);
+      color:var(--green-dark);
+      font-weight:700;
+      font-size:13px;
+      margin-bottom:18px;
+    }
+
+    h1{
+      font-size:clamp(36px, 6vw, 70px);
+      line-height:0.95;
+      letter-spacing:-1.7px;
+      margin-bottom:16px;
+    }
+
+    .sub{
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.7;
+      max-width:700px;
+      margin-bottom:24px;
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:26px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:54px;
+      padding:0 22px;
+      border-radius:999px;
+      text-decoration:none;
+      font-weight:800;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+
+    .btn:hover{ transform:translateY(-2px); }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--green), var(--green-dark));
+      color:#fff;
+      box-shadow:0 14px 30px rgba(140,198,63,0.28);
+    }
+
+    .btn-secondary{
+      background:#fff;
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .stat{
+      padding:18px;
+      border-radius:20px;
+      background:#fff;
+      border:1px solid var(--line);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:28px;
+      margin-bottom:6px;
+    }
+
+    .stat span{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .hero-right{
+      padding:22px;
+      min-height:560px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .logo-panel{
+      width:100%;
+      height:100%;
+      min-height:516px;
+      border-radius:26px;
+      text-decoration:none;
+      color:inherit;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      background:
+        radial-gradient(circle at top, rgba(140,198,63,0.22), transparent 35%),
+        linear-gradient(180deg, #ffffff, #f6fff0);
+      border:1px solid rgba(140,198,63,0.18);
+      position:relative;
+      overflow:hidden;
+      padding:28px;
+    }
+
+    .logo-box{
+      width:min(100%, 360px);
+      background:#fff;
+      border-radius:24px;
+      padding:28px 22px;
+      box-shadow:0 18px 40px rgba(15,23,42,0.1);
+      margin-bottom:24px;
+    }
+
+    .logo-box img{
+      width:100%;
+      display:block;
+    }
+
+    .logo-panel h2{
+      font-size:32px;
+      margin-bottom:10px;
+    }
+
+    .logo-panel p{
+      color:var(--muted);
+      line-height:1.7;
+      max-width:360px;
+      margin-bottom:18px;
+    }
+
+    .mini-button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:50px;
+      padding:0 20px;
+      border-radius:999px;
+      background:linear-gradient(135deg, var(--green), var(--green-dark));
+      color:#fff;
+      font-weight:800;
+      box-shadow:0 14px 28px rgba(140,198,63,0.24);
+    }
+
+    .section{
+      margin-top:28px;
+    }
+
+    .section-head{
+      margin-bottom:16px;
+    }
+
+    .section-head h3{
+      font-size:30px;
+      margin-bottom:8px;
+    }
+
+    .section-head p{
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .preview-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .preview-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:0 14px 30px rgba(15,23,42,0.06);
+    }
+
+    .preview-card img{
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      display:block;
+      background:#eef6e6;
+    }
+
+    .preview-body{
+      padding:16px;
+    }
+
+    .preview-body h4{
+      font-size:20px;
+      margin-bottom:8px;
+    }
+
+    .preview-body p{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+      margin-bottom:12px;
+    }
+
+    .url-box{
+      padding:10px 12px;
+      border-radius:14px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      font-size:12px;
+      color:#475569;
+      line-height:1.5;
+      word-break:break-all;
+      margin-bottom:12px;
+    }
+
+    .go-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:42px;
+      padding:0 16px;
+      border-radius:999px;
+      background:#0f172a;
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+    }
+
+    @media (max-width: 1080px){
+      .hero{
+        grid-template-columns:1fr;
+      }
+      .preview-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+    }
+
+    @media (max-width: 640px){
+      body{ padding:16px; }
+      .hero-left{ padding:24px; min-height:auto; }
+      .hero-right{ min-height:auto; }
+      .logo-panel{ min-height:380px; }
+      .sub{ font-size:16px; }
+      .stats{ grid-template-columns:1fr; }
+      .preview-grid{ grid-template-columns:1fr; }
+      .actions{ flex-direction:column; }
+      .btn{ width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="card hero-left">
+        <div class="badge">Mini Mart • реални публични URL изображения</div>
+        <h1>Mini Mart<br>Real Catalog</h1>
+        <p class="sub">
+          Това е начална страница с реалното публично лого и част от реалните публични
+          продуктови визии от Mini Mart. Натисни и отвори пълния каталог.
+        </p>
+
+        <div class="actions">
+          <a class="btn btn-primary" href="katalog.html">Отвори каталог</a>
+          <a class="btn btn-secondary" href="katalog.html#products">Виж продуктите</a>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <strong>3</strong>
+            <span>публични сандвич/тост визии</span>
+          </div>
+          <div class="stat">
+            <strong>6</strong>
+            <span>публични хотдог визии</span>
+          </div>
+          <div class="stat">
+            <strong>100%</strong>
+            <span>copy-paste front-end основа</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card hero-right">
+        <a class="logo-panel" href="katalog.html">
+          <div class="logo-box">
+            <img src="https://mini-mart.bg/wp-content/uploads/2023/08/logo-copy.png" alt="Mini Mart Logo">
+          </div>
+          <h2>Натисни логото</h2>
+          <p>Отваря каталог с реални снимки, публични URL адреси и готови карти за продуктите.</p>
+          <div class="mini-button">Влез в каталога</div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h3>Бърз преглед</h3>
+        <p>Част от реалните публични изображения, които се виждат на официалните страници.</p>
+      </div>
+
+      <div class="preview-grid">
+        <article class="preview-card">
+          <img src="https://mini-mart.bg/wp-content/uploads/2025/09/01-Classic.png" alt="Класически хотдог">
+          <div class="preview-body">
+            <h4>Класически хотдог</h4>
+            <p>Реална публична продуктова визия.</p>
+            <div class="url-box">https://mini-mart.bg/wp-content/uploads/2025/09/01-Classic.png</div>
+            <a class="go-link" href="katalog.html#classic">Виж в каталог</a>
+          </div>
+        </article>
+
+        <article class="preview-card">
+          <img src="https://mini-mart.bg/wp-content/uploads/2025/09/02-Multigrain.png" alt="Хотдог Multigrain">
+          <div class="preview-body">
+            <h4>Multigrain</h4>
+            <p>Реална публична продуктова визия.</p>
+            <div class="url-box">https://mini-mart.bg/wp-content/uploads/2025/09/02-Multigrain.png</div>
+            <a class="go-link" href="katalog.html#multigrain">Виж в каталог</a>
+          </div>
+        </article>
+
+        <article class="preview-card">
+          <img src="https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_01.png" alt="Един Рап цезар">
+          <div class="preview-body">
+            <h4>Един Рап цезар</h4>
+            <p>Реална публична продуктова визия.</p>
+            <div class="url-box">https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_01.png</div>
+            <a class="go-link" href="katalog.html#rap-cezar">Виж в каталог</a>
+          </div>
+        </article>
+
+        <article class="preview-card">
+          <img src="https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg" alt="Комбо меню">
+          <div class="preview-body">
+            <h4>Комбо меню</h4>
+            <p>Реална публична промо визия.</p>
+            <div class="url-box">https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg</div>
+            <a class="go-link" href="katalog.html#combo">Виж в каталог</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

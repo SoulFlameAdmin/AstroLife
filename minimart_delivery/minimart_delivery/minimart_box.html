@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Mart</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #f5f7fa, #e4ecf3);
+      font-family: Arial, sans-serif;
+    }
+
+    .logo-button {
+      width: min(90%, 500px);
+      background: #ffffff;
+      border: none;
+      border-radius: 24px;
+      padding: 40px 30px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .logo-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.16);
+    }
+
+    .logo-button img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <button class="logo-button" onclick="openMiniMart()">
+    <img src="https://mini-mart.bg/wp-content/uploads/2023/08/logo-copy.png" alt="Mini Mart Logo">
+  </button>
+
+  <script>
+    function openMiniMart() {
+      window.location.href = "file:///E:/minimart_delivery/minimart_delivery/index.html";
+    }
+  </script>
+</body>
+</html>
