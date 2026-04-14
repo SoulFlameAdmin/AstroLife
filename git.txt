@@ -1,0 +1,1 @@
+Set-Location E:\SF_DOSTAVKI; git add .; git commit -m "deploy: update SF_DOSTAVKI main index"; git push origin main
