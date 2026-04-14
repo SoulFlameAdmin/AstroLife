@@ -1,0 +1,372 @@
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = __dirname;
+
+const PRICES_JS = path.join(ROOT, "products-data-prices.js");
+const IMAGES_JS = path.join(ROOT, "products-data-images.js");
+
+const OUT_JS = path.join(ROOT, "products-data.js");
+const OUT_JSON = path.join(ROOT, "products-merged.json");
+
+function readJsProducts(filePath) {
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Missing file: ${filePath}`);
+  }
+
+  let text = fs.readFileSync(filePath, "utf8").trim();
+  text = text.replace(/^\s*window\.KAUFLAND_PRODUCTS\s*=\s*/i, "");
+  text = text.replace(/;\s*$/, "");
+
+  const data = JSON.parse(text);
+  if (!Array.isArray(data)) {
+    throw new Error(`${path.basename(filePath)} does not contain an array`);
+  }
+
+  return data;
+}
+
+function writeJsProducts(filePath, products) {
+  const js =
+    "window.KAUFLAND_PRODUCTS = " +
+    JSON.stringify(products, null, 2) +
+    ";\n";
+  fs.writeFileSync(filePath, js, "utf8");
+}
+
+function normalizeSpaces(str) {
+  return String(str || "").replace(/\s+/g, " ").trim();
+}
+
+function slugifyBg(text) {
+  const repl = {
+    "а": "a", "б": "b", "в": "v", "г": "g", "д": "d", "е": "e",
+    "ж": "zh", "з": "z", "и": "i", "й": "y", "к": "k", "л": "l",
+    "м": "m", "н": "n", "о": "o", "п": "p", "р": "r", "с": "s",
+    "т": "t", "у": "u", "ф": "f", "х": "h", "ц": "ts", "ч": "ch",
+    "ш": "sh", "щ": "sht", "ъ": "a", "ь": "", "ю": "yu", "я": "ya"
+  };
+
+  let out = [];
+  const s = normalizeSpaces(text).toLowerCase();
+
+  for (const ch of s) {
+    if (repl[ch]) out.push(repl[ch]);
+    else if (/[a-z0-9]/i.test(ch) || /[а-я]/i.test(ch)) out.push(ch);
+    else out.push("-");
+  }
+
+  return out.join("").replace(/-+/g, "-").replace(/^-|-$/g, "");
+}
+
+function keyFromName(name) {
+  let s = normalizeSpaces(name).toLowerCase();
+  s = s.replace(/×/g, "x").replace(/[–—]/g, "-");
+  s = s.replace(/[„“"']/g, "");
+  s = s.replace(/[^a-zа-я0-9\s%-]+/gi, " ");
+  s = normalizeSpaces(s);
+  return slugifyBg(s);
+}
+
+function cleanCategory(cat) {
+  let s = normalizeSpaces(cat);
+  if (!s) return "Оферти";
+
+  s = s.replace(/Валидно от.*$/i, "");
+  s = s.replace(/Предложенията са валидни.*$/i, "");
+  s = s.replace(/\d{1,2}\.\d{1,2}\.\d{4}/g, "");
+  s = s.replace(/\d{1,2}\.\d{1,2}\./g, "");
+  s = s.replace(/\d+[.,]\d{2}\s*лв\.?/gi, "");
+  s = s.replace(/\d+[.,]\d{2}\s*€/gi, "");
+  s = s.replace(/-\d{1,3}%.*$/g, "");
+  s = normalizeSpaces(s);
+
+  const known = [
+    "Актуални оферти",
+    "Kaufland Card",
+    "Плодове и зеленчуци",
+    "Месо и колбаси",
+    "Риба",
+    "Млечни продукти",
+    "Основни храни",
+    "Напитки",
+    "Дрогерия и дом",
+    "Дом и техника",
+    "Тематични оферти",
+    "Вкусът на Европа"
+  ];
+
+  for (const item of known) {
+    if (s.toLowerCase().includes(item.toLowerCase())) return item;
+  }
+
+  return s || "Оферти";
+}
+
+function isRealImage(url) {
+  const s = String(url || "").trim().toLowerCase();
+  if (!s) return false;
+  if (s.includes("kl-logo")) return false;
+  if (s.includes("logo-footer")) return false;
+  if (s.includes("kaufland-logo-fallback")) return false;
+  if (s.endsWith(".svg")) return false;
+  return true;
+}
+
+function parsePrice(value) {
+  if (value === null || value === undefined || value === "") return null;
+  if (typeof value === "number" && Number.isFinite(value)) return round2(value);
+
+  let s = String(value)
+    .replace(/лв\.?/gi, "")
+    .replace(/€/gi, "")
+    .replace(/\s+/g, "")
+    .trim();
+
+  if (!s) return null;
+
+  if (/^\d{1,3}(\.\d{3})*,\d{1,2}$/.test(s)) {
+    s = s.replace(/\./g, "").replace(",", ".");
+  } else if (/^\d{1,3}(,\d{3})*\.\d{1,2}$/.test(s)) {
+    s = s.replace(/,/g, "");
+  } else if (s.includes(",") && !s.includes(".")) {
+    s = s.replace(",", ".");
+  } else if (s.includes(",") && s.includes(".")) {
+    s = s.replace(/,/g, "");
+  }
+
+  const m = s.match(/-?\d+(?:\.\d+)?/);
+  return m ? round2(Number(m[0])) : null;
+}
+
+function extractBgnPrices(text) {
+  const matches = [...String(text || "").matchAll(/(\d{1,4}(?:[.,]\d{1,2})?)\s*лв\.?/gi)];
+  return matches
+    .map((m) => parsePrice(m[1]))
+    .filter((v) => v !== null && v > 0);
+}
+
+function extractDiscountLabel(text) {
+  const s = String(text || "");
+  const m1 = s.match(/-\s*(\d{1,3})\s*%/i);
+  if (m1) return `-${m1[1]}%`;
+  const m2 = s.match(/(\d{1,3})\s*%\s*отстъп/i);
+  if (m2) return `-${m2[1]}%`;
+  return "";
+}
+
+function extractValidity(text) {
+  const s = normalizeSpaces(text || "");
+  const m1 = s.match(/Валидно от\s*\d{1,2}\.\d{1,2}\.\d{4}\s*до\s*\d{1,2}\.\d{1,2}\.\d{4}/i);
+  if (m1) return m1[0];
+  const m2 = s.match(/Валидни на\s*\d{1,2}\.\d{1,2}\.\d{4}/i);
+  if (m2) return m2[0];
+  const m3 = s.match(/Валидно от\s*\d{1,2}\.\d{1,2}\.\d{4}/i);
+  if (m3) return m3[0];
+  return "";
+}
+
+function guessCategory(text) {
+  const s = String(text || "").toLowerCase();
+  const known = [
+    "Актуални оферти",
+    "Kaufland Card",
+    "Плодове и зеленчуци",
+    "Месо и колбаси",
+    "Риба",
+    "Млечни продукти",
+    "Основни храни",
+    "Напитки",
+    "Дрогерия и дом",
+    "Дом и техника",
+    "Тематични оферти",
+    "Вкусът на Европа"
+  ];
+  for (const cat of known) {
+    if (s.includes(cat.toLowerCase())) return cat;
+  }
+  return "";
+}
+
+function buildBlob(raw) {
+  return [
+    raw.name,
+    raw.product_name,
+    raw.title,
+    raw.category,
+    raw.source_category,
+    raw.validity,
+    raw.discount_label,
+    raw.description,
+    raw.text,
+    raw.raw_text
+  ]
+    .filter(Boolean)
+    .map(String)
+    .join(" | ");
+}
+
+function tryFillMissingPrices(product) {
+  let promo = parsePrice(product.promo_price_bgn ?? product.price ?? product.promoPrice ?? product.promo_price);
+  let regular = parsePrice(product.regular_price_bgn ?? product.oldPrice ?? product.regular_price ?? product.original_price_bgn);
+
+  if (promo !== null && regular !== null) return { promo, regular };
+
+  const blob = buildBlob(product);
+  const prices = extractBgnPrices(blob);
+
+  if (promo === null && prices.length >= 1) promo = prices[0];
+  if (regular === null && prices.length >= 2) regular = prices[1];
+
+  return { promo, regular };
+}
+
+function buildImagesIndex(imageProducts) {
+  const byName = new Map();
+  const bySlug = new Map();
+
+  for (const p of imageProducts) {
+    const name = normalizeSpaces(p.name || "");
+    if (!name) continue;
+
+    const key = keyFromName(name);
+    const item = {
+      name,
+      key,
+      image_url: p.image_url || "",
+      product_url: p.product_url || p.source_url || "",
+      source_url: p.source_url || p.product_url || "",
+      raw: p
+    };
+
+    const nkey = name.toLowerCase();
+    if (!byName.has(nkey)) byName.set(nkey, []);
+    byName.get(nkey).push(item);
+
+    if (!bySlug.has(key)) bySlug.set(key, []);
+    bySlug.get(key).push(item);
+  }
+
+  return { byName, bySlug };
+}
+
+function bestImageMatch(priceProduct, imageIndex) {
+  const name = normalizeSpaces(priceProduct.name || "");
+  if (!name) return null;
+
+  const direct = imageIndex.byName.get(name.toLowerCase()) || [];
+  for (const item of direct) {
+    if (isRealImage(item.image_url)) return item;
+  }
+
+  const slug = keyFromName(name);
+  const bySlug = imageIndex.bySlug.get(slug) || [];
+  for (const item of bySlug) {
+    if (isRealImage(item.image_url)) return item;
+  }
+
+  for (const [key, items] of imageIndex.bySlug.entries()) {
+    if (slug && (slug.includes(key) || key.includes(slug))) {
+      for (const item of items) {
+        if (isRealImage(item.image_url)) return item;
+      }
+    }
+  }
+
+  return null;
+}
+
+function extractDiscountPercent(label, promo, regular) {
+  const m = String(label || "").match(/(\d{1,3})/);
+  if (m) return Number(m[1]);
+
+  if (promo && regular && regular > promo) {
+    return Math.round((1 - promo / regular) * 100);
+  }
+
+  return 0;
+}
+
+function mergeProducts(priceProducts, imageProducts) {
+  const imageIndex = buildImagesIndex(imageProducts);
+  const merged = [];
+
+  for (let i = 0; i < priceProducts.length; i++) {
+    const p = priceProducts[i];
+    const prices = tryFillMissingPrices(p);
+
+    let category = cleanCategory(p.category || p.source_category || "Оферти");
+    if (!category || category === "Оферти") {
+      category = guessCategory(buildBlob(p)) || "Оферти";
+    }
+
+    const base = {
+      id: p.id || `kaufland-offer-${keyFromName(p.name || `produkt-${i + 1}`)}`,
+      name: normalizeSpaces(p.name || `Продукт ${i + 1}`),
+      category,
+      source_category: cleanCategory(p.source_category || p.category || category),
+      promo_price_bgn: prices.promo,
+      regular_price_bgn: prices.regular,
+      discount_label: normalizeSpaces(p.discount_label || ""),
+      validity: normalizeSpaces(p.validity || extractValidity(buildBlob(p)) || ""),
+      source_url:
+        p.source_url ||
+        p.product_url ||
+        "https://www.kaufland.bg/aktualni-predlozheniya/oferti.html",
+      product_url:
+        p.product_url ||
+        p.source_url ||
+        "https://www.kaufland.bg/aktualni-predlozheniya/oferti.html",
+      image_url: p.image_url || "",
+      image_type: p.image_type || ""
+    };
+
+    const match = bestImageMatch(base, imageIndex);
+    if (match && isRealImage(match.image_url)) {
+      base.image_url = match.image_url;
+      base.image_type = "real_merged_from_images";
+      if (!base.product_url) base.product_url = match.product_url;
+      if (!base.source_url) base.source_url = match.source_url;
+    }
+
+    const discountPercent = extractDiscountPercent(
+      base.discount_label,
+      base.promo_price_bgn,
+      base.regular_price_bgn
+    );
+    if (!base.discount_label && discountPercent > 0) {
+      base.discount_label = `-${discountPercent}%`;
+    }
+
+    merged.push(base);
+  }
+
+  return merged;
+}
+
+function round2(v) {
+  return Math.round(Number(v) * 100) / 100;
+}
+
+function main() {
+  const priceProducts = readJsProducts(PRICES_JS);
+  const imageProducts = readJsProducts(IMAGES_JS);
+
+  const merged = mergeProducts(priceProducts, imageProducts);
+
+  fs.writeFileSync(OUT_JSON, JSON.stringify(merged, null, 2), "utf8");
+  writeJsProducts(OUT_JS, merged);
+
+  const total = merged.length;
+  const withRealImages = merged.filter((p) => isRealImage(p.image_url)).length;
+  const withPromoPrices = merged.filter((p) => p.promo_price_bgn !== null && p.promo_price_bgn !== undefined).length;
+
+  console.log("DONE");
+  console.log("Total products:", total);
+  console.log("Products with real images:", withRealImages);
+  console.log("Products with visible promo prices:", withPromoPrices);
+  console.log("JS output:", OUT_JS);
+  console.log("JSON output:", OUT_JSON);
+}
+
+main();

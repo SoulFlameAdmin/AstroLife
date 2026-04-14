@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaufland Delivery</title>  <meta name="description" content="SoulFlame доставки с Kaufland продукти, синхронизирани от локална таблица." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <div class="page-bg"></div>
+
+  <div class="app-shell">
+    <main>
+      <section class="panel hero glass-panel">
+        <div class="hero-top">
+          <div class="brand-lockup">
+            <img id="heroLogo" src="./assets/kaufland-logo-fallback.svg" alt="Kaufland" />
+            <div>
+               <h1>Kaufland Delivery</h1>
+              <p>
+                Всички продукти се зареждат от локалния <strong>products-data.js</strong>.
+                Картите са оптимизирани за снимка, цена, текст и AR preview.
+                Поръчките вече се изчисляват в <strong>евро</strong>.
+              </p>
+            </div>
+          </div>
+          <button id="syncInfoBtn" class="btn-outline" type="button">Как се sync-ва</button>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi glass-bubble">
+            <span class="label">Продукти в пакета</span>
+            <span class="value" id="kpiProducts">0</span>
+          </div>
+          <div class="kpi glass-bubble">
+            <span class="label">Надценка</span>
+            <span class="value" id="kpiMarkup">0%</span>
+          </div>
+          <div class="kpi glass-bubble">
+            <span class="label">Доставка</span>
+            <span class="value" id="kpiDelivery">0.00 €</span>
+          </div>
+          <div class="kpi glass-bubble">
+            <span class="label">Източник</span>
+            <span class="value" id="kpiSource">JS</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel controls glass-panel">
+        <div class="control-grid">
+          <input id="searchInput" class="control" type="text" placeholder="Търси по име на продукт..." />
+          <select id="categorySelect" class="control"></select>
+          <select id="sortSelect" class="control">
+            <option value="discount-desc">Подреди: най-голяма отстъпка</option>
+            <option value="promo-asc">Подреди: цена € ↑</option>
+            <option value="promo-desc">Подреди: цена € ↓</option>
+            <option value="name-asc">Подреди: име A-Z</option>
+          </select>
+          <button id="resetBtn" class="btn-secondary" type="button">Изчисти</button>
+        </div>
+      </section>
+
+      <section class="catalog-toolbar">
+        <div id="resultsInfo">Зареждане...</div>
+        <div class="small">
+          Всички карти са вързани към локалния <strong>products-data.js</strong>.
+        </div>
+      </section>
+
+      <section id="catalogGrid" class="catalog-grid"></section>
+    </main>
+
+    <aside class="panel sidebar glass-panel">
+      <div class="sidebar-top">
+        <h2>Поръчка</h2>
+        <div id="cartCountBadge" class="cart-count-badge">0</div>
+      </div>
+
+      <p>
+       
+
+
+
+
+
+
+
+
+      </p>
+
+      <div class="mini-note glass-bubble">
+        Смята автоматично от конфигурацията.
+        </strong>.
+      </div>
+
+      <div id="cartList" class="cart-list"></div>
+
+      <div class="totals glass-bubble">
+        <div class="total-row"><span>Сума по Kaufland</span><strong id="subtotalBgn">0.00 €</strong></div>
+        <div class="total-row"><span>SoulFlame %</span><strong id="markupBgn">0.00 €</strong></div>
+        <div class="total-row"><span>Доставка</span><strong id="deliveryBgn">0.00 €</strong></div>
+        <div class="total-row grand-total"><span>Крайна сума</span><strong id="grandTotalBgn">0.00 €</strong></div>
+      </div>
+
+      <div class="form-grid">
+        <input id="customerName" class="control" type="text" placeholder="Име на клиент" />
+        <input id="customerPhone" class="control" type="text" placeholder="Телефон" />
+        <textarea id="customerAddress" class="control" placeholder="Адрес за доставка"></textarea>
+        <textarea id="customerNotes" class="control" placeholder="Бележка към поръчката"></textarea>
+      </div>
+
+      <div class="footer-actions">
+        <button id="sendWhatsAppBtn" class="btn-primary wide" type="button">Поръчай през WhatsApp</button>
+        <button id="copyOrderBtn" class="btn-secondary" type="button">Копирай поръчката</button>
+        <button id="downloadOrderBtn" class="btn-outline" type="button">Свали JSON</button>
+        <button id="clearCartBtn" class="btn-outline wide" type="button">Изчисти количката</button>
+      </div>
+
+      <div class="helper-links">
+        <a href="./sync-products.bat">sync-products.bat</a>
+        <a href="./sync-products.py">sync-products.py</a>
+        <a href="./products-data.js">products-data.js</a>
+      </div>
+    </aside>
+  </div>
+
+  <div id="arModal" class="ar-modal" hidden>
+    <div class="ar-backdrop" data-close-ar></div>
+
+    <div class="panel ar-dialog glass-panel">
+      <div class="ar-dialog-top">
+        <div class="ar-title-wrap">
+          <div class="ar-chip">AR Preview</div>
+          <h3 id="arName">Продукт</h3>
+          <p id="arCategory">Категория</p>
+        </div>
+        <button id="closeArBtn" class="icon-btn" type="button" aria-label="Затвори">✕</button>
+      </div>
+
+      <div class="ar-content">
+        <div id="arStage" class="ar-stage"></div>
+
+        <div class="ar-side">
+          <div class="ar-price-row">
+            <div id="arPrice" class="price-now">0.00 €</div>
+            <div id="arOldPrice" class="price-old"></div>
+            <div id="arDiscount" class="discount-badge"></div>
+          </div>
+
+          <div class="ar-meta-box glass-bubble">
+            <div class="ar-meta-list">
+              <div class="ar-meta-line"><span>Валидност</span><strong id="arValidity"></strong></div>
+            </div>
+          </div>
+
+          <div id="arImageState" class="ar-image-state"></div>
+
+          <div class="ar-actions">
+            <a id="openSourceBtn" class="btn-outline" href="#" target="_blank" rel="noopener">Източник</a>
+            <button id="addFromArBtn" class="btn-primary" type="button">Добави</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="./assets/config.js"></script>
+  <script src="./products-data.js"></script>
+  <script src="./assets/app.js"></script>
+</body>
+</html>

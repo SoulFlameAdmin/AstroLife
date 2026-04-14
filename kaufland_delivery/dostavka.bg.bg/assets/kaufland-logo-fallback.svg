@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="220" viewBox="0 0 320 220">
+  <rect width="320" height="220" rx="24" fill="#ffffff"/>
+  <rect x="30" y="30" width="80" height="80" fill="none" stroke="#e1000f" stroke-width="10"/>
+  <rect x="55" y="55" width="30" height="30" fill="none" stroke="#000000" stroke-width="10"/>
+  <text x="130" y="78" font-size="28" font-family="Arial, Helvetica, sans-serif" font-weight="700" fill="#000000">Kaufland</text>
+  <text x="130" y="112" font-size="16" font-family="Arial, Helvetica, sans-serif" fill="#666666">SoulFlame box placeholder</text>
+  <text x="30" y="170" font-size="16" font-family="Arial, Helvetica, sans-serif" fill="#444444">Използва се, когато липсва отделна продуктова снимка.</text>
+</svg>
