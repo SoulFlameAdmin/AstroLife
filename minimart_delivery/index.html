@@ -3,409 +3,433 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mini Mart | Реален каталог</title>
-  <meta name="description" content="Mini Mart каталог с реални публични изображения и линкове." />
+  <title>Mini Mart Delivery | Каталог</title>
+  <meta name="description" content="Mini Mart delivery каталог с продуктови снимки, реални публично потвърдени цени и количка." />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root{
-      --bg:#f4f8f2;
-      --card:#ffffff;
-      --text:#0f172a;
-      --muted:#64748b;
-      --green:#8cc63f;
-      --green-dark:#5e8f1d;
-      --line:rgba(15, 23, 42, 0.08);
-      --shadow:0 20px 60px rgba(15, 23, 42, 0.12);
-      --radius:28px;
-    }
-
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     body{
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(140,198,63,0.18), transparent 32%),
-        radial-gradient(circle at bottom right, rgba(140,198,63,0.12), transparent 28%),
-        linear-gradient(135deg, #f8fff6, var(--bg));
-      color:var(--text);
-      min-height:100vh;
-      padding:24px;
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      background:linear-gradient(180deg,#f8fff4,#f2f7ee 55%,#edf4e8);
+      color:#122018;
     }
-
-    .wrap{
-      max-width:1280px;
-      margin:0 auto;
+    :root{
+      --green:#8cc63f;
+      --green-dark:#5d8f1a;
+      --line:rgba(18,32,24,.09);
+      --card:#fff;
+      --muted:#617069;
+      --shadow:0 18px 50px rgba(18,32,24,.10);
+      --radius:26px;
     }
-
-    .hero{
-      display:grid;
-      grid-template-columns:1.05fr 0.95fr;
-      gap:24px;
-      align-items:stretch;
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      background:rgba(255,255,255,.88);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line);
     }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
+    .topbar-inner{
+      max-width:1500px;margin:0 auto;padding:14px 18px;
+      display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
     }
-
-    .hero-left{
-      padding:38px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      min-height:560px;
+    .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit}
+    .brand img{width:140px;display:block}
+    .brand-copy strong{display:block;font-size:17px}
+    .brand-copy span{font-size:13px;color:var(--muted)}
+    .top-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .search{
+      min-width:min(48vw,340px);height:48px;padding:0 16px;border-radius:999px;
+      border:1px solid var(--line);outline:none;background:#fff;font-size:14px;
     }
+    .cart-btn,.filter-btn{
+      height:48px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+      background:#fff;font-weight:800;cursor:pointer;color:#122018;
+    }
+    .cart-btn{background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;border:none}
 
+    .hero{max-width:1500px;margin:0 auto;padding:24px 18px 8px}
+    .hero-card{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center;
+      background:linear-gradient(135deg,#ffffff,#f5ffea);
+      border:1px solid rgba(140,198,63,.18);box-shadow:var(--shadow);
+      border-radius:34px;padding:26px;
+    }
     .badge{
-      display:inline-flex;
-      width:fit-content;
-      padding:10px 16px;
-      border-radius:999px;
-      background:rgba(140,198,63,0.14);
-      color:var(--green-dark);
-      font-weight:700;
-      font-size:13px;
-      margin-bottom:18px;
+      display:inline-flex;padding:10px 15px;border-radius:999px;
+      background:rgba(140,198,63,.14);color:var(--green-dark);font-weight:800;font-size:13px;
+      margin-bottom:14px;
     }
-
-    h1{
-      font-size:clamp(36px, 6vw, 70px);
-      line-height:0.95;
-      letter-spacing:-1.7px;
-      margin-bottom:16px;
+    h1{font-size:clamp(34px,5vw,62px);line-height:.94;letter-spacing:-1.7px;margin:0 0 12px}
+    .hero p{margin:0 0 16px;color:var(--muted);font-size:17px;line-height:1.75;max-width:760px}
+    .hero-note{font-size:13px;color:#4f5e57;background:#fff;border:1px solid var(--line);padding:12px 14px;border-radius:18px}
+    .hero-visual{
+      display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
     }
+    .mini-card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 10px 26px rgba(18,32,24,.06)}
+    .mini-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#eef6e5}
+    .mini-card div{padding:12px 14px;font-weight:800}
 
-    .sub{
-      color:var(--muted);
-      font-size:18px;
-      line-height:1.7;
-      max-width:700px;
-      margin-bottom:24px;
+    .section{max-width:1500px;margin:0 auto;padding:24px 18px 34px}
+    .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+    .filter-btn.active{background:#122018;color:#fff;border-color:#122018}
+    .summary{display:flex;justify-content:space-between;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+    .summary p{margin:0;color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+    .card{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+      overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;
     }
-
-    .actions{
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      margin-bottom:26px;
+    .thumb{position:relative}
+    .thumb img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#edf6e6}
+    .tag{
+      position:absolute;left:14px;top:14px;padding:8px 11px;border-radius:999px;
+      background:rgba(255,255,255,.92);backdrop-filter:blur(6px);font-size:12px;font-weight:900;
     }
+    .body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .title{font-size:22px;font-weight:900;line-height:1.1}
+    .desc{font-size:14px;line-height:1.65;color:var(--muted);min-height:68px}
+    .price{font-size:28px;font-weight:900;letter-spacing:-.8px}
+    .price small{font-size:12px;color:var(--muted);display:block;font-weight:700;letter-spacing:0;margin-top:4px}
+    .meta{font-size:12px;color:#496154;background:#f7faf7;border:1px solid var(--line);border-radius:14px;padding:10px 12px;line-height:1.55}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto}
+    .btn{height:46px;padding:0 16px;border-radius:999px;border:none;cursor:pointer;font-weight:900}
+    .btn-add{background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;box-shadow:0 12px 24px rgba(140,198,63,.24)}
+    .btn-secondary{background:#122018;color:#fff;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+    .btn[disabled]{background:#dce6d6;color:#68766f;cursor:not-allowed;box-shadow:none}
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:54px;
-      padding:0 22px;
-      border-radius:999px;
-      text-decoration:none;
-      font-weight:800;
-      transition:transform .2s ease, box-shadow .2s ease;
+    .cart-drawer{
+      position:fixed;right:18px;bottom:18px;width:min(420px,calc(100vw - 24px));max-height:78vh;
+      background:#fff;border:1px solid var(--line);border-radius:28px;box-shadow:0 24px 70px rgba(18,32,24,.20);
+      z-index:80;display:none;flex-direction:column;overflow:hidden;
     }
+    .cart-drawer.open{display:flex}
+    .cart-head{padding:18px 18px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
+    .cart-head strong{font-size:20px}
+    .cart-list{padding:12px 18px;overflow:auto;display:flex;flex-direction:column;gap:10px;max-height:46vh}
+    .cart-item{display:grid;grid-template-columns:72px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:18px;padding:10px}
+    .cart-item img{width:72px;height:72px;object-fit:cover;border-radius:14px;background:#edf6e6}
+    .cart-item-title{font-weight:900;font-size:15px}
+    .cart-item-price{font-size:13px;color:var(--muted);margin-top:4px}
+    .qty{display:flex;align-items:center;gap:8px;margin-top:8px}
+    .qty button{width:28px;height:28px;border:none;border-radius:999px;cursor:pointer;background:#122018;color:#fff;font-weight:900}
+    .remove{border:none;background:transparent;color:#b42318;font-weight:800;cursor:pointer}
+    .cart-foot{border-top:1px solid var(--line);padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px}
+    .row{display:flex;justify-content:space-between;gap:14px;align-items:center}
+    .checkout{height:50px;border:none;border-radius:999px;background:linear-gradient(135deg,var(--green),var(--green-dark));color:#fff;font-weight:900;cursor:pointer}
+    .muted{color:var(--muted);font-size:13px;line-height:1.5}
+    .empty{padding:18px;border:1px dashed var(--line);border-radius:18px;text-align:center;color:var(--muted)}
 
-    .btn:hover{ transform:translateY(-2px); }
-
-    .btn-primary{
-      background:linear-gradient(135deg, var(--green), var(--green-dark));
-      color:#fff;
-      box-shadow:0 14px 30px rgba(140,198,63,0.28);
-    }
-
-    .btn-secondary{
-      background:#fff;
-      color:var(--text);
-      border:1px solid var(--line);
-    }
-
-    .stats{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-    }
-
-    .stat{
-      padding:18px;
-      border-radius:20px;
-      background:#fff;
-      border:1px solid var(--line);
-    }
-
-    .stat strong{
-      display:block;
-      font-size:28px;
-      margin-bottom:6px;
-    }
-
-    .stat span{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.5;
-    }
-
-    .hero-right{
-      padding:22px;
-      min-height:560px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .logo-panel{
-      width:100%;
-      height:100%;
-      min-height:516px;
-      border-radius:26px;
-      text-decoration:none;
-      color:inherit;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      background:
-        radial-gradient(circle at top, rgba(140,198,63,0.22), transparent 35%),
-        linear-gradient(180deg, #ffffff, #f6fff0);
-      border:1px solid rgba(140,198,63,0.18);
-      position:relative;
-      overflow:hidden;
-      padding:28px;
-    }
-
-    .logo-box{
-      width:min(100%, 360px);
-      background:#fff;
-      border-radius:24px;
-      padding:28px 22px;
-      box-shadow:0 18px 40px rgba(15,23,42,0.1);
-      margin-bottom:24px;
-    }
-
-    .logo-box img{
-      width:100%;
-      display:block;
-    }
-
-    .logo-panel h2{
-      font-size:32px;
-      margin-bottom:10px;
-    }
-
-    .logo-panel p{
-      color:var(--muted);
-      line-height:1.7;
-      max-width:360px;
-      margin-bottom:18px;
-    }
-
-    .mini-button{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:50px;
-      padding:0 20px;
-      border-radius:999px;
-      background:linear-gradient(135deg, var(--green), var(--green-dark));
-      color:#fff;
-      font-weight:800;
-      box-shadow:0 14px 28px rgba(140,198,63,0.24);
-    }
-
-    .section{
-      margin-top:28px;
-    }
-
-    .section-head{
-      margin-bottom:16px;
-    }
-
-    .section-head h3{
-      font-size:30px;
-      margin-bottom:8px;
-    }
-
-    .section-head p{
-      color:var(--muted);
-      line-height:1.7;
-    }
-
-    .preview-grid{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-    }
-
-    .preview-card{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:24px;
-      overflow:hidden;
-      box-shadow:0 14px 30px rgba(15,23,42,0.06);
-    }
-
-    .preview-card img{
-      width:100%;
-      aspect-ratio:1/1;
-      object-fit:cover;
-      display:block;
-      background:#eef6e6;
-    }
-
-    .preview-body{
-      padding:16px;
-    }
-
-    .preview-body h4{
-      font-size:20px;
-      margin-bottom:8px;
-    }
-
-    .preview-body p{
-      color:var(--muted);
-      font-size:14px;
-      line-height:1.6;
-      margin-bottom:12px;
-    }
-
-    .url-box{
-      padding:10px 12px;
-      border-radius:14px;
-      background:#f8fafc;
-      border:1px solid var(--line);
-      font-size:12px;
-      color:#475569;
-      line-height:1.5;
-      word-break:break-all;
-      margin-bottom:12px;
-    }
-
-    .go-link{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:42px;
-      padding:0 16px;
-      border-radius:999px;
-      background:#0f172a;
-      color:#fff;
-      text-decoration:none;
-      font-weight:700;
-    }
-
-    @media (max-width: 1080px){
-      .hero{
-        grid-template-columns:1fr;
-      }
-      .preview-grid{
-        grid-template-columns:repeat(2,1fr);
-      }
-    }
-
-    @media (max-width: 640px){
-      body{ padding:16px; }
-      .hero-left{ padding:24px; min-height:auto; }
-      .hero-right{ min-height:auto; }
-      .logo-panel{ min-height:380px; }
-      .sub{ font-size:16px; }
-      .stats{ grid-template-columns:1fr; }
-      .preview-grid{ grid-template-columns:1fr; }
-      .actions{ flex-direction:column; }
-      .btn{ width:100%; }
+    @media (max-width:1200px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media (max-width:960px){.hero-card{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:680px){
+      .grid{grid-template-columns:1fr}
+      .hero-visual{grid-template-columns:1fr}
+      .search{min-width:100%}
+      .top-actions{width:100%}
+      .cart-btn,.filter-btn{flex:1}
+      .cart-drawer{right:12px;left:12px;width:auto;bottom:12px}
     }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <section class="hero">
-      <div class="card hero-left">
-        <div class="badge">Mini Mart • реални публични URL изображения</div>
-        <h1>Mini Mart<br>Real Catalog</h1>
-        <p class="sub">
-          Това е начална страница с реалното публично лого и част от реалните публични
-          продуктови визии от Mini Mart. Натисни и отвори пълния каталог.
-        </p>
-
-        <div class="actions">
-          <a class="btn btn-primary" href="katalog.html">Отвори каталог</a>
-          <a class="btn btn-secondary" href="katalog.html#products">Виж продуктите</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top">
+        <img src="https://mini-mart.bg/wp-content/uploads/2023/08/logo-copy.png" alt="Mini Mart logo">
+        <div class="brand-copy">
+          <strong>Mini Mart Delivery</strong>
+          <span>Единен каталог + количка в самия index</span>
         </div>
+      </a>
 
-        <div class="stats">
-          <div class="stat">
-            <strong>3</strong>
-            <span>публични сандвич/тост визии</span>
+      <div class="top-actions">
+        <input id="searchInput" class="search" type="text" placeholder="Търси продукт..." />
+        <button class="cart-btn" id="openCartBtn">Количка (<span id="cartCount">0</span>)</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Всички</button>
+      <button class="filter-btn" data-filter="hotdog">Хотдог</button>
+      <button class="filter-btn" data-filter="sandwich">Сандвич</button>
+      <button class="filter-btn" data-filter="drink">Напитки</button>
+      <button class="filter-btn" data-filter="combo">Комбо</button>
+    </div>
+
+    <div class="summary">
+      <h2 style="margin:0;font-size:30px">Продукти</h2>
+      <p id="resultsText">Показани 10 продукта</p>
+    </div>
+
+    <div class="grid" id="productGrid"></div>
+  </section>
+
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-head">
+      <strong>Твоята количка</strong>
+      <button class="filter-btn" id="closeCartBtn">Затвори</button>
+    </div>
+    <div class="cart-list" id="cartList"></div>
+    <div class="cart-foot">
+      <div class="row"><span>Общо</span><strong id="cartTotal">0.00 лв</strong></div>
+      <button class="checkout" id="checkoutBtn">Завърши заявка</button>
+      <div class="muted">Количката е front-end демо с localStorage. За реални поръчки после се връзва към Firebase / имейл / админ панел.</div>
+    </div>
+  </aside>
+
+  <script>
+    const STORAGE_KEY = 'minimart_delivery_cart_v1';
+
+    const products = [
+      {
+        id: 'classic-hotdog',
+        title: 'Classic Hotdog',
+        category: 'hotdog',
+        price: 3.50,
+        image: 'https://mini-mart.bg/wp-content/uploads/2025/09/01-Classic.png',
+        tag: 'Хотдог',
+        desc: 'Класически хотдог 130 g.',
+        note: 'Публично потвърдена регулярна цена.',
+        source: 'https://mini-mart.bg/aktualno/'
+      },
+      {
+        id: 'new-york-hotdog',
+        title: 'New York Hotdog',
+        category: 'hotdog',
+        price: 4.30,
+        image: 'https://mini-mart.bg/wp-content/uploads/2026/02/04-New-York-New-1.png',
+        tag: 'Хотдог',
+        desc: 'Хотдог в стил New York 170 g.',
+        note: 'Публично потвърдена цена от официална брошурна PDF политика.',
+        source: 'https://mini-mart.bg/aktualno/'
+      },
+      {
+        id: 'espresso',
+        title: 'Кафе Еспресо',
+        category: 'drink',
+        price: 1.19,
+        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
+        tag: 'Напитка',
+        desc: 'Еспресо 25/45/75 ml.',
+        note: 'Публично потвърдена регулярна цена от Комбо меню.',
+        source: 'https://mini-mart.bg/wp-content/uploads/2026/01/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-1-2.pdf'
+      },
+      {
+        id: 'devin-water',
+        title: 'Devin 500 ml',
+        category: 'drink',
+        price: 0.99,
+        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
+        tag: 'Напитка',
+        desc: 'Изворна или минерална вода 500 ml.',
+        note: 'Публично потвърдена регулярна цена от Комбо меню.',
+        source: 'https://mini-mart.bg/wp-content/uploads/2026/01/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-1-2.pdf'
+      },
+      {
+        id: 'pepsi-330',
+        title: '7UP / Mirinda / Pepsi 330 ml',
+        category: 'drink',
+        price: 1.59,
+        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
+        tag: 'Напитка',
+        desc: 'Газирана напитка 330 ml кен.',
+        note: 'Публично потвърдена регулярна цена от Комбо меню.',
+        source: 'https://mini-mart.bg/wp-content/uploads/2026/01/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-1-2.pdf'
+      },
+      {
+        id: 'ariana-radler',
+        title: 'Ariana Radler 0.0% 330 ml',
+        category: 'drink',
+        price: 1.49,
+        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
+        tag: 'Напитка',
+        desc: 'Радлер Ariana различни видове 0.0% vol. 330 ml.',
+        note: 'Публично потвърдена регулярна цена от Комбо меню.',
+        source: 'https://mini-mart.bg/wp-content/uploads/2026/01/%D0%9F%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0-%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-1-2.pdf'
+      },
+      {
+        id: 'rap-cezar',
+        title: 'Един Рап цезар',
+        category: 'sandwich',
+        price: null,
+        image: 'https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_01.png',
+        tag: 'Сандвич',
+        desc: 'Официално публикувана продуктова визия.',
+        note: 'Има официална снимка, но не намерих публично структурирана отделна цена.',
+        source: 'https://mini-mart.bg/aktualno/'
+      },
+      {
+        id: 'rap-ham',
+        title: 'Един Рап с шунка',
+        category: 'sandwich',
+        price: null,
+        image: 'https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_02.png',
+        tag: 'Сандвич',
+        desc: 'Официално публикувана продуктова визия.',
+        note: 'Има официална снимка, но не намерих публично структурирана отделна цена.',
+        source: 'https://mini-mart.bg/aktualno/'
+      },
+      {
+        id: 'toast-ham',
+        title: 'Един Тост шунка',
+        category: 'sandwich',
+        price: null,
+        image: 'https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_03.png',
+        tag: 'Сандвич',
+        desc: 'Официално публикувана продуктова визия.',
+        note: 'Има официална снимка, но не намерих публично структурирана отделна цена.',
+        source: 'https://mini-mart.bg/aktualno/'
+      },
+      {
+        id: 'combo-menu',
+        title: 'Комбо меню визия',
+        category: 'combo',
+        price: null,
+        image: 'https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg',
+        tag: 'Комбо',
+        desc: 'Официална комбо визия. Вътре има различни комбинации по обект и период.',
+        note: 'Комбото има публични регулярни цени за отделни артикули, но не една универсална цена за цялата визия.',
+        source: 'https://mini-mart.bg/brochure/'
+      }
+    ];
+
+    let cart = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    let activeFilter = 'all';
+    let query = '';
+
+    const grid = document.getElementById('productGrid');
+    const cartList = document.getElementById('cartList');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const resultsText = document.getElementById('resultsText');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const searchInput = document.getElementById('searchInput');
+
+    function money(v){ return `${v.toFixed(2)} лв`; }
+
+    function renderProducts(){
+      const filtered = products.filter(p => {
+        const filterMatch = activeFilter === 'all' || p.category === activeFilter;
+        const searchMatch = !query || `${p.title} ${p.desc} ${p.tag}`.toLowerCase().includes(query);
+        return filterMatch && searchMatch;
+      });
+
+      resultsText.textContent = `Показани ${filtered.length} продукта`;
+
+      grid.innerHTML = filtered.map(p => `
+        <article class="card">
+          <div class="thumb">
+            <img src="${p.image}" alt="${p.title}">
+            <div class="tag">${p.tag}</div>
           </div>
-          <div class="stat">
-            <strong>6</strong>
-            <span>публични хотдог визии</span>
+          <div class="body">
+            <div class="title">${p.title}</div>
+            <div class="desc">${p.desc}</div>
+            <div class="price">
+              ${p.price != null ? money(p.price) : 'Няма цена'}
+              <small>${p.price != null ? 'публично потвърдена' : 'няма публично потвърдена стойност'}</small>
+            </div>
+            <div class="meta">${p.note}</div>
+            <div class="actions">
+              <button class="btn btn-add" ${p.price == null ? 'disabled' : ''} onclick="addToCart('${p.id}')">${p.price == null ? 'Няма цена' : 'Добави в количката'}</button>
+              <a class="btn btn-secondary" href="${p.source}" target="_blank" rel="noopener">Източник</a>
+            </div>
           </div>
-          <div class="stat">
-            <strong>100%</strong>
-            <span>copy-paste front-end основа</span>
+        </article>
+      `).join('');
+    }
+
+    function addToCart(id){
+      const product = products.find(p => p.id === id);
+      if(!product || product.price == null) return;
+      const existing = cart.find(item => item.id === id);
+      if(existing){
+        existing.qty += 1;
+      } else {
+        cart.push({ id: product.id, title: product.title, price: product.price, image: product.image, qty: 1 });
+      }
+      persistCart();
+      renderCart();
+      cartDrawer.classList.add('open');
+    }
+
+    function changeQty(id, delta){
+      const item = cart.find(i => i.id === id);
+      if(!item) return;
+      item.qty += delta;
+      if(item.qty <= 0) cart = cart.filter(i => i.id !== id);
+      persistCart();
+      renderCart();
+    }
+
+    function removeItem(id){
+      cart = cart.filter(i => i.id !== id);
+      persistCart();
+      renderCart();
+    }
+
+    function persistCart(){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+    }
+
+    function renderCart(){
+      cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+      const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      cartTotal.textContent = money(total);
+
+      if(!cart.length){
+        cartList.innerHTML = '<div class="empty">Количката е празна.</div>';
+        return;
+      }
+
+      cartList.innerHTML = cart.map(item => `
+        <div class="cart-item">
+          <img src="${item.image}" alt="${item.title}">
+          <div>
+            <div class="cart-item-title">${item.title}</div>
+            <div class="cart-item-price">${money(item.price)} / бр.</div>
+            <div class="qty">
+              <button onclick="changeQty('${item.id}', -1)">−</button>
+              <strong>${item.qty}</strong>
+              <button onclick="changeQty('${item.id}', 1)">+</button>
+            </div>
+          </div>
+          <div>
+            <div style="font-weight:900;text-align:right">${money(item.price * item.qty)}</div>
+            <button class="remove" onclick="removeItem('${item.id}')">Премахни</button>
           </div>
         </div>
-      </div>
+      `).join('');
+    }
 
-      <div class="card hero-right">
-        <a class="logo-panel" href="katalog.html">
-          <div class="logo-box">
-            <img src="https://mini-mart.bg/wp-content/uploads/2023/08/logo-copy.png" alt="Mini Mart Logo">
-          </div>
-          <h2>Натисни логото</h2>
-          <p>Отваря каталог с реални снимки, публични URL адреси и готови карти за продуктите.</p>
-          <div class="mini-button">Влез в каталога</div>
-        </a>
-      </div>
-    </section>
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        renderProducts();
+      });
+    });
 
-    <section class="section">
-      <div class="section-head">
-        <h3>Бърз преглед</h3>
-        <p>Част от реалните публични изображения, които се виждат на официалните страници.</p>
-      </div>
+    searchInput.addEventListener('input', e => {
+      query = e.target.value.trim().toLowerCase();
+      renderProducts();
+    });
 
-      <div class="preview-grid">
-        <article class="preview-card">
-          <img src="https://mini-mart.bg/wp-content/uploads/2025/09/01-Classic.png" alt="Класически хотдог">
-          <div class="preview-body">
-            <h4>Класически хотдог</h4>
-            <p>Реална публична продуктова визия.</p>
-            <div class="url-box">https://mini-mart.bg/wp-content/uploads/2025/09/01-Classic.png</div>
-            <a class="go-link" href="katalog.html#classic">Виж в каталог</a>
-          </div>
-        </article>
+    document.getElementById('openCartBtn').addEventListener('click', () => cartDrawer.classList.add('open'));
+    document.getElementById('closeCartBtn').addEventListener('click', () => cartDrawer.classList.remove('open'));
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+      if(!cart.length){ alert('Количката е празна.'); return; }
+      const text = cart.map(i => `• ${i.title} x${i.qty} = ${money(i.price * i.qty)}`).join('\n');
+      alert(`Заявка:\n\n${text}\n\nОбщо: ${money(cart.reduce((s,i)=>s+i.price*i.qty,0))}\n\nСледваща стъпка: вържи бутона към форма, имейл или Firebase.`);
+    });
 
-        <article class="preview-card">
-          <img src="https://mini-mart.bg/wp-content/uploads/2025/09/02-Multigrain.png" alt="Хотдог Multigrain">
-          <div class="preview-body">
-            <h4>Multigrain</h4>
-            <p>Реална публична продуктова визия.</p>
-            <div class="url-box">https://mini-mart.bg/wp-content/uploads/2025/09/02-Multigrain.png</div>
-            <a class="go-link" href="katalog.html#multigrain">Виж в каталог</a>
-          </div>
-        </article>
-
-        <article class="preview-card">
-          <img src="https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_01.png" alt="Един Рап цезар">
-          <div class="preview-body">
-            <h4>Един Рап цезар</h4>
-            <p>Реална публична продуктова визия.</p>
-            <div class="url-box">https://mini-mart.bg/wp-content/uploads/2025/06/Minimart_March_toastrap_01.png</div>
-            <a class="go-link" href="katalog.html#rap-cezar">Виж в каталог</a>
-          </div>
-        </article>
-
-        <article class="preview-card">
-          <img src="https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg" alt="Комбо меню">
-          <div class="preview-body">
-            <h4>Комбо меню</h4>
-            <p>Реална публична промо визия.</p>
-            <div class="url-box">https://mini-mart.bg/wp-content/uploads/2025/07/%D0%9A%D0%BE%D0%BC%D0%B1%D0%BE-%D0%BC%D0%B5%D0%BD%D1%8E-Web.jpg</div>
-            <a class="go-link" href="katalog.html#combo">Виж в каталог</a>
-          </div>
-        </article>
-      </div>
-    </section>
-  </div>
+    renderProducts();
+    renderCart();
+  </script>
 </body>
 </html>
