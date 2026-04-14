@@ -3,198 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>MiniMart | Каталог</title>
-  <meta name="description" content="MiniMart index с box, logo-style знак, каталог, поръчай и AR бутон." />
+  <title>MiniMart</title>
+  <meta name="description" content="MiniMart index с един box и logo-style визия." />
   <meta name="theme-color" content="#f7f8fc" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    :root{--bg:#f7f8fc;--text:#0f172a;--muted:#5f6b85;--line:rgba(15,23,42,.10);--brand:#4338ca;--brand2:#06b6d4;--glass:rgba(255,255,255,.62);--glass2:rgba(255,255,255,.80);--shadow:0 24px 70px rgba(15,23,42,.12)}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--text);background:linear-gradient(180deg,#fbfcff 0%,#f3f6fb 100%);overflow-x:hidden}button,input,textarea,select{font:inherit}a{text-decoration:none;color:inherit}.hidden{display:none!important}
-    .blur{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:-2}.b1{width:320px;height:320px;background:rgba(67,56,202,.10);top:-120px;left:-80px}.b2{width:340px;height:340px;background:rgba(6,182,212,.10);right:-100px;top:120px}
-    .wrap{width:min(1240px,calc(100% - 32px));margin:0 auto}.hero{min-height:100svh;display:grid;place-items:center;padding:28px 0;position:relative;overflow:hidden}.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.56)),url('https://picsum.photos/id/1011/1800/1200');background-size:cover;background-position:center;background-attachment:fixed;transform:scale(1.04)}
-    .hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}.box{border:1px solid rgba(255,255,255,.76);background:var(--glass2);backdrop-filter:blur(18px);box-shadow:var(--shadow);border-radius:32px;padding:28px}.soft{background:var(--glass)}
-    .eyebrow,.pill{display:inline-flex;align-items:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,.74);border:1px solid rgba(255,255,255,.92);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
-    h1{margin:18px 0 12px;font-size:clamp(42px,7vw,84px);line-height:.92;letter-spacing:-.06em}h1 span{background:linear-gradient(135deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}p{color:var(--muted);line-height:1.75}
-    .logoRow{display:flex;align-items:center;gap:14px;margin-bottom:8px}.logoMark{width:72px;height:72px;border-radius:22px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff;font-size:34px;font-weight:900;box-shadow:var(--shadow)}.logoWord{display:flex;flex-direction:column}.logoWord strong{font-size:28px;letter-spacing:-.04em}.logoWord span{font-size:13px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.14em}
-    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}.btn,.ghost{min-height:52px;padding:0 18px;border-radius:16px;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-weight:800;transition:.22s}.btn{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:var(--shadow)}.ghost{background:rgba(255,255,255,.78);border:1px solid var(--line);color:var(--text)}.btn:hover,.ghost:hover{transform:translateY(-2px)}
-    .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.stat{padding:16px;border-radius:20px;background:rgba(255,255,255,.56);border:1px solid rgba(255,255,255,.84)}.stat strong{display:block;font-size:20px}.stat span{color:var(--muted)}
-    .side h2{margin:14px 0 10px;font-size:34px;letter-spacing:-.04em}.miniList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.miniList div{padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.60);border:1px solid rgba(255,255,255,.86);font-weight:700;color:#334155}
-    .catalogModal,.arModal{position:fixed;inset:0;display:grid;place-items:center;padding:16px;z-index:80}.overlay{position:fixed;inset:0;background:rgba(255,255,255,.42);backdrop-filter:blur(8px);z-index:70}.catalogCard,.arCard{width:min(1180px,100%);max-height:calc(100dvh - 32px);overflow:auto;border-radius:32px;border:1px solid rgba(255,255,255,.92);background:rgba(255,255,255,.84);backdrop-filter:blur(18px);box-shadow:var(--shadow)}
-    .catalogHero{position:relative;min-height:280px;padding:22px;display:flex;align-items:end;background-image:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.52)),url('https://picsum.photos/id/1040/1800/900');background-size:cover;background-position:center}.close{position:absolute;top:16px;right:16px;width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.92);background:rgba(255,255,255,.86);cursor:pointer;font-size:18px;font-weight:900}.catalogInfo{max-width:760px}.catalogInfo h2,.cartHead h3,.arCard h3{margin:14px 0 10px;font-size:clamp(28px,4vw,42px);letter-spacing:-.04em;line-height:1.02}
-    .toolbar{display:flex;justify-content:space-between;gap:14px;align-items:end;flex-wrap:wrap;padding:18px 22px 0}.field{display:grid;gap:8px}.field span{font-size:13px;font-weight:700;color:#334155}.field input,.field textarea,.field select{min-height:52px;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.80);outline:none;width:100%}.field textarea{min-height:120px;resize:vertical}
-    .products{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;padding:22px}.product{border-radius:24px;overflow:hidden;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.88);box-shadow:var(--shadow)}.media{aspect-ratio:16/10;background-size:cover;background-position:center;position:relative}.media::after{content:attr(data-label);position:absolute;left:14px;bottom:14px;padding:8px 10px;border-radius:999px;background:rgba(255,255,255,.82);font-size:12px;font-weight:900}.body{padding:16px}.body h4{margin:0 0 8px;font-size:21px}.price{font-size:22px;font-weight:900;margin-top:12px}.productActions{display:flex;gap:10px;margin-top:14px}.orderBtn,.arBtn{flex:1;min-height:44px;border-radius:14px;font-weight:800;cursor:pointer;border:none}.orderBtn{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff}.arBtn{background:rgba(255,255,255,.86);border:1px solid var(--line);color:#0f172a}
-    .cartFloat{position:fixed;right:16px;bottom:16px;z-index:60;min-height:54px;padding:0 18px;border:none;border-radius:18px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-weight:900;cursor:pointer;box-shadow:var(--shadow)}.cartFloat b{background:rgba(255,255,255,.18);padding:6px 10px;border-radius:999px;margin-left:8px}
-    .cartPanel{position:fixed;right:16px;bottom:16px;width:min(430px,calc(100vw - 24px));max-height:86dvh;overflow:auto;border-radius:30px;background:rgba(255,255,255,.84);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.92);box-shadow:var(--shadow);z-index:90}.cartHead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px;border-bottom:1px solid rgba(15,23,42,.08)}.cartItems,.cartActions{display:grid;gap:12px;padding:16px}.cartItem,.sumBox,.successBox{padding:14px;border-radius:18px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.88)}.row,.sumRow{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.qty{display:flex;align-items:center;gap:10px;margin-top:10px}.qty button{width:32px;height:32px;border-radius:10px;background:#fff;border:1px solid var(--line);cursor:pointer}.sum{margin:0 16px 16px}.sumRow{padding:4px 0;color:var(--muted)}.sumRow strong{color:var(--text)}.sumRow.total{padding-top:10px;border-top:1px solid rgba(15,23,42,.08);font-size:20px}
-    .checkout{width:min(860px,100%);max-height:calc(100dvh - 32px);overflow:auto;border-radius:30px}.checkoutForm{display:grid;gap:16px;padding:22px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.grid .full{grid-column:1/-1}.successIcon{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;margin:0 auto 14px;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;font-size:32px;box-shadow:var(--shadow)}.successBox{text-align:center}
-    .arCard{width:min(760px,100%);padding:24px;position:relative}.arStage{padding:22px 0 12px;display:grid;place-items:center}.phone{width:min(320px,80vw);aspect-ratio:9/18;border-radius:36px;background:linear-gradient(180deg,#0f172a,#111827);padding:18px;position:relative;box-shadow:0 30px 80px rgba(15,23,42,.28)}.camera{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:90px;height:16px;border-radius:999px;background:rgba(255,255,255,.14)}.arVisual{position:absolute;inset:70px 24px 100px 24px;background-size:cover;background-position:center;border-radius:24px;transform:perspective(900px) rotateX(10deg) rotateY(-10deg);box-shadow:0 20px 50px rgba(0,0,0,.28)}.arGrid{position:absolute;left:24px;right:24px;bottom:24px;height:90px;border-radius:18px;background-image:linear-gradient(rgba(255,255,255,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.16) 1px,transparent 1px);background-size:20px 20px;opacity:.55}
-    .toastWrap{position:fixed;right:16px;bottom:86px;display:grid;gap:10px;z-index:120}.toast{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.94);border:1px solid rgba(15,23,42,.10);box-shadow:var(--shadow)}
-    @media (max-width:980px){.hero::before{background-attachment:scroll}.hero-grid,.grid,.stats,.miniList,.productActions{grid-template-columns:1fr}.stats{display:grid}.productActions{display:grid}}
-    @media (max-width:640px){.wrap{width:min(1240px,calc(100% - 20px))}.hero-grid{grid-template-columns:1fr}.actions{flex-direction:column}.btn,.ghost{width:100%}.products{grid-template-columns:1fr;padding:16px}.toolbar{padding:16px 16px 0}.catalogHero{min-height:240px}.cartPanel{right:12px;left:12px;width:auto;bottom:12px}.cartFloat{right:12px;left:12px;width:auto;bottom:12px}}
+    :root{--text:#0f172a;--muted:#64748b;--line:rgba(15,23,42,.10);--brand:#4338ca;--brand2:#06b6d4;--shadow:0 24px 70px rgba(15,23,42,.12)}
+    *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--text);background:linear-gradient(180deg,#fbfcff 0%,#f3f6fb 100%);overflow:hidden}
+    .blur{position:fixed;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}.b1{width:320px;height:320px;background:rgba(67,56,202,.10);top:-120px;left:-80px}.b2{width:340px;height:340px;background:rgba(6,182,212,.10);right:-100px;top:120px}
+    .hero{min-height:100%;display:grid;place-items:center;padding:20px;position:relative}.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.56)),url('https://picsum.photos/id/1011/1800/1200');background-size:cover;background-position:center;background-attachment:fixed;transform:scale(1.04)}
+    .box{position:relative;z-index:1;width:min(560px,100%);padding:34px;border-radius:34px;background:rgba(255,255,255,.78);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.88);box-shadow:var(--shadow);text-align:center}
+    .eyebrow{display:inline-flex;align-items:center;min-height:34px;padding:0 12px;border-radius:999px;background:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.92);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--brand)}
+    .logo{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:18px}.logoMark{width:104px;height:104px;border-radius:28px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;color:#fff;font-size:48px;font-weight:900;box-shadow:var(--shadow)}.logoWord strong{display:block;font-size:42px;letter-spacing:-.05em}.logoWord span{display:block;margin-top:6px;color:var(--muted);font-size:13px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+    h1{margin:18px 0 10px;font-size:clamp(34px,6vw,56px);line-height:.95;letter-spacing:-.05em}.subtitle{margin:0 auto;max-width:430px;color:var(--muted);line-height:1.75}
+    .actions{display:flex;flex-direction:column;gap:12px;margin-top:24px}.btn,.ghost{min-height:54px;padding:0 18px;border-radius:16px;border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-weight:800;text-decoration:none;transition:.22s}.btn{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;box-shadow:var(--shadow)}.ghost{background:rgba(255,255,255,.82);border:1px solid var(--line);color:var(--text)}.btn:hover,.ghost:hover{transform:translateY(-2px)}
+    @media (max-width:640px){body{overflow:auto}.hero::before{background-attachment:scroll}.box{padding:24px;border-radius:28px}.logoMark{width:88px;height:88px;font-size:42px}.logoWord strong{font-size:34px}}
   </style>
 </head>
 <body>
-  <div class="blur b1"></div><div class="blur b2"></div>
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="box">
-        <div class="eyebrow">Index · MiniMart</div>
-        <div class="logoRow">
-          <div class="logoMark">M</div>
-          <div class="logoWord">
-            <strong>MiniMart</strong>
-            <span>smart catalog</span>
-          </div>
-        </div>
-        <h1>MiniMart box.<br><span>Клик и се отваря каталогът.</span></h1>
-        <p>Това е новият root index: голям MiniMart box отпред, logo-style знак и директен каталог. Под всеки продукт има `Поръчай` и `AR` бутон.</p>
-        <div class="actions">
-          <button class="btn" id="openCatalogBtn" type="button">Отвори MiniMart каталог</button>
-          <button class="ghost" id="scrollInfoBtn" type="button">Виж как работи</button>
-        </div>
-        <div class="stats">
-          <div class="stat"><strong>Каталог</strong><span>отваря се след клик</span></div>
-          <div class="stat"><strong>Поръчай</strong><span>директно в количка</span></div>
-          <div class="stat"><strong>AR</strong><span>preview слой за продукта</span></div>
+  <div class="blur b1"></div>
+  <div class="blur b2"></div>
+  <main class="hero">
+    <section class="box">
+      <div class="eyebrow">MiniMart</div>
+      <div class="logo">
+        <div class="logoMark">M</div>
+        <div class="logoWord">
+          <strong>MiniMart</strong>
+          <span>smart catalog</span>
         </div>
       </div>
-      <div class="box soft side" id="infoBox">
-        <div class="pill">MiniMart flow</div>
-        <h2>Какво прави index-ът</h2>
-        <div class="miniList">
-          <div>✔ Box с MiniMart logo style</div>
-          <div>✔ Клик отваря каталог</div>
-          <div>✔ Продукти със снимки</div>
-          <div>✔ Поръчай бутон</div>
-          <div>✔ AR бутон</div>
-          <div>✔ Количка + checkout</div>
-        </div>
+      <h1>Един box.<br>Едно лого.<br>MiniMart.</h1>
+      <p class="subtitle">Чист начален index с един централен MiniMart box. Оттук отваряш каталога или MiniMart box страницата.</p>
+      <div class="actions">
+        <a class="btn" href="/minimart-box.html">Отвори MiniMart каталог</a>
+        <a class="ghost" href="/admin">Admin</a>
       </div>
-    </div>
-  </section>
-
-  <div class="overlay hidden" id="overlay"></div>
-
-  <section class="catalogModal hidden" id="catalogModal">
-    <div class="catalogCard">
-      <div class="catalogHero">
-        <button class="close" id="closeCatalogBtn" type="button">✕</button>
-        <div class="catalogInfo">
-          <div class="eyebrow">MiniMart Catalog</div>
-          <h2>Избери какво да поръчаш</h2>
-          <p>Продукти със снимки, бутон `Поръчай` и бутон `AR` до всеки артикул.</p>
-        </div>
-      </div>
-      <div class="toolbar">
-        <div>
-          <div class="pill">Налични продукти</div>
-        </div>
-        <label class="field">
-          <span>Търси продукт</span>
-          <input id="searchInput" type="text" placeholder="вода, сандвич, шоколад..." />
-        </label>
-      </div>
-      <div class="products" id="productsGrid"></div>
-    </div>
-  </section>
-
-  <button class="cartFloat" id="cartFloat" type="button">Количка <b id="cartCount">0</b></button>
-
-  <aside class="cartPanel hidden" id="cartPanel">
-    <div class="cartHead">
-      <h3>Твоята количка</h3>
-      <button class="close" id="closeCartBtn" type="button">✕</button>
-    </div>
-    <div class="cartItems" id="cartItems"></div>
-    <div class="sum" id="sumBox">
-      <div class="sumRow"><span>Продукти</span><strong id="basePrice">0.00 лв</strong></div>
-      <div class="sumRow"><span>Такса</span><strong id="servicePrice">0.00 лв</strong></div>
-      <div class="sumRow"><span>Доставка</span><strong id="deliveryPrice">0.00 лв</strong></div>
-      <div class="sumRow total"><span>Общо</span><strong id="totalPrice">0.00 лв</strong></div>
-    </div>
-    <div class="cartActions">
-      <button class="ghost" id="clearCartBtn" type="button">Изчисти</button>
-      <button class="btn" id="openCheckoutBtn" type="button">Поръчай</button>
-    </div>
-  </aside>
-
-  <section class="catalogModal hidden" id="checkoutModal">
-    <div class="catalogCard checkout box">
-      <div class="toolbar" style="padding-top:22px">
-        <div>
-          <div class="pill">Checkout</div>
-          <h2 style="margin:12px 0 0;font-size:40px;letter-spacing:-.04em">Завърши поръчката</h2>
-        </div>
-        <button class="close" id="closeCheckoutBtn" type="button">✕</button>
-      </div>
-      <form class="checkoutForm" id="checkoutForm">
-        <div class="grid">
-          <label class="field"><span>Име</span><input id="customerName" type="text" required placeholder="Димитър" /></label>
-          <label class="field"><span>Телефон</span><input id="customerPhone" type="tel" required placeholder="08..." /></label>
-          <label class="field full"><span>Адрес</span><input id="customerAddress" type="text" required placeholder="ул., вход, етаж..." /></label>
-          <label class="field full"><span>Бележка</span><textarea id="customerNote" placeholder="Бележка към поръчката..."></textarea></label>
-        </div>
-        <div class="sumBox" id="checkoutSummary"></div>
-        <button class="btn" type="submit">Изпрати поръчка</button>
-      </form>
-      <div class="successBox hidden" id="successBox">
-        <div class="successIcon">✓</div>
-        <h3>Поръчката е записана</h3>
-        <p id="successText"></p>
-        <button class="btn" id="doneBtn" type="button">Готово</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="arModal hidden" id="arModal">
-    <div class="arCard box">
-      <button class="close" id="closeArBtn" type="button">✕</button>
-      <div class="pill">AR Preview</div>
-      <h3 id="arTitle">Продукт</h3>
-      <p id="arDesc">AR preview на продукта.</p>
-      <div class="arStage">
-        <div class="phone">
-          <div class="camera"></div>
-          <div class="arVisual" id="arVisual"></div>
-          <div class="arGrid"></div>
-        </div>
-      </div>
-      <p>Това е demo AR слой. Когато имаш реален 3D asset, тук директно връзваме WebAR / Scene Viewer.</p>
-    </div>
-  </section>
-
-  <div class="toastWrap" id="toastWrap"></div>
-
-  <script>
-    const PRODUCTS=[
-      {name:'Вода 1.5L',price:1.8,label:'Вода',desc:'Ежедневна бърза покупка.',image:'https://picsum.photos/id/96/1200/900'},
-      {name:'Сандвич',price:6.9,label:'Храна',desc:'Готов за взимане, идеален за обяд.',image:'https://picsum.photos/id/1080/1200/900'},
-      {name:'Чипс',price:4.3,label:'Snack',desc:'Импулсна покупка.',image:'https://picsum.photos/id/312/1200/900'},
-      {name:'Шоколад',price:3.5,label:'Sweet',desc:'Малка добавка към поръчката.',image:'https://picsum.photos/id/1081/1200/900'},
-      {name:'Кафе',price:5.2,label:'Coffee',desc:'Бърза покупка за сутринта.',image:'https://picsum.photos/id/30/1200/900'},
-      {name:'Кроасан',price:2.9,label:'Bakery',desc:'Малка закуска.',image:'https://picsum.photos/id/292/1200/900'}
-    ];
-    const SERVICE=.12, DELIVERY=4.9;
-    const state={cart:[]};
-    const $=s=>document.querySelector(s);
-    const els={overlay:$('#overlay'),catalogModal:$('#catalogModal'),searchInput:$('#searchInput'),productsGrid:$('#productsGrid'),cartFloat:$('#cartFloat'),cartCount:$('#cartCount'),cartPanel:$('#cartPanel'),cartItems:$('#cartItems'),basePrice:$('#basePrice'),servicePrice:$('#servicePrice'),deliveryPrice:$('#deliveryPrice'),totalPrice:$('#totalPrice'),checkoutModal:$('#checkoutModal'),checkoutForm:$('#checkoutForm'),checkoutSummary:$('#checkoutSummary'),successBox:$('#successBox'),successText:$('#successText'),arModal:$('#arModal'),arTitle:$('#arTitle'),arDesc:$('#arDesc'),arVisual:$('#arVisual'),toastWrap:$('#toastWrap')};
-    document.addEventListener('DOMContentLoaded',()=>{bind();renderProducts();renderCart()});
-    function bind(){ $('#openCatalogBtn').addEventListener('click',openCatalog); $('#closeCatalogBtn').addEventListener('click',closeAll); $('#cartFloat').addEventListener('click',openCart); $('#closeCartBtn').addEventListener('click',closeAll); $('#openCheckoutBtn').addEventListener('click',openCheckout); $('#closeCheckoutBtn').addEventListener('click',closeAll); $('#closeArBtn').addEventListener('click',closeAll); $('#doneBtn').addEventListener('click',()=>{closeAll(); hide(els.successBox); show(els.checkoutForm)}); $('#clearCartBtn').addEventListener('click',()=>{state.cart=[];renderCart();toast('Количката е изчистена')}); $('#scrollInfoBtn').addEventListener('click',()=>document.getElementById('infoBox').scrollIntoView({behavior:'smooth'})); els.overlay.addEventListener('click',closeAll); els.searchInput.addEventListener('input',renderProducts); els.checkoutForm.addEventListener('submit',submitOrder)}
-    function renderProducts(){ const q=(els.searchInput.value||'').trim().toLowerCase(); const list=PRODUCTS.filter(p=>!q||`${p.name} ${p.desc} ${p.label}`.toLowerCase().includes(q)); els.productsGrid.innerHTML=list.map((p,i)=>`<article class="product"><div class="media" data-label="${p.label}" style="background-image:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.32)),url('${p.image}')"></div><div class="body"><h4>${p.name}</h4><p>${p.desc}</p><div class="price">${money(p.price)}</div><div class="productActions"><button class="orderBtn" data-order="${i}">Поръчай</button><button class="arBtn" data-ar="${i}">AR</button></div></div></article>`).join(''); els.productsGrid.querySelectorAll('.orderBtn').forEach(btn=>btn.addEventListener('click',()=>addToCart(list[Number(btn.dataset.order)]))); els.productsGrid.querySelectorAll('.arBtn').forEach(btn=>btn.addEventListener('click',()=>openAr(list[Number(btn.dataset.ar)])))}
-    function addToCart(product){ const key=product.name; const existing=state.cart.find(i=>i.key===key); if(existing) existing.qty+=1; else state.cart.push({key,name:product.name,price:product.price,qty:1}); renderCart(); openCart(); toast(`Добавено: ${product.name}`)}
-    function renderCart(){ const base=state.cart.reduce((s,i)=>s+i.price*i.qty,0); const service=base*SERVICE; const delivery=base?DELIVERY:0; const total=base+service+delivery; const count=state.cart.reduce((s,i)=>s+i.qty,0); els.cartCount.textContent=count; els.cartItems.innerHTML=state.cart.length?state.cart.map(item=>`<div class="cartItem"><div class="row"><div><strong>${item.name}</strong><br><small>MiniMart</small></div><strong>${money(item.price*item.qty)}</strong></div><div class="qty"><button data-key="${item.key}" data-delta="-1">−</button><span>${item.qty}</span><button data-key="${item.key}" data-delta="1">+</button></div></div>`).join(''):'<div class="cartItem">Количката е празна.</div>'; els.basePrice.textContent=money(base); els.servicePrice.textContent=money(service); els.deliveryPrice.textContent=money(delivery); els.totalPrice.textContent=money(total); els.checkoutSummary.innerHTML=base?`<div class="sumRow"><span>Продукти</span><strong>${money(base)}</strong></div><div class="sumRow"><span>Такса</span><strong>${money(service)}</strong></div><div class="sumRow"><span>Доставка</span><strong>${money(delivery)}</strong></div><div class="sumRow total"><span>Общо</span><strong>${money(total)}</strong></div>`:'<div>Няма продукти.</div>'; els.cartItems.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>changeQty(btn.dataset.key,Number(btn.dataset.delta))))}
-    function changeQty(key,delta){ const item=state.cart.find(i=>i.key===key); if(!item) return; item.qty+=delta; if(item.qty<=0) state.cart=state.cart.filter(i=>i.key!==key); renderCart() }
-    function openCatalog(){ show(els.overlay); show(els.catalogModal) }
-    function openCart(){ show(els.overlay); show(els.cartPanel) }
-    function openCheckout(){ if(!state.cart.length) return toast('Добави поне един продукт'); show(els.overlay); show(els.checkoutModal); show(els.checkoutForm); hide(els.successBox) }
-    function submitOrder(e){ e.preventDefault(); const base=state.cart.reduce((s,i)=>s+i.price*i.qty,0); if(!base) return; const service=base*SERVICE; const total=base+service+DELIVERY; const id=`MM-${Date.now().toString().slice(-8)}`; state.cart=[]; renderCart(); hide(els.checkoutForm); show(els.successBox); els.successText.textContent=`Номер: ${id} · ${money(total)}`; els.checkoutForm.reset(); toast(`Поръчката ${id} е записана`) }
-    function openAr(product){ show(els.overlay); show(els.arModal); els.arTitle.textContent=product.name; els.arDesc.textContent=product.desc; els.arVisual.style.backgroundImage=`linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.08)),url('${product.image}')` }
-    function closeAll(){ hide(els.overlay); hide(els.catalogModal); hide(els.cartPanel); hide(els.checkoutModal); hide(els.arModal) }
-    function money(v){ return `${Number(v||0).toFixed(2)} лв` }
-    function show(el){ el.classList.remove('hidden') }
-    function hide(el){ el.classList.add('hidden') }
-    function toast(msg){ const d=document.createElement('div'); d.className='toast'; d.textContent=msg; els.toastWrap.appendChild(d); setTimeout(()=>d.remove(),2400) }
-  </script>
+    </section>
+  </main>
 </body>
 </html>
