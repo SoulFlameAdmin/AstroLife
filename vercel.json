@@ -1,6 +1,5 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/poruchkibg-max.html" },
     { "source": "/admin", "destination": "/admin.html" }
   ]
 }
